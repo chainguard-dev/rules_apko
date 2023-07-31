@@ -1,0 +1,15 @@
+load("@rules_apko//apko:defs.bzl", "apko_image")
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+
+apko_image(
+    name = "lock",
+    packages = "@example_lock//:packages",
+    config = "apko.yaml",
+)
+
+build_test(
+    name = "test",
+    targets = [
+        ":lock",
+    ],
+)

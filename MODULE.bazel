@@ -1,7 +1,7 @@
 "Bazel dependencies"
 
 module(
-    name = "com_myorg_rules_mylang",
+    name = "rules_apko",
     version = "0.0.0",
     compatibility_level = 1,
 )
@@ -14,8 +14,14 @@ bazel_dep(name = "bazel_skylib_gazelle_plugin", version = "1.4.1", dev_dependenc
 bazel_dep(name = "aspect_bazel_lib", version = "1.32.1", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "6.1.0", dev_dependency = True)
 
-mylang = use_extension("//mylang:extensions.bzl", "mylang")
-mylang.toolchain(mylang_version = "1.14.2")
-use_repo(mylang, "mylang_toolchains")
+apko = use_extension("//apko:extensions.bzl", "apko")
 
-register_toolchains("@mylang_toolchains//:all")
+apko.toolchain(apko_version = "v0.10.0")
+use_repo(apko, "apko_toolchains")
+register_toolchains("@apko_toolchains//:all")
+
+apko.translate_lock(
+    name = "example_lock",
+    lock = "//examples/lock:apko.lock.json"
+)
+use_repo(apko, "example_lock")

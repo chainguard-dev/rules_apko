@@ -5,6 +5,10 @@
 # Required until this is the default; expected in Bazel 7
 common --enable_bzlmod
 
+# Required for range requests
+build --credential_helper=%workspace%/apk_fetch_helper.py --credential_helper_cache_duration=0
+
+
 # Load any settings specific to the current user.
 # .bazelrc.user should appear in .gitignore so that settings are not shared with team members
 # This needs to be last statement in this
