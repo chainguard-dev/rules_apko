@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+# Adds Range header to requests if the url contains a fragment (#) named "APK_RANGE".
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests
+# This is a credential helper called by bazel when making outgoing http requests.
+# https://github.com/bazelbuild/proposals/blob/main/designs/2022-06-07-bazel-credential-helpers.md
+
 import sys
 import json
 import logging.config

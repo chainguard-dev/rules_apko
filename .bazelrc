@@ -6,6 +6,7 @@
 common --enable_bzlmod
 
 # Required for range requests
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests
 build --credential_helper=%workspace%/apk_fetch_helper.py --credential_helper_cache_duration=0
 
 
