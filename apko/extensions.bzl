@@ -11,7 +11,7 @@ effectively overriding the default named toolchain due to toolchain resolution p
 """
 
 load(":repositories.bzl", "apko_register_toolchains")
-load(":translate.bzl", "translate_apko_lock", "apk_import", "parse_lock")
+load(":translate.bzl", "apk_import", "parse_lock", "translate_apko_lock")
 
 _DEFAULT_NAME = "apko"
 
@@ -32,7 +32,6 @@ def _apko_extension_impl(module_ctx):
     registrations = {}
     for mod in module_ctx.modules:
         for lock in mod.tags.translate_lock:
-
             lock_file = parse_lock(module_ctx.read(lock.lock))
             for package in lock_file["packages"]:
                 apk_import(
@@ -47,8 +46,8 @@ def _apko_extension_impl(module_ctx):
                     control_checksum = package["control"]["checksum"],
                     data_range = package["data"]["range"],
                     data_checksum = package["data"]["checksum"],
-                )   
-            print(lock.name)
+                )
+
             translate_apko_lock(name = lock.name, lock = lock.lock)
 
         for toolchain in mod.tags.toolchain:
@@ -81,6 +80,6 @@ apko = module_extension(
     implementation = _apko_extension_impl,
     tag_classes = {
         "toolchain": apko_toolchain,
-        "translate_lock": apko_translate_lock
+        "translate_lock": apko_translate_lock,
     },
 )

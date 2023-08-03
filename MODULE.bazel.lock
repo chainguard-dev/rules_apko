@@ -923,7 +923,7 @@
       }
     },
     "//apko:extensions.bzl%apko": {
-      "bzlTransitiveDigest": "o/yGdYdExE5QjF2nzWHYgczqKQ3RBtgli6DJzOo2IdU=",
+      "bzlTransitiveDigest": "vpLMxA//5O5V6+5OIceLK7zMvpC6JdFsOzFlzJjdfRU=",
       "generatedRepoSpecs": {
         "apko_linux_arm64": {
           "bzlFile": "@@//apko:repositories.bzl",
