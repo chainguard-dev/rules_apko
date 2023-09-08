@@ -33,12 +33,6 @@ bzl_library(
 )
 
 bzl_library(
-    name = "defs",
-    srcs = ["defs.bzl"],
-    visibility = ["//visibility:public"],
-)
-
-bzl_library(
     name = "extensions",
     srcs = ["extensions.bzl"],
     visibility = ["//visibility:public"],
@@ -46,7 +40,21 @@ bzl_library(
 )
 
 bzl_library(
+    name = "defs",
+    srcs = ["defs.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["//apko/private:apko_image"],
+)
+
+bzl_library(
     name = "toolchain",
     srcs = ["toolchain.bzl"],
     visibility = ["//visibility:public"],
+)
+
+bzl_library(
+    name = "translate_lock",
+    srcs = ["translate_lock.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["//apko/private:util"],
 )

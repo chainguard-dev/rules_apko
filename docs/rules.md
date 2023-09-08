@@ -2,15 +2,24 @@
 
 Public API re-exports
 
-<a id="example"></a>
+<a id="apko_image"></a>
 
-## example
+## apko_image
 
 <pre>
-example()
+apko_image(<a href="#apko_image-name">name</a>, <a href="#apko_image-config">config</a>, <a href="#apko_image-packages">packages</a>, <a href="#apko_image-tag">tag</a>)
 </pre>
 
-This is an example
 
+
+**ATTRIBUTES**
+
+
+| Name  | Description | Type | Mandatory | Default |
+| :------------- | :------------- | :------------- | :------------- | :------------- |
+| <a id="apko_image-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
+| <a id="apko_image-config"></a>config |  -   | <a href="https://bazel.build/concepts/labels">Label</a> | required |  |
+| <a id="apko_image-packages"></a>packages |  -   | <a href="https://bazel.build/concepts/labels">Label</a> | optional | <code>None</code> |
+| <a id="apko_image-tag"></a>tag |  -   | String | required |  |
 
 

@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 1,
-  "moduleFileHash": "3e5a349c94328329f7183c9f3a31c69b32ccffc322a2c36f0e419b77a872fe98",
+  "moduleFileHash": "3d09bf72447320c502727463747cf6672fd63dbd77440280fda74800e34d0ade",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -43,11 +43,11 @@
           "tags": [
             {
               "tagName": "toolchain",
-              "attributeValues": {"apko_version":"--v0.10.0"},
+              "attributeValues": {"apko_version":"--v0.0.0"},
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 19,
+                "line": 18,
                 "column": 15
               }
             },
@@ -907,66 +907,6 @@
         }
       }
     },
-    "@bazel_tools//tools/cpp:cc_configure.bzl%cc_configure_extension": {
-      "bzlTransitiveDigest": "fX+NTqVY9jebrhWZSjm+R2r4sMbV1U3pvP90DKmouSg=",
-      "generatedRepoSpecs": {
-        "local_config_cc": {
-          "bzlFile": "@@bazel_tools//tools/cpp:cc_configure.bzl",
-          "ruleClassName": "cc_autoconf",
-          "attributes": {"name":"--bazel_tools~cc_configure_extension~local_config_cc"}
-        },
-        "local_config_cc_toolchains": {
-          "bzlFile": "@@bazel_tools//tools/cpp:cc_configure.bzl",
-          "ruleClassName": "cc_autoconf_toolchains",
-          "attributes": {"name":"--bazel_tools~cc_configure_extension~local_config_cc_toolchains"}
-        }
-      }
-    },
-    "//apko:extensions.bzl%apko": {
-      "bzlTransitiveDigest": "vpLMxA//5O5V6+5OIceLK7zMvpC6JdFsOzFlzJjdfRU=",
-      "generatedRepoSpecs": {
-        "apko_linux_arm64": {
-          "bzlFile": "@@//apko:repositories.bzl",
-          "ruleClassName": "apko_repositories",
-          "attributes": {"name":"--_main~apko~apko_linux_arm64","platform":"--linux_arm64","apko_version":"--v0.10.0"}
-        },
-        "apko_darwin_arm64": {
-          "bzlFile": "@@//apko:repositories.bzl",
-          "ruleClassName": "apko_repositories",
-          "attributes": {"name":"--_main~apko~apko_darwin_arm64","platform":"--darwin_arm64","apko_version":"--v0.10.0"}
-        },
-        "apko_linux_i386": {
-          "bzlFile": "@@//apko:repositories.bzl",
-          "ruleClassName": "apko_repositories",
-          "attributes": {"name":"--_main~apko~apko_linux_i386","platform":"--linux_i386","apko_version":"--v0.10.0"}
-        },
-        "apko_toolchains": {
-          "bzlFile": "@@//apko/private:toolchains_repo.bzl",
-          "ruleClassName": "toolchains_repo",
-          "attributes": {"name":"--_main~apko~apko_toolchains","user_repository_name":"--apko"}
-        },
-        "apko_darwin_amd64": {
-          "bzlFile": "@@//apko:repositories.bzl",
-          "ruleClassName": "apko_repositories",
-          "attributes": {"name":"--_main~apko~apko_darwin_amd64","platform":"--darwin_amd64","apko_version":"--v0.10.0"}
-        },
-        "busybox_x86_64_1.36.1-r4": {
-          "bzlFile": "@@//apko:translate.bzl",
-          "ruleClassName": "apk_import",
-          "attributes": {"name":"--_main~apko~busybox_x86_64_1.36.1-r4","package_name":"--busybox","version":"--1.36.1-r4","architecture":"--x86_64","url":"--https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/busybox-1.36.1-r4.apk","signature_range":"--bytes=0-665","signature_checksum":"--ef784bec3732c37f42305853b9258f31d84481f7818dad44029a3ae0fdd62838","control_range":"--bytes=665-2301","control_checksum":"--sha1-1204835fabd0269d7d00bf93b972a2498ca93b04","data_range":"--bytes=2301-","data_checksum":"--e450e2e76cefc1ab1e8dd7dad2c375db3dba167fa72c5397def8cbccc697f372"}
-        },
-        "example_lock": {
-          "bzlFile": "@@//apko:translate.bzl",
-          "ruleClassName": "translate_apko_lock",
-          "attributes": {"name":"--_main~apko~example_lock","lock":"@@//examples/lock:apko.lock.json"}
-        },
-        "apko_linux_amd64": {
-          "bzlFile": "@@//apko:repositories.bzl",
-          "ruleClassName": "apko_repositories",
-          "attributes": {"name":"--_main~apko~apko_linux_amd64","platform":"--linux_amd64","apko_version":"--v0.10.0"}
-        }
-      }
-    },
     "@buildifier_prebuilt~6.1.0//:defs.bzl%buildifier_prebuilt_deps_extension": {
       "bzlTransitiveDigest": "dLWYYf/8KTack6FnTOdNbrdMSaxEMZ6/Rm2d43zWWC8=",
       "generatedRepoSpecs": {
@@ -1034,6 +974,61 @@
           "bzlFile": "@@bazel_tools//tools/osx:xcode_configure.bzl",
           "ruleClassName": "xcode_autoconf",
           "attributes": {"name":"--rules_cc~0.0.2~cc_configure~local_config_xcode","xcode_locator":"--@bazel_tools//tools/osx:xcode_locator.m","remote_xcode":"--"}
+        }
+      }
+    },
+    "//apko:extensions.bzl%apko": {
+      "bzlTransitiveDigest": "CTzYEeNRBiX9nfxr5WqpLw7QRrHOH2wDd4XwIt8LrXc=",
+      "generatedRepoSpecs": {
+        "apko_linux_arm64": {
+          "bzlFile": "@@//apko:repositories.bzl",
+          "ruleClassName": "apko_repositories",
+          "attributes": {"name":"--_main~apko~apko_linux_arm64","platform":"--linux_arm64","apko_version":"--v0.0.0"}
+        },
+        "apko_darwin_arm64": {
+          "bzlFile": "@@//apko:repositories.bzl",
+          "ruleClassName": "apko_repositories",
+          "attributes": {"name":"--_main~apko~apko_darwin_arm64","platform":"--darwin_arm64","apko_version":"--v0.0.0"}
+        },
+        "apko_linux_i386": {
+          "bzlFile": "@@//apko:repositories.bzl",
+          "ruleClassName": "apko_repositories",
+          "attributes": {"name":"--_main~apko~apko_linux_i386","platform":"--linux_i386","apko_version":"--v0.0.0"}
+        },
+        "apko_toolchains": {
+          "bzlFile": "@@//apko/private:toolchains_repo.bzl",
+          "ruleClassName": "toolchains_repo",
+          "attributes": {"name":"--_main~apko~apko_toolchains","user_repository_name":"--apko"}
+        },
+        "apko_darwin_amd64": {
+          "bzlFile": "@@//apko:repositories.bzl",
+          "ruleClassName": "apko_repositories",
+          "attributes": {"name":"--_main~apko~apko_darwin_amd64","platform":"--darwin_amd64","apko_version":"--v0.0.0"}
+        },
+        "musl_x86_64_1.2.4_git20230717-r2": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~musl_x86_64_1.2.4_git20230717-r2","package_name":"--musl","version":"--1.2.4_git20230717-r2","architecture":"--x86_64","url":"--https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/musl-1.2.4_git20230717-r2.apk","signature_range":"--bytes=0-663","signature_checksum":"--sha256-MGQuPl32VeejCb03Emx+QRAWd+4eZGojgo32yKJubws=","control_range":"--bytes=664-1230","control_checksum":"--sha1-0QcZQhy2GxzaRF4Kip4NVG0pgrc=","data_range":"--bytes=1231-","data_checksum":"--sha256-BEDUjs8id32t4l9xhzFKSVDrEOOuxHeKIAjyg/cmIE8="}
+        },
+        "dl-cdn.alpinelinux.org_alpine_edge_main_x86_64": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_repository",
+          "attributes": {"name":"--_main~apko~dl-cdn.alpinelinux.org_alpine_edge_main_x86_64","url":"--https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/APKINDEX.tar.gz","architecture":"--x86_64"}
+        },
+        "busybox_x86_64_1.36.1-r6": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~busybox_x86_64_1.36.1-r6","package_name":"--busybox","version":"--1.36.1-r6","architecture":"--x86_64","url":"--https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/busybox-1.36.1-r6.apk","signature_range":"--bytes=0-665","signature_checksum":"--sha256-vaZCFt0jkhVmQGbD7Tveo3AdhPc2+XLfW3pZNL879h0=","control_range":"--bytes=666-2299","control_checksum":"--sha1-FpE8E5DomFCSlHelv/YSXO1DyXY=","data_range":"--bytes=2300-","data_checksum":"--sha256-+OO3KZGmBuS1zVYdJDW9RRj9OB0XRFDomswjX8vkeAo="}
+        },
+        "example_lock": {
+          "bzlFile": "@@//apko:translate_lock.bzl",
+          "ruleClassName": "translate_apko_lock",
+          "attributes": {"name":"--_main~apko~example_lock","lock":"@@//examples/lock:apko.lock.json"}
+        },
+        "apko_linux_amd64": {
+          "bzlFile": "@@//apko:repositories.bzl",
+          "ruleClassName": "apko_repositories",
+          "attributes": {"name":"--_main~apko~apko_linux_amd64","platform":"--linux_amd64","apko_version":"--v0.0.0"}
         }
       }
     },
@@ -1252,6 +1247,21 @@
         }
       }
     },
+    "@bazel_tools//tools/cpp:cc_configure.bzl%cc_configure_extension": {
+      "bzlTransitiveDigest": "fX+NTqVY9jebrhWZSjm+R2r4sMbV1U3pvP90DKmouSg=",
+      "generatedRepoSpecs": {
+        "local_config_cc": {
+          "bzlFile": "@@bazel_tools//tools/cpp:cc_configure.bzl",
+          "ruleClassName": "cc_autoconf",
+          "attributes": {"name":"--bazel_tools~cc_configure_extension~local_config_cc"}
+        },
+        "local_config_cc_toolchains": {
+          "bzlFile": "@@bazel_tools//tools/cpp:cc_configure.bzl",
+          "ruleClassName": "cc_autoconf_toolchains",
+          "attributes": {"name":"--bazel_tools~cc_configure_extension~local_config_cc_toolchains"}
+        }
+      }
+    },
     "@rules_java~5.5.0//java:extensions.bzl%toolchains": {
       "bzlTransitiveDigest": "IVTttRaqn26iAvJN4qehdM+OxbrjZDF3SRPyI2lokXk=",
       "generatedRepoSpecs": {
@@ -1459,6 +1469,206 @@
           "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
           "ruleClassName": "http_archive",
           "attributes": {"name":"--rules_java~5.5.0~toolchains~remotejdk11_macos_aarch64","build_file":"@@rules_java~5.5.0//toolchains:jdk.BUILD","sha256":"--6bb0d2c6e8a29dcd9c577bbb2986352ba12481a9549ac2c0bcfd00ed60e538d2","strip_prefix":"--zulu11.56.19-ca-jdk11.0.15-macosx_aarch64","urls":["--https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu11.56.19-ca-jdk11.0.15-macosx_aarch64.tar.gz","--https://cdn.azul.com/zulu/bin/zulu11.56.19-ca-jdk11.0.15-macosx_aarch64.tar.gz"]}
+        }
+      }
+    },
+    "@gazelle~0.29.0//:extensions.bzl%go_deps": {
+      "bzlTransitiveDigest": "EsUnSNHru6IySyQXL27kHcOTqGsmPZjAEwdweVuAIIc=",
+      "generatedRepoSpecs": {
+        "com_github_fsnotify_fsnotify": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~com_github_fsnotify_fsnotify","importpath":"--github.com/fsnotify/fsnotify","sum":"--h1:n+5WquG0fcWoWp6xPWfHdbskMCQaFnG6PfBrh1Ky4HY=","version":"--v1.6.0","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "org_golang_x_text": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~org_golang_x_text","importpath":"--golang.org/x/text","sum":"--h1:cokOdA+Jmi5PJGXLlLllQSgYigAEfHXJAERHVMaCc2k=","version":"--v0.3.3","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "com_github_bmatcuk_doublestar_v4": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~com_github_bmatcuk_doublestar_v4","importpath":"--github.com/bmatcuk/doublestar/v4","sum":"--h1:HTuxyug8GyFbRkrffIpzNCSK4luc0TY3wzXvzIZhEXc=","version":"--v4.6.0","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "com_github_pmezard_go_difflib": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~com_github_pmezard_go_difflib","importpath":"--github.com/pmezard/go-difflib","sum":"--h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=","version":"--v1.0.0","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "org_golang_google_protobuf": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~org_golang_google_protobuf","importpath":"--google.golang.org/protobuf","sum":"--h1:w43yiav+6bVFTBQFZX0r7ipe9JQ1QsbMgHwbBziscLw=","version":"--v1.28.0","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "org_golang_x_mod": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~org_golang_x_mod","importpath":"--golang.org/x/mod","sum":"--h1:LapD9S96VoQRhi/GrNTqeBJFrUjs5UHCAtTlgwA5oZA=","version":"--v0.7.0","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "bazel_gazelle_go_repository_directives": {
+          "bzlFile": "@@gazelle~0.29.0//internal/bzlmod:go_deps.bzl",
+          "ruleClassName": "_go_repository_directives",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~bazel_gazelle_go_repository_directives","directives":{"--com_github_bazelbuild_buildtools":["--importpath=github.com/bazelbuild/buildtools","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--com_github_bmatcuk_doublestar_v4":["--importpath=github.com/bmatcuk/doublestar/v4","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--com_github_fsnotify_fsnotify":["--importpath=github.com/fsnotify/fsnotify","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--com_github_google_go_cmp":["--importpath=github.com/google/go-cmp","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--com_github_pelletier_go_toml":["--importpath=github.com/pelletier/go-toml","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--com_github_pmezard_go_difflib":["--importpath=github.com/pmezard/go-difflib","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--org_golang_x_mod":["--importpath=golang.org/x/mod","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--org_golang_x_sync":["--importpath=golang.org/x/sync","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--org_golang_x_tools":["--importpath=golang.org/x/tools","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--org_golang_x_sys":["--importpath=golang.org/x/sys","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--com_github_gogo_protobuf":["--importpath=github.com/gogo/protobuf","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--com_github_golang_mock":["--importpath=github.com/golang/mock","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--com_github_golang_protobuf":["--importpath=github.com/golang/protobuf","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--org_golang_google_protobuf":["--importpath=google.golang.org/protobuf","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--org_golang_x_net":["--importpath=golang.org/x/net","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--org_golang_x_text":["--importpath=golang.org/x/text","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--org_golang_google_genproto":["--importpath=google.golang.org/genproto","--build_naming_convention=import_alias","--build_file_proto_mode=default"],"--org_golang_google_grpc":["--importpath=google.golang.org/grpc","--build_naming_convention=import_alias","--build_file_proto_mode=default"]}}
+        },
+        "org_golang_x_tools": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~org_golang_x_tools","importpath":"--golang.org/x/tools","sum":"--h1:+bSpV5HIeWkuvgaMfI3UmKRThoTA5ODJTUd8T17NO+4=","version":"--v0.5.0","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "com_github_bazelbuild_buildtools": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~com_github_bazelbuild_buildtools","importpath":"--github.com/bazelbuild/buildtools","sum":"--h1:DraHsDqTYhf6w1369EEdFyA5hjJnGX88xNJRv1+20E0=","version":"--v0.0.0-20230111132423-06e8e2436a75","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "org_golang_x_net": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~org_golang_x_net","importpath":"--golang.org/x/net","sum":"--h1:4nGaVu0QrbjT/AK2PRLuQfQuh6DJve+pELhqTdAj3x0=","version":"--v0.0.0-20210405180319-a5a99cb37ef4","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "org_golang_google_genproto": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~org_golang_google_genproto","importpath":"--google.golang.org/genproto","sum":"--h1:+kGHl1aib/qcwaRi1CbqBZ1rk19r85MNUf8HaBghugY=","version":"--v0.0.0-20200526211855-cb27e3aa2013","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "com_github_pelletier_go_toml": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~com_github_pelletier_go_toml","importpath":"--github.com/pelletier/go-toml","sum":"--h1:4yBQzkHv+7BHq2PQUZF3Mx0IYxG7LsP222s7Agd3ve8=","version":"--v1.9.5","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "com_github_gogo_protobuf": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~com_github_gogo_protobuf","importpath":"--github.com/gogo/protobuf","sum":"--h1:Ov1cvc58UF3b5XjBnZv7+opcTcQFZebYjWzi34vdm4Q=","version":"--v1.3.2","build_naming_convention":"--import_alias","build_file_proto_mode":"--disable"}
+        },
+        "com_github_golang_protobuf": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~com_github_golang_protobuf","importpath":"--github.com/golang/protobuf","sum":"--h1:ROPKBNFfQgOUMifHyP+KYbvpjbdoFNs+aK7DXlji0Tw=","version":"--v1.5.2","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "org_golang_x_sync": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~org_golang_x_sync","importpath":"--golang.org/x/sync","sum":"--h1:wsuoTGHzEhffawBOhz5CYhcrV4IdKZbEyZjBMuTp12o=","version":"--v0.1.0","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "com_github_golang_mock": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~com_github_golang_mock","importpath":"--github.com/golang/mock","sum":"--h1:ErTB+efbowRARo13NNdxyJji2egdxLGQhRaY+DUumQc=","version":"--v1.6.0","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "org_golang_google_grpc": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~org_golang_google_grpc","importpath":"--google.golang.org/grpc","sum":"--h1:fPVVDxY9w++VjTZsYvXWqEf9Rqar/e+9zYfxKK+W+YU=","version":"--v1.50.0","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "org_golang_x_sys": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~org_golang_x_sys","importpath":"--golang.org/x/sys","sum":"--h1:Zr2JFtRQNX3BCZ8YtxRE9hNJYC8J6I1MVbMg6owUp18=","version":"--v0.4.0","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        },
+        "com_github_google_go_cmp": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository.bzl",
+          "ruleClassName": "go_repository",
+          "attributes": {"name":"--gazelle~0.29.0~go_deps~com_github_google_go_cmp","importpath":"--github.com/google/go-cmp","sum":"--h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=","version":"--v0.5.9","build_naming_convention":"--import_alias","build_file_proto_mode":"--default"}
+        }
+      }
+    },
+    "@gazelle~0.29.0//internal/bzlmod:non_module_deps.bzl%non_module_deps": {
+      "bzlTransitiveDigest": "RDTfcVogc+UvMuyAlZEN2UZANdcq8L6Q9iGcoAtsbNY=",
+      "generatedRepoSpecs": {
+        "bazel_gazelle_go_repository_config": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository_config.bzl",
+          "ruleClassName": "go_repository_config",
+          "attributes": {"name":"--gazelle~0.29.0~non_module_deps~bazel_gazelle_go_repository_config","config":"@@gazelle~0.29.0~go_deps~bazel_gazelle_go_repository_directives//:WORKSPACE"}
+        },
+        "bazel_gazelle_go_repository_tools": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository_tools.bzl",
+          "ruleClassName": "go_repository_tools",
+          "attributes": {"name":"--gazelle~0.29.0~non_module_deps~bazel_gazelle_go_repository_tools","go_cache":"@@gazelle~0.29.0~non_module_deps~bazel_gazelle_go_repository_cache//:go.env"}
+        },
+        "bazel_gazelle_go_repository_cache": {
+          "bzlFile": "@@gazelle~0.29.0//internal:go_repository_cache.bzl",
+          "ruleClassName": "go_repository_cache",
+          "attributes": {"name":"--gazelle~0.29.0~non_module_deps~bazel_gazelle_go_repository_cache","go_sdk_name":"--go_default_sdk","go_env":{}}
+        }
+      }
+    },
+    "@rules_go~0.38.1//go/private:extensions.bzl%non_module_dependencies": {
+      "bzlTransitiveDigest": "gW1pdbeIv4zG1swPXANI+vfDQu6gbiE8PLfVRW09pEE=",
+      "generatedRepoSpecs": {
+        "org_golang_x_xerrors": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~org_golang_x_xerrors","urls":["--https://mirror.bazel.build/github.com/golang/xerrors/archive/04be3eba64a22a838cdb17b8dca15a52871c08b4.zip","--https://github.com/golang/xerrors/archive/04be3eba64a22a838cdb17b8dca15a52871c08b4.zip"],"sha256":"--ffad2b06ef2e09d040da2ff08077865e99ab95d4d0451737fc8e33706bb01634","strip_prefix":"--xerrors-04be3eba64a22a838cdb17b8dca15a52871c08b4","patches":["@@rules_go~0.38.1//third_party:org_golang_x_xerrors-gazelle.patch"],"patch_args":["---p1"]}
+        },
+        "gogo_special_proto": {
+          "bzlFile": "@@rules_go~0.38.1//proto:gogo.bzl",
+          "ruleClassName": "gogo_special_proto",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~gogo_special_proto"}
+        },
+        "org_golang_google_protobuf": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~org_golang_google_protobuf","sha256":"--cbaac40c1faf6a3647316d46ec9c614e99aa92c539a78b7c1e4dec3ff5f73694","urls":["--https://mirror.bazel.build/github.com/protocolbuffers/protobuf-go/archive/refs/tags/v1.28.1.zip","--https://github.com/protocolbuffers/protobuf-go/archive/refs/tags/v1.28.1.zip"],"strip_prefix":"--protobuf-go-1.28.1","patches":["@@rules_go~0.38.1//third_party:org_golang_google_protobuf-gazelle.patch"],"patch_args":["---p1"]}
+        },
+        "com_github_mwitkow_go_proto_validators": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~com_github_mwitkow_go_proto_validators","urls":["--https://mirror.bazel.build/github.com/mwitkow/go-proto-validators/archive/refs/tags/v0.3.2.zip","--https://github.com/mwitkow/go-proto-validators/archive/refs/tags/v0.3.2.zip"],"sha256":"--d8697f05a2f0eaeb65261b480e1e6035301892d9fc07ed945622f41b12a68142","strip_prefix":"--go-proto-validators-0.3.2"}
+        },
+        "org_golang_x_tools": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~org_golang_x_tools","urls":["--https://mirror.bazel.build/github.com/golang/tools/archive/refs/tags/v0.5.0.zip","--https://github.com/golang/tools/archive/refs/tags/v0.5.0.zip"],"sha256":"--7b22a085a24e9da2fb9db9b97e9e7325387e66153997f17e44129df2943ddee7","strip_prefix":"--tools-0.5.0","patches":["@@rules_go~0.38.1//third_party:org_golang_x_tools-deletegopls.patch","@@rules_go~0.38.1//third_party:org_golang_x_tools-gazelle.patch"],"patch_args":["---p1"]}
+        },
+        "go_googleapis": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~go_googleapis","urls":["--https://mirror.bazel.build/github.com/googleapis/googleapis/archive/83c3605afb5a39952bf0a0809875d41cf2a558ca.zip","--https://github.com/googleapis/googleapis/archive/83c3605afb5a39952bf0a0809875d41cf2a558ca.zip"],"sha256":"--ba694861340e792fd31cb77274eacaf6e4ca8bda97707898f41d8bebfd8a4984","strip_prefix":"--googleapis-83c3605afb5a39952bf0a0809875d41cf2a558ca","patches":["@@rules_go~0.38.1//third_party:go_googleapis-deletebuild.patch","@@rules_go~0.38.1//third_party:go_googleapis-directives.patch","@@rules_go~0.38.1//third_party:go_googleapis-gazelle.patch"],"patch_args":["---E","---p1"]}
+        },
+        "org_golang_google_genproto": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~org_golang_google_genproto","urls":["--https://mirror.bazel.build/github.com/googleapis/go-genproto/archive/9d59e20e5cd16f7c64a2107aeec4c4e843a6df73.zip","--https://github.com/googleapis/go-genproto/archive/9d59e20e5cd16f7c64a2107aeec4c4e843a6df73.zip"],"sha256":"--8896d6cf7041c5300d4e3963887fc50a641f0afa969d2bc9323879a6b8c80ce4","strip_prefix":"--go-genproto-9d59e20e5cd16f7c64a2107aeec4c4e843a6df73","patches":["@@rules_go~0.38.1//third_party:org_golang_google_genproto-gazelle.patch"],"patch_args":["---p1"]}
+        },
+        "bazel_skylib": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~bazel_skylib","urls":["--https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.3.0/bazel-skylib-1.3.0.tar.gz","--https://github.com/bazelbuild/bazel-skylib/releases/download/1.3.0/bazel-skylib-1.3.0.tar.gz"],"sha256":"--74d544d96f4a5bb630d465ca8bbcfe231e3594e5aae57e1edbf17a6eb3ca2506","strip_prefix":"--"}
+        },
+        "com_github_gogo_protobuf": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~com_github_gogo_protobuf","urls":["--https://mirror.bazel.build/github.com/gogo/protobuf/archive/refs/tags/v1.3.2.zip","--https://github.com/gogo/protobuf/archive/refs/tags/v1.3.2.zip"],"sha256":"--f89f8241af909ce3226562d135c25b28e656ae173337b3e58ede917aa26e1e3c","strip_prefix":"--protobuf-1.3.2","patches":["@@rules_go~0.38.1//third_party:com_github_gogo_protobuf-gazelle.patch"],"patch_args":["---p1"]}
+        },
+        "com_github_golang_protobuf": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~com_github_golang_protobuf","urls":["--https://mirror.bazel.build/github.com/golang/protobuf/archive/refs/tags/v1.5.2.zip","--https://github.com/golang/protobuf/archive/refs/tags/v1.5.2.zip"],"sha256":"--5bd0a70e2f3829db9d0e340887af4e921c5e0e5bb3f8d1be49a934204cb16445","strip_prefix":"--protobuf-1.5.2","patches":["@@rules_go~0.38.1//third_party:com_github_golang_protobuf-gazelle.patch"],"patch_args":["---p1"]}
+        },
+        "io_bazel_rules_nogo": {
+          "bzlFile": "@@rules_go~0.38.1//go/private:nogo.bzl",
+          "ruleClassName": "go_register_nogo",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~io_bazel_rules_nogo","nogo":"--@io_bazel_rules_go//:default_nogo"}
+        },
+        "com_github_golang_mock": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~com_github_golang_mock","urls":["--https://mirror.bazel.build/github.com/golang/mock/archive/refs/tags/v1.7.0-rc.1.zip","--https://github.com/golang/mock/archive/refs/tags/v1.7.0-rc.1.zip"],"patches":["@@rules_go~0.38.1//third_party:com_github_golang_mock-gazelle.patch"],"patch_args":["---p1"],"sha256":"--5359c78b0c1649cf7beb3b48ff8b1d1aaf0243b22ea4789aba94805280075d8e","strip_prefix":"--mock-1.7.0-rc.1"}
+        },
+        "org_golang_x_sys": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--rules_go~0.38.1~non_module_dependencies~org_golang_x_sys","urls":["--https://mirror.bazel.build/github.com/golang/sys/archive/refs/tags/v0.4.0.zip","--https://github.com/golang/sys/archive/refs/tags/v0.4.0.zip"],"sha256":"--30995c105724d9d7efb229df3cb26492b47e666bb6f5022530899532896c209b","strip_prefix":"--sys-0.4.0","patches":["@@rules_go~0.38.1//third_party:org_golang_x_sys-gazelle.patch"],"patch_args":["---p1"]}
+        }
+      }
+    },
+    "@bazel_tools//tools/osx:xcode_configure.bzl%xcode_configure_extension": {
+      "bzlTransitiveDigest": "OmamqKJsiE8WH/LST0ioVROxC7R/MdakCNW9DSPS5/U=",
+      "generatedRepoSpecs": {
+        "local_config_xcode": {
+          "bzlFile": "@@bazel_tools//tools/osx:xcode_configure.bzl",
+          "ruleClassName": "xcode_autoconf",
+          "attributes": {"name":"--bazel_tools~xcode_configure_extension~local_config_xcode","xcode_locator":"--@bazel_tools//tools/osx:xcode_locator.m","remote_xcode":"--"}
         }
       }
     }

@@ -11,7 +11,9 @@ effectively overriding the default named toolchain due to toolchain resolution p
 """
 
 load(":repositories.bzl", "apko_register_toolchains")
-load(":translate.bzl", "apk_import", "parse_lock", "translate_apko_lock")
+load(":translate_lock.bzl", "translate_apko_lock")
+load("//apko/private:apk.bzl", "apk_import", "apk_repository")
+load("//apko/private:util.bzl", "parse_lock", "sanitize_string")
 
 _DEFAULT_NAME = "apko"
 
@@ -33,9 +35,17 @@ def _apko_extension_impl(module_ctx):
     for mod in module_ctx.modules:
         for lock in mod.tags.translate_lock:
             lock_file = parse_lock(module_ctx.read(lock.lock))
+
+            for repository in lock_file["repositories"]:
+                apk_repository(
+                    name = sanitize_string("{}_{}".format(repository["name"], repository["architecture"])),
+                    url = repository["url"],
+                    architecture = repository["architecture"],
+                )
+
             for package in lock_file["packages"]:
                 apk_import(
-                    name = "{}_{}_{}".format(package["name"], package["architecture"], package["version"]),
+                    name = sanitize_string("{}_{}_{}".format(package["name"], package["architecture"], package["version"])),
                     package_name = package["name"],
                     version = package["version"],
                     architecture = package["architecture"],

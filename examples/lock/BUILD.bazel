@@ -3,8 +3,9 @@ load("@bazel_skylib//rules:build_test.bzl", "build_test")
 
 apko_image(
     name = "lock",
-    packages = "@example_lock//:packages",
     config = "apko.yaml",
+    packages = "@example_lock//:packages",
+    tag = "lock:latest",
 )
 
 build_test(

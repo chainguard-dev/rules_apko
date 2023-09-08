@@ -19,8 +19,13 @@ headers = {}
 
 payload = json.loads(sys.stdin.read())
 
-if "APK_RANGE" in payload["uri"]:
+if "__rules_apko_range__" in payload["uri"]:
     parsed=urlparse(payload["uri"])
-    headers["Range"] = [parsed.fragment.removeprefix("APK_RANGE=")] 
+    headers["Range"] = [parsed.fragment.removeprefix("__rules_apko_range__=")] 
+
+
+file1 = open("/Users/thesayyn/Documents/rules_apko/test.log", "a")  # append mode
+file1.write(json.dumps({"headers": headers, "payload": payload})+"\n")
+file1.close()
 
 print(json.dumps({"headers": headers}))

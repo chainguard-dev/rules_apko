@@ -17,3 +17,31 @@ bzl_library(
     srcs = ["resolved_toolchain.bzl"],
     visibility = ["//apko:__subpackages__"],
 )
+
+bzl_library(
+    name = "apk",
+    srcs = ["apk.bzl"],
+    visibility = ["//apko:__subpackages__"],
+    deps = [
+        ":util",
+        "@aspect_bazel_lib//lib:base64",
+    ],
+)
+
+bzl_library(
+    name = "apko_image",
+    srcs = ["apko_image.bzl"],
+    visibility = ["//apko:__subpackages__"],
+)
+
+bzl_library(
+    name = "util",
+    srcs = ["util.bzl"],
+    visibility = ["//apko:__subpackages__"],
+)
+
+bzl_library(
+    name = "yaml",
+    srcs = ["yaml.bzl"],
+    visibility = ["//apko:__subpackages__"],
+)
