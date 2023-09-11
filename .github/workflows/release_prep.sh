@@ -37,3 +37,14 @@ EOF
 
 awk 'f;/--SNIP--/{f=1}' e2e/smoke/WORKSPACE.bazel
 echo "\`\`\`" 
+
+
+cat << EOF
+
+## Initial setup
+
+rules_apko requires a one-time setup to configure bazel to be able to make partial fetches.
+
+Follow https://github.com/chainguard-dev/rules_apko/blob/main/docs/initial-setup.md for the setup.
+
+EOF

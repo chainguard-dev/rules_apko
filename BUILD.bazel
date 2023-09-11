@@ -1,4 +1,7 @@
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@rules_apko//apko:defs.bzl", "apko_bazelrc")
+
+apko_bazelrc()
 
 gazelle_binary(
     name = "gazelle_bin",

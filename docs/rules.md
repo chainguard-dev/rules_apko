@@ -23,3 +23,22 @@ apko_image(<a href="#apko_image-name">name</a>, <a href="#apko_image-config">con
 | <a id="apko_image-tag"></a>tag |  -   | String | required |  |
 
 
+<a id="apko_bazelrc"></a>
+
+## apko_bazelrc
+
+<pre>
+apko_bazelrc(<a href="#apko_bazelrc-name">name</a>, <a href="#apko_bazelrc-kwargs">kwargs</a>)
+</pre>
+
+
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="apko_bazelrc-name"></a>name |  <p align="center"> - </p>   |  <code>"apko_bazelrc"</code> |
+| <a id="apko_bazelrc-kwargs"></a>kwargs |  <p align="center"> - </p>   |  none |
+
+

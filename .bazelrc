@@ -5,10 +5,8 @@
 # Required until this is the default; expected in Bazel 7
 common --enable_bzlmod
 
-# Required for range requests
-# https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests
-build --credential_helper=%workspace%/apk_fetch_helper.py --credential_helper_cache_duration=0
-
+# Required for rules_apko to make range requests
+try-import %workspace%/.bazelrc.apko
 
 # Load any settings specific to the current user.
 # .bazelrc.user should appear in .gitignore so that settings are not shared with team members

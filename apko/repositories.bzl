@@ -32,6 +32,13 @@ def rules_apko_dependencies():
         ],
     )
 
+    http_archive(
+        name = "aspect_bazel_lib",
+        sha256 = "09b51a9957adc56c905a2c980d6eb06f04beb1d85c665b467f659871403cf423",
+        strip_prefix = "bazel-lib-1.34.5",
+        url = "https://github.com/aspect-build/bazel-lib/releases/download/v1.34.5/bazel-lib-v1.34.5.tar.gz",
+    )
+
 ########
 # Remaining content of the file is only used to support toolchains.
 ########

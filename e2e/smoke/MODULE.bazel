@@ -5,3 +5,14 @@ local_path_override(
     module_name = "rules_apko",
     path = "../..",
 )
+
+apko = use_extension(
+    "@rules_apko//apko:extensions.bzl",
+    "apko",
+    dev_dependency = True,
+)
+apko.translate_lock(
+    name = "example_lock",
+    lock = "//:apko.lock.json",
+)
+use_repo(apko, "example_lock")

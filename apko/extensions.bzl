@@ -38,14 +38,14 @@ def _apko_extension_impl(module_ctx):
 
             for repository in lock_file["repositories"]:
                 apk_repository(
-                    name = sanitize_string("{}_{}".format(repository["name"], repository["architecture"])),
+                    name = sanitize_string("{}_{}_{}".format(lock.name, repository["name"], repository["architecture"])),
                     url = repository["url"],
                     architecture = repository["architecture"],
                 )
 
             for package in lock_file["packages"]:
                 apk_import(
-                    name = sanitize_string("{}_{}_{}".format(package["name"], package["architecture"], package["version"])),
+                    name = sanitize_string("{}_{}_{}_{}".format(lock.name, package["name"], package["architecture"], package["version"])),
                     package_name = package["name"],
                     version = package["version"],
                     architecture = package["architecture"],
@@ -58,7 +58,7 @@ def _apko_extension_impl(module_ctx):
                     data_checksum = package["data"]["checksum"],
                 )
 
-            translate_apko_lock(name = lock.name, lock = lock.lock)
+            translate_apko_lock(name = lock.name, target_name = lock.name, lock = lock.lock)
 
         for toolchain in mod.tags.toolchain:
             if toolchain.name != _DEFAULT_NAME and not mod.is_root:
