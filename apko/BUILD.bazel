@@ -1,5 +1,5 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-load("//mylang/private:resolved_toolchain.bzl", "resolved_toolchain")
+load("//apko/private:resolved_toolchain.bzl", "resolved_toolchain")
 
 # For stardoc to reference the files
 exports_files(["defs.bzl"])
@@ -25,17 +25,11 @@ bzl_library(
     srcs = ["repositories.bzl"],
     visibility = ["//visibility:public"],
     deps = [
-        "//mylang/private:toolchains_repo",
-        "//mylang/private:versions",
+        "//apko/private:toolchains_repo",
+        "//apko/private:versions",
         "@bazel_tools//tools/build_defs/repo:http.bzl",
         "@bazel_tools//tools/build_defs/repo:utils.bzl",
     ],
-)
-
-bzl_library(
-    name = "defs",
-    srcs = ["defs.bzl"],
-    visibility = ["//visibility:public"],
 )
 
 bzl_library(
@@ -43,6 +37,23 @@ bzl_library(
     srcs = ["extensions.bzl"],
     visibility = ["//visibility:public"],
     deps = [":repositories"],
+)
+
+bzl_library(
+    name = "translate_lock",
+    srcs = ["translate_lock.bzl"],
+    visibility = ["//visibility:public"],
+    deps = ["//apko/private:util"],
+)
+
+bzl_library(
+    name = "defs",
+    srcs = ["defs.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//apko/private:apko_image",
+        "@aspect_bazel_lib//lib:write_source_files",
+    ],
 )
 
 bzl_library(

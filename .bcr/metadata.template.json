@@ -1,7 +1,7 @@
 {
-  "homepage": "https://github.com/myorg/rules_mylang",
+  "homepage": "https://github.com/chainguard-dev/rules_apko",
   "maintainers": [],
-  "repository": ["github:myorg/rules_mylang"],
+  "repository": ["github:chainguard-dev/rules_apko"],
   "versions": [],
   "yanked_versions": {}
 }

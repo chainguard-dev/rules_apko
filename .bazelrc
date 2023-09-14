@@ -5,6 +5,9 @@
 # Required until this is the default; expected in Bazel 7
 common --enable_bzlmod
 
+# Required for rules_apko to make range requests
+try-import %workspace%/.apko/.bazelrc
+
 # Load any settings specific to the current user.
 # .bazelrc.user should appear in .gitignore so that settings are not shared with team members
 # This needs to be last statement in this

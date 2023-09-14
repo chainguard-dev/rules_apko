@@ -1,0 +1,3 @@
+# Required for rules_apko to make range requests
+try-import %workspace%/.apko/.bazelrc
+
