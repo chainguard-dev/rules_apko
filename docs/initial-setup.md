@@ -20,5 +20,5 @@ And finally paste this into your preferred \`.bazelrc\` file,
 
 ```sh
 # Required for rules_apko to make range requests
-try-import %workspace%/.bazelrc.apko.range
+try-import %workspace%/.apko/.bazelrc
 ```

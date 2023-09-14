@@ -6,7 +6,7 @@
 common --enable_bzlmod
 
 # Required for rules_apko to make range requests
-try-import %workspace%/.bazelrc.apko
+try-import %workspace%/.apko/.bazelrc
 
 # Load any settings specific to the current user.
 # .bazelrc.user should appear in .gitignore so that settings are not shared with team members

@@ -12,7 +12,7 @@ effectively overriding the default named toolchain due to toolchain resolution p
 
 load(":repositories.bzl", "apko_register_toolchains")
 load(":translate_lock.bzl", "translate_apko_lock")
-load("//apko/private:apk.bzl", "apk_import", "apk_repository")
+load("//apko/private:apk.bzl", "apk_import", "apk_keyring", "apk_repository")
 load("//apko/private:util.bzl", "parse_lock", "sanitize_string")
 
 _DEFAULT_NAME = "apko"
@@ -36,14 +36,24 @@ def _apko_extension_impl(module_ctx):
         for lock in mod.tags.translate_lock:
             lock_file = parse_lock(module_ctx.read(lock.lock))
 
-            for repository in lock_file["repositories"]:
+            if not "contents" in lock_file:
+                continue
+
+            if "keyring" in lock_file["contents"]:
+                for keyring in lock_file["contents"]["keyring"]:
+                    apk_keyring(
+                        name = sanitize_string("{}_{}".format(lock.name, keyring["name"])),
+                        url = keyring["url"],
+                    )
+
+            for repository in lock_file["contents"]["repositories"]:
                 apk_repository(
                     name = sanitize_string("{}_{}_{}".format(lock.name, repository["name"], repository["architecture"])),
                     url = repository["url"],
                     architecture = repository["architecture"],
                 )
 
-            for package in lock_file["packages"]:
+            for package in lock_file["contents"]["packages"]:
                 apk_import(
                     name = sanitize_string("{}_{}_{}_{}".format(lock.name, package["name"], package["architecture"], package["version"])),
                     package_name = package["name"],

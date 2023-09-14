@@ -11,7 +11,7 @@ def apko_bazelrc(name = "apko_bazelrc", **kwargs):
     write_source_files(
         name = name,
         files = {
-            ".apko/.bazelrc.apko": "@rules_apko//apko/private/range:range.bazelrc",
+            ".apko/.bazelrc": "@rules_apko//apko/private/range:range.bazelrc",
             ".apko/range.sh": "@rules_apko//apko/private/range:range.sh",
         },
         **kwargs

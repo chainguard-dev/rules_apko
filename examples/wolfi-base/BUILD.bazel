@@ -2,15 +2,15 @@ load("@rules_apko//apko:defs.bzl", "apko_image")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 
 apko_image(
-    name = "lock",
+    name = "wolfi-base",
     config = "apko.yaml",
-    packages = "@examples_lock//:packages",
-    tag = "lock:latest",
+    packages = "@examples_wolfi_base//:packages",
+    tag = "wolfi:latest",
 )
 
 build_test(
     name = "test",
     targets = [
-        ":lock",
+        ":wolfi-base",
     ],
 )

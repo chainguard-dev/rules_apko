@@ -1,3 +1,4 @@
-echo -n '{"headers":{"Range":[' &&
-cat | sed -n 's/.*#__rules_apko_range__=\(bytes=[[:digit:]]*-[[:digit:]]*\).*/"\1"/p' | tr -d '\n' &&
-echo -n ']}'
+#!/usr/bin/env bash
+echo -n '{"headers":{"Range":['
+cat | sed -n 's/.*#_apk_range_bytes_\([[:digit:]]*-[[:digit:]]*\).*/"bytes=\1"/p' | tr -d '\n'
+echo ']}}'

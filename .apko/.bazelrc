@@ -3,4 +3,4 @@
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests
 # Use https://www.base64decode.org/ to see what this base64 encoded command does.
 
-common --credential_helper='%workspace%/.apko/range.sh'
+common --credential_helper="%workspace%/.apko/range.sh"

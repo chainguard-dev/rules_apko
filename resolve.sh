@@ -97,7 +97,7 @@ echo ""
 echo "@ Add this to lock"
 echo ""
 
-cat <<EOF
+cat >&2 <<EOF
 { 
     "name": "$pkgname", 
     "version": "$pkgver", 
