@@ -8,7 +8,7 @@ apko_bazelrc()
 apko_image(
     name = "lock",
     config = "apko.yaml",
-    packages = "@example_lock//:packages",
+    packages = "@example_lock//:contents",
     tag = "lock:latest",
 )
 

@@ -21,18 +21,18 @@ use_repo(toolchain, "apko_toolchains")
 register_toolchains("@apko_toolchains//:all")
 
 # locks
-lock = use_extension(
+apk = use_extension(
     "//apko:extensions.bzl",
     "apko",
     dev_dependency = True,
 )
-lock.translate_lock(
+apk.translate_lock(
     name = "examples_lock",
     lock = "//examples/lock:apko.lock.json",
 )
-lock.translate_lock(
+apk.translate_lock(
     name = "examples_wolfi_base",
     lock = "//examples/wolfi-base:apko.lock.json",
 )
-use_repo(lock, "examples_lock")
-use_repo(lock, "examples_wolfi_base")
+use_repo(apk, "examples_lock")
+use_repo(apk, "examples_wolfi_base")

