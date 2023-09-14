@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 1,
-  "moduleFileHash": "3ffc821318d344c3a007fc94a9da08947a9f7ff847034dc6f1d1f13a80748251",
+  "moduleFileHash": "6eb6ee7bcdce84129385c418cac77118da91445ac8220f175fad3e3659207595",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -61,8 +61,8 @@
               "devDependency": true,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 30,
-                "column": 20
+                "line": 29,
+                "column": 19
               }
             },
             {
@@ -71,8 +71,8 @@
               "devDependency": true,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 34,
-                "column": 20
+                "line": 33,
+                "column": 19
               }
             }
           ],
@@ -910,5 +910,146 @@
       }
     }
   },
-  "moduleExtensions": {}
+  "moduleExtensions": {
+    "//apko:extensions.bzl%apko": {
+      "bzlTransitiveDigest": "SUSV3OKfdx5w7DOM6Ll8SMDe1YSatVrNZl/NLOBRq9A=",
+      "generatedRepoSpecs": {
+        "examples_lock_musl_x86_64_1.2.4_git20230717-r2": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_lock_musl_x86_64_1.2.4_git20230717-r2","package_name":"--musl","version":"--1.2.4_git20230717-r2","architecture":"--x86_64","url":"--https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/musl-1.2.4_git20230717-r2.apk","signature_range":"--bytes=0-663","signature_checksum":"--sha256-MGQuPl32VeejCb03Emx+QRAWd+4eZGojgo32yKJubws=","control_range":"--bytes=664-1230","control_checksum":"--sha1-0QcZQhy2GxzaRF4Kip4NVG0pgrc=","data_range":"--bytes=1231-","data_checksum":"--sha256-BEDUjs8id32t4l9xhzFKSVDrEOOuxHeKIAjyg/cmIE8="}
+        },
+        "apko_darwin_arm64": {
+          "bzlFile": "@@//apko:repositories.bzl",
+          "ruleClassName": "apko_repositories",
+          "attributes": {"name":"--_main~apko~apko_darwin_arm64","platform":"--darwin_arm64","apko_version":"--v0.0.0"}
+        },
+        "examples_wolfi_base_openssl-config_x86_64_3.1.2-r0": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_openssl-config_x86_64_3.1.2-r0","package_name":"--openssl-config","version":"--3.1.2-r0","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/openssl-config-3.1.2-r0.apk","signature_range":"--bytes=0-698","signature_checksum":"--sha256-YiJ52K616UbOcfikvivowz/nKHI6kYRx1XHoZkcmYDM=","control_range":"--bytes=699-1033","control_checksum":"--sha1-8YXo1izBaNRtUvASCnnJBIs4ZFY=","data_range":"--bytes=1034-","data_checksum":"--sha256-eiG2XDm1A9ISP/knoPU+rTnNeHwqMTHBd8kcqTGBoAI="}
+        },
+        "examples_wolfi_base_busybox_x86_64_1.36.1-r2": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_busybox_x86_64_1.36.1-r2","package_name":"--busybox","version":"--1.36.1-r2","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/busybox-1.36.1-r2.apk","signature_range":"--bytes=0-660","signature_checksum":"--sha256-JpKU0Hf2BDujBVfwhLGGNgNyvPYtA/tMzzCZCnRc120=","control_range":"--bytes=661-1153","control_checksum":"--sha1-d2kYe9D3/7EJ+b9C6YkKqlSsU/M=","data_range":"--bytes=1154-","data_checksum":"--sha256-/ZVBynpsT9iBHekkLAf59csVhMBwoKyjLnjF53u2cIE="}
+        },
+        "examples_wolfi_base_zlib_x86_64_1.3-r0": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_zlib_x86_64_1.3-r0","package_name":"--zlib","version":"--1.3-r0","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/zlib-1.3-r0.apk","signature_range":"--bytes=0-694","signature_checksum":"--sha256-gW3pGEhnMfw9XSw6IOM+XeeRaSJroOqkUiCXyPscp3g=","control_range":"--bytes=695-1078","control_checksum":"--sha1-2c/3NY/o7FDtGM4k93d8nDACYWk=","data_range":"--bytes=1079-","data_checksum":"--sha256-ZwQMNfeiOo2duE+cxSybjb283bIAphOkpJgXFEXtW7g="}
+        },
+        "examples_wolfi_base_packages.wolfi.dev_os_x86_64_x86_64": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_repository",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_packages.wolfi.dev_os_x86_64_x86_64","url":"--https://packages.wolfi.dev/os/x86_64/APKINDEX.tar.gz","architecture":"--x86_64"}
+        },
+        "examples_wolfi_base_libssl3_x86_64_3.1.2-r0": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_libssl3_x86_64_3.1.2-r0","package_name":"--libssl3","version":"--3.1.2-r0","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/libssl3-3.1.2-r0.apk","signature_range":"--bytes=0-696","signature_checksum":"--sha256-pX4BktfhuPJYz/naNQ+/bLX2rLsD8qcZGlJ3/xa+AtA=","control_range":"--bytes=697-1067","control_checksum":"--sha1-KxOTEVLsjDakMA3X+/dunv1sbVw=","data_range":"--bytes=1068-","data_checksum":"--sha256-fRE+SmXiIHBUcd7sg5aBTaZA0HIVCRTHi6BedDD/mBc="}
+        },
+        "examples_wolfi_base_ca-certificates-bundle_x86_64_20230506-r0": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_ca-certificates-bundle_x86_64_20230506-r0","package_name":"--ca-certificates-bundle","version":"--20230506-r0","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20230506-r0.apk","signature_range":"--bytes=0-649","signature_checksum":"--sha256-h1Wj2FAjSIS61Pn3wT+N8ocmh6LCySY4XTEfzP7auOA=","control_range":"--bytes=650-966","control_checksum":"--sha1-/YGo3iUSdyF2/rk3tKR6MhtUEzg=","data_range":"--bytes=967-","data_checksum":"--sha256-7neBVl819zb1HiRNaW8Ze6E1SPTrvfxytQyCdRTbUrg="}
+        },
+        "apko_linux_amd64": {
+          "bzlFile": "@@//apko:repositories.bzl",
+          "ruleClassName": "apko_repositories",
+          "attributes": {"name":"--_main~apko~apko_linux_amd64","platform":"--linux_amd64","apko_version":"--v0.0.0"}
+        },
+        "apko_linux_arm64": {
+          "bzlFile": "@@//apko:repositories.bzl",
+          "ruleClassName": "apko_repositories",
+          "attributes": {"name":"--_main~apko~apko_linux_arm64","platform":"--linux_arm64","apko_version":"--v0.0.0"}
+        },
+        "examples_lock_busybox_x86_64_1.36.1-r7": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_lock_busybox_x86_64_1.36.1-r7","package_name":"--busybox","version":"--1.36.1-r7","architecture":"--x86_64","url":"--https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/busybox-1.36.1-r7.apk","signature_range":"--bytes=0-665","signature_checksum":"--sha256-Le6OL4LQva/QGvQuULa5inTSDG7Gmvv/QO+8Mfzy8KA=","control_range":"--bytes=666-2298","control_checksum":"--sha1-DD+ZCO6gahU3mrx5xtm9/b8luHw=","data_range":"--bytes=2299-","data_checksum":"--sha256-SWbMW79a/YQeH0lX7KQI8lXCSHV8VJ/vy+PZ21fdd80="}
+        },
+        "examples_wolfi_base_ld-linux_x86_64_2.38-r1": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_ld-linux_x86_64_2.38-r1","package_name":"--ld-linux","version":"--2.38-r1","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/ld-linux-2.38-r1.apk","signature_range":"--bytes=0-701","signature_checksum":"--sha256-AXwPY/xsVV9QG4+a0Z3TAEABNSIvspfyIQWUXASVa/o=","control_range":"--bytes=702-1085","control_checksum":"--sha1-mLP2PhJnwuy+X9e40BkWRGoNpz8=","data_range":"--bytes=1086-","data_checksum":"--sha256-QlwNddHxbCE/HIligvH5ajs5f66QA6IhO1252X/Bsjg="}
+        },
+        "examples_wolfi_base_wolfi-keys_x86_64_1-r5": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_wolfi-keys_x86_64_1-r5","package_name":"--wolfi-keys","version":"--1-r5","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/wolfi-keys-1-r5.apk","signature_range":"--bytes=0-648","signature_checksum":"--sha256-avYaa1hJQ/CoUqQOxxaM36C7X93zg8JiGjUcCYkefeA=","control_range":"--bytes=649-957","control_checksum":"--sha1-0fpy9hX9x84izBkTlUFtNXLEeqk=","data_range":"--bytes=958-","data_checksum":"--sha256-33hX1bPb8tpZMsxDs8sUQchU8T7ptX3dpgoJd6GSZqo="}
+        },
+        "examples_wolfi_base_apk-tools_x86_64_2.14.0-r0": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_apk-tools_x86_64_2.14.0-r0","package_name":"--apk-tools","version":"--2.14.0-r0","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/apk-tools-2.14.0-r0.apk","signature_range":"--bytes=0-657","signature_checksum":"--sha256-2+sFpwBB0Ol/KFzvL50XbFMNInU7utN4K1nom+Nd09g=","control_range":"--bytes=658-1094","control_checksum":"--sha1-5lEO4JohyDLUB0MMSqVgQor2Ug8=","data_range":"--bytes=1095-","data_checksum":"--sha256-LJsAe8zTp0gXfPprwAs0lqnUjhG2t4ytWAQZajDu81w="}
+        },
+        "apko_darwin_amd64": {
+          "bzlFile": "@@//apko:repositories.bzl",
+          "ruleClassName": "apko_repositories",
+          "attributes": {"name":"--_main~apko~apko_darwin_amd64","platform":"--darwin_amd64","apko_version":"--v0.0.0"}
+        },
+        "examples_wolfi_base_wolfi-base_x86_64_1-r3": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_wolfi-base_x86_64_1-r3","package_name":"--wolfi-base","version":"--1-r3","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/wolfi-base-1-r3.apk","signature_range":"--bytes=0-649","signature_checksum":"--sha256-norCSxfvICp4g+SZfOlti5CGOorNXdiRcOtTW/XcMYw=","control_range":"--bytes=650-983","control_checksum":"--sha1-LrzTxq5MubwvQY3xCuDnXVIGJek=","data_range":"--bytes=984-","data_checksum":"--sha256-ZBy+EmJUZ0VgbBysw6eCtifGF++Gvf+36StxdJqhU7E="}
+        },
+        "examples_wolfi_base_packages.wolfi.dev_os": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_keyring",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_packages.wolfi.dev_os","url":"--https://packages.wolfi.dev/os/wolfi-signing.rsa.pub"}
+        },
+        "examples_wolfi_base_libcrypto3_x86_64_3.1.2-r0": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_libcrypto3_x86_64_3.1.2-r0","package_name":"--libcrypto3","version":"--3.1.2-r0","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/libcrypto3-3.1.2-r0.apk","signature_range":"--bytes=0-700","signature_checksum":"--sha256-pgX/AzJPCwbLImhK+AM1sAxuj10BDxeA4z1D3PyW5B8=","control_range":"--bytes=701-1074","control_checksum":"--sha1-ZEp23bIVsI2yn1PD2I5al1BecY4=","data_range":"--bytes=1075-","data_checksum":"--sha256-Ettey6//lpLf4X70l/LpSVi8rt8LaZw1qGvL/j3yAsc="}
+        },
+        "examples_wolfi_base_glibc_x86_64_2.38-r1": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_glibc_x86_64_2.38-r1","package_name":"--glibc","version":"--2.38-r1","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/glibc-2.38-r1.apk","signature_range":"--bytes=0-696","signature_checksum":"--sha256-d4+OPb4mx0sTLwm96slBXDhnHqJx64LuuZb1cAduZiw=","control_range":"--bytes=697-1304","control_checksum":"--sha1-ZmAI/Ykd1R9bcT1s82L3SPJhOEA=","data_range":"--bytes=1305-","data_checksum":"--sha256-6Zet8FU0YNkt8puM+YQk9F3nKs8Zs1pBUMNtukApAJ4="}
+        },
+        "examples_wolfi_base": {
+          "bzlFile": "@@//apko:translate_lock.bzl",
+          "ruleClassName": "translate_apko_lock",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base","target_name":"--examples_wolfi_base","lock":"@@//examples/wolfi-base:apko.lock.json"}
+        },
+        "examples_lock": {
+          "bzlFile": "@@//apko:translate_lock.bzl",
+          "ruleClassName": "translate_apko_lock",
+          "attributes": {"name":"--_main~apko~examples_lock","target_name":"--examples_lock","lock":"@@//examples/lock:apko.lock.json"}
+        },
+        "examples_lock_dl-cdn.alpinelinux.org_alpine_edge_main_x86_64": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_repository",
+          "attributes": {"name":"--_main~apko~examples_lock_dl-cdn.alpinelinux.org_alpine_edge_main_x86_64","url":"--https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/APKINDEX.tar.gz","architecture":"--x86_64"}
+        },
+        "apko_linux_i386": {
+          "bzlFile": "@@//apko:repositories.bzl",
+          "ruleClassName": "apko_repositories",
+          "attributes": {"name":"--_main~apko~apko_linux_i386","platform":"--linux_i386","apko_version":"--v0.0.0"}
+        },
+        "apko_toolchains": {
+          "bzlFile": "@@//apko/private:toolchains_repo.bzl",
+          "ruleClassName": "toolchains_repo",
+          "attributes": {"name":"--_main~apko~apko_toolchains","user_repository_name":"--apko"}
+        },
+        "examples_wolfi_base_wolfi-baselayout_x86_64_20230201-r6": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_wolfi-baselayout_x86_64_20230201-r6","package_name":"--wolfi-baselayout","version":"--20230201-r6","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/wolfi-baselayout-20230201-r6.apk","signature_range":"--bytes=0-700","signature_checksum":"--sha256-voGHae+yd9WCX8oSdhNhu02HBWp1RpgyPOCmV/YQU6A=","control_range":"--bytes=701-1049","control_checksum":"--sha1-7VhAhkjHFu8hi9j6VPHxlOX95sc=","data_range":"--bytes=1050-","data_checksum":"--sha256-E1YOC4cEwiNxueSte+3mQzPSxBGuAE7D89R3E7gVxYQ="}
+        },
+        "examples_wolfi_base_libcrypt1_x86_64_2.38-r1": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_libcrypt1_x86_64_2.38-r1","package_name":"--libcrypt1","version":"--2.38-r1","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/libcrypt1-2.38-r1.apk","signature_range":"--bytes=0-693","signature_checksum":"--sha256-HZh2U9316Uxsyl1CoFF4vNd8PJCKjA1zzSnRGEoprJM=","control_range":"--bytes=694-1070","control_checksum":"--sha1-DwdoqPBygzIvrTNKsyOy09wnRmQ=","data_range":"--bytes=1071-","data_checksum":"--sha256-p9RviAkWnEBtTIm5Ho0T3JwdbpPlN/CkDdOi604pJ90="}
+        },
+        "examples_wolfi_base_glibc-locale-posix_x86_64_2.38-r1": {
+          "bzlFile": "@@//apko/private:apk.bzl",
+          "ruleClassName": "apk_import",
+          "attributes": {"name":"--_main~apko~examples_wolfi_base_glibc-locale-posix_x86_64_2.38-r1","package_name":"--glibc-locale-posix","version":"--2.38-r1","architecture":"--x86_64","url":"--https://packages.wolfi.dev/os/x86_64/glibc-locale-posix-2.38-r1.apk","signature_range":"--bytes=0-692","signature_checksum":"--sha256-7xRf327HLB/5Nl+lJ2td3vybte3tGHVVQj1Ha4DCAGE=","control_range":"--bytes=693-1036","control_checksum":"--sha1-t3B1UtIKvydFltjFBTSIz95M4Uc=","data_range":"--bytes=1037-","data_checksum":"--sha256-J+O1VFBKcu9xm/wcXgJGPqJv+8sq3IbnCE2xvRMGZ8c="}
+        }
+      }
+    }
+  }
 }

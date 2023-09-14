@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+
+# THIS IS A HACKY BASH SCRIPT THAT IS NOT MEANT TO BE USED BY USERS.
+# Generates lock file package entry for a given apk url.
+# This is a hacky interim bash script to generate lockfiles until we get `apko resolve` command.
+# 
+# Can be run as `./resolve.sh <url_to_apk>`
+
 set -o errexit -o nounset -o pipefail
 
 apk="$TMPDIR/$(echo $1 | base64)"

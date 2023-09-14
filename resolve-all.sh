@@ -2,6 +2,17 @@
 set -o nounset -o pipefail
 
 
+# THIS IS A HACKY BASH SCRIPT THAT IS NOT MEANT TO BE USED BY USERS.
+
+# Updates lock file for given a example for missing packages. 
+# 
+# Runs bazel build <example_folder> and tries to add package entries for missing packages by
+# capturing the error message.
+#
+# Can be run as ./resolve-all.sh <relative_path_to_the_example>
+# 
+# Eg: `./resolve-all.sh examples/wolfi-base`
+
 example=$1
 
 output=$(mktemp)
@@ -29,5 +40,4 @@ while [ true ]; do
         echo "🥖 🙌 All good!"
         exit 0
     fi
-    sleep 1
 done

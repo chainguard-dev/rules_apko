@@ -1,5 +1,11 @@
 "A rule for running apko with prepopulated cache"
 
+_ATTRS = {
+    "packages": attr.label(),
+    "tag": attr.string(mandatory = True),
+    "config": attr.label(allow_single_file = True, mandatory = True),
+}
+
 def _impl(ctx):
     apko_info = ctx.toolchains["@rules_apko//apko:toolchain_type"].apko_info
 
@@ -39,12 +45,14 @@ def _impl(ctx):
         files = depset([output]),
     )
 
-apko_image = rule(
+apko_image_lib = struct(
+    attrs = _ATTRS,
     implementation = _impl,
-    attrs = {
-        "packages": attr.label(),
-        "tag": attr.string(mandatory = True),
-        "config": attr.label(allow_single_file = True, mandatory = True),
-    },
     toolchains = ["@rules_apko//apko:toolchain_type"],
+)
+
+apko_image = rule(
+    implementation = apko_image_lib.implementation,
+    attrs = apko_image_lib.attrs,
+    toolchains = apko_image_lib.toolchains,
 )
