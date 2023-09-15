@@ -13,7 +13,11 @@ set -o nounset -o pipefail
 # 
 # Eg: `./resolve-all.sh examples/wolfi-base`
 
-example=$1
+example="$1"
+dir="${2:-$1}"
+lockfile="$dir/apko.lock.json"
+
+echo "🥖 Lockfile is at $lockfile"
 
 output=$(mktemp)
 
@@ -27,10 +31,10 @@ while [ true ]; do
 
             echo "🥕 Fetching $required"
             json=$(./resolve.sh $required 2>&1 > /dev/null | jq -c)
-            lock="$(jq --argjson package "$json" '.contents.packages |= . + [$package]' "$example/apko.lock.json")"
+            lock="$(jq --argjson package "$json" '.contents.packages |= . + [$package]' "$dir/apko.lock.json")"
 
-            echo "$lock" > "$example/apko.lock.json"
-            echo "👌 $required"
+            echo "$lock" > "$dir/apko.lock.json"
+            echo "👌 ok"
             echo ""
         else 
             cat "$output"
