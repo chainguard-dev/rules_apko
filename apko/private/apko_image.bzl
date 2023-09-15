@@ -1,10 +1,11 @@
 "A rule for running apko with prepopulated cache"
 
 _ATTRS = {
-    "packages": attr.label(),
-    "tag": attr.string(mandatory = True),
+    "contents": attr.label(mandatory = True),
     "config": attr.label(allow_single_file = True, mandatory = True),
     "output": attr.string(default = "oci", values = ["oci", "docker"]),
+    "architecture": attr.string(),
+    "tag": attr.string(mandatory = True),
     "args": attr.string_list(),
 }
 
@@ -31,17 +32,21 @@ def _impl(ctx):
     args.add("--cache-dir={}/{}/{}".format(ctx.bin_dir.path, ctx.label.package, cache_name))
     args.add("--offline")
 
-    inputs = [ctx.file.config] + ctx.files.packages
+    if ctx.attr.architecture:
+        args.add("--arch")
+        args.add(ctx.attr.architecture)
 
-    for package in ctx.files.packages:
-        package_owner = package.owner.workspace_name
-        package_cache_entry_key = package.path[package.path.find(package_owner) + len(package_owner) + 1:]
-        package_entry = ctx.actions.declare_file("/".join([cache_name, package_cache_entry_key]))
+    inputs = [ctx.file.config] + ctx.files.contents
+
+    for content in ctx.files.contents:
+        content_owner = content.owner.workspace_name
+        content_cache_entry_key = content.path[content.path.find(content_owner) + len(content_owner) + 1:]
+        content_entry = ctx.actions.declare_file("/".join([cache_name, content_cache_entry_key]))
         ctx.actions.symlink(
-            target_file = package,
-            output = package_entry,
+            target_file = content,
+            output = content_entry,
         )
-        inputs.append(package_entry)
+        inputs.append(content_entry)
 
     ctx.actions.run(
         executable = apko_info.binary,

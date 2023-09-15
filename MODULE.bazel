@@ -41,6 +41,11 @@ apk.translate_lock(
     name = "examples_oci",
     lock = "//examples/oci:apko.lock.json",
 )
+apk.translate_lock(
+    name = "examples_multi_arch_and_repo",
+    lock = "//examples/multi_arch_and_repo:apko.lock.json",
+)
+use_repo(apk, "examples_multi_arch_and_repo")
 use_repo(apk, "examples_lock")
 use_repo(apk, "examples_wolfi_base")
 use_repo(apk, "examples_oci")

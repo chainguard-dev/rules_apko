@@ -7,18 +7,12 @@ load("@container_structure_test//:defs.bzl", "container_structure_test")
 # See MODULE.bazel for how apko.lock.json is translated to @examples_oci//:contents
 apko_image(
     name = "wolfi-base",
-    args = select({
-        "@platforms//cpu:arm64": [
-            "--arch",
-            "aarch64",
-        ],
-        "@platforms//cpu:x86_64": [
-            "--arch",
-            "x86_64",
-        ],
+    architecture = select({
+        "@platforms//cpu:arm64": "arm64",
+        "@platforms//cpu:x86_64": "amd64",
     }),
     config = "apko.yaml",
-    packages = "@examples_oci//:contents",
+    contents = "@examples_oci//:contents",
     tag = "wolfi:latest",
 )
 

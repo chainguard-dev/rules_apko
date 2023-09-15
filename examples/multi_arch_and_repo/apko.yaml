@@ -1,0 +1,25 @@
+contents:
+  repositories:
+    - https://dl-cdn.alpinelinux.org/alpine/edge/main
+    - https://dl-cdn.alpinelinux.org/alpine/edge/community
+  packages:
+    - ca-certificates
+    - libc6-compat
+    - git
+    - less
+    - openssh
+    - jq
+    - unzip
+    - curl
+    - cdrkit
+    - ethtool
+    - openssl
+
+archs:
+  - arm64
+  - amd64
+
+os-release:
+  id: custom_alpine
+  version-id: "0.0.0"
+  name: "Custom Alpine"
