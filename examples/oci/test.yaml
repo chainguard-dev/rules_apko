@@ -1,0 +1,9 @@
+schemaVersion: 2.0.0
+commandTests:
+  - name: "test"
+    command: "sh"
+    args: ["/say_hello.sh"]
+    expectedOutput:
+      - hello! rules_apko and apko.
+      - NAME="Wolfi"
+      - HOME_URL="https://wolfi.dev"
