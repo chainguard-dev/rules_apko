@@ -6,7 +6,7 @@ load("@bazel_skylib//rules:build_test.bzl", "build_test")
 apko_image(
     name = "wolfi-base",
     config = "apko.yaml",
-    packages = "@examples_wolfi_base//:contents",
+    contents = "@examples_wolfi_base//:contents",
     tag = "wolfi:latest",
 )
 

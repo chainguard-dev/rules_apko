@@ -33,11 +33,19 @@ function extract_section () {
 sig_begin="${streams[0]}"
 control_begin="${streams[1]}"
 data_begin="${streams[2]}"
-control_len=$(($data_begin-$control_begin))
 
 echo ""
 echo "@ sanity check"
 echo ""
+
+
+if ! extract_section $apk $sig_begin $control_begin | gzip -t 2> /dev/null; then
+    echo "x signature section contains 1f8b. trying the next index"
+    sig_begin="${streams[0]}"
+    control_begin="${streams[2]}"
+    data_begin="${streams[3]}"
+fi
+
 t=$(mktemp -t "t1")
 t2=$(mktemp -t "t2")
 
@@ -99,6 +107,10 @@ while IFS=$'\n' read -r line; do
         pkgarch="$value"
     fi
 done < <(extract_section $apk $control_begin $data_begin | tar -xOz - .PKGINFO) 
+
+if [[ "$pkgarch" == "noarch" ]]; then 
+    pkgarch=$(echo "${1}" | sed "s/\/$pkgname.*//" | rev | cut -f 1 -d "/" | rev)
+fi
 
 echo ""
 echo "@ Add this to lock"
