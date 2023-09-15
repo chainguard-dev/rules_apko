@@ -7,4 +7,9 @@ stardoc_with_diff_test(
     bzl_library_target = "//apko:defs",
 )
 
+stardoc_with_diff_test(
+    name = "translate_lock",
+    bzl_library_target = "//apko:translate_lock",
+)
+
 update_docs(name = "update")
