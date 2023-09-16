@@ -34,14 +34,14 @@ _reserved_chars = {
     "~": "%7E",
 }
 
-def url_escape(url):
+def _url_escape(url):
     """Replace reserved characters with their percent-encoded values"""
     for char, encoded_value in _reserved_chars.items():
         url = url.replace(char, encoded_value)
 
     return url
 
-def repo_url(url, arch):
+def _repo_url(url, arch):
     """Returns the base url for a given apk url
 
     For example, given `https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/APKINDEX.tar.gz`
@@ -58,7 +58,7 @@ def repo_url(url, arch):
         return url[0:arch_index - 1]
     return url
 
-def sanitize_string(string):
+def _sanitize_string(string):
     """Sanitizes a string to be a valid workspace name
 
     workspace names may contain only A-Z, a-z, 0-9, '-', '_' and '.'
@@ -79,10 +79,10 @@ def sanitize_string(string):
         result += c
     return result
 
-def parse_lock(content):
+def _parse_lock(content):
     return json.decode(content)
 
-def normalize_sri(rctx, checksum):
+def _normalize_sri(rctx, checksum):
     """Converts SRI string to a plain checksum hex.
 
     Args:
@@ -100,7 +100,7 @@ def normalize_sri(rctx, checksum):
     return r.stdout
 
 # TODO: this shouldn't be necessary in the first place. change apko so that it except to find the original apk in the cache
-def concatenate_gzip_segments(rctx, output, signature, control, data):
+def _concatenate_gzip_segments(rctx, output, signature, control, data):
     """concatenates gzip segments into one gzip file in signature, control, data order
 
     Args:
@@ -117,3 +117,12 @@ def concatenate_gzip_segments(rctx, output, signature, control, data):
     r = rctx.execute([p, output, signature, control, data])
     if r.return_code != 0:
         fail("""concatenate_gzip_segments failed.\nstderr: {}\nstdout: {}""".format(r.stdout, r.stderr))
+
+util = struct(
+    concatenate_gzip_segments = _concatenate_gzip_segments,
+    normalize_sri = _normalize_sri,
+    parse_lock = _parse_lock,
+    sanitize_string = _sanitize_string,
+    repo_url = _repo_url,
+    url_escape = _url_escape,
+)
