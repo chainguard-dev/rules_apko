@@ -12,6 +12,8 @@ load("@rules_apko//apko:defs.bzl", "apko_bazelrc")
 apko_bazelrc()
 ```
 
+> NOTE: by default `apko_bazelrc` will generate `.bazelrc` to accomodate for fetching from  `dl-cdn.alpinelinux.org` and `packages.wolfi.dev`. this can be configured by passing the `repositories` attribute to `apko_bazelrc()` call.
+
 Then run
 
 ```sh

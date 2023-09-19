@@ -10,24 +10,6 @@
     ],
     "packages": [
       {
-        "name": "busybox",
-        "version": "1.36.1-r7",
-        "architecture": "x86_64",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/busybox-1.36.1-r7.apk",
-        "signature": {
-          "range": "bytes=0-665",
-          "checksum": "sha256-Le6OL4LQva/QGvQuULa5inTSDG7Gmvv/QO+8Mfzy8KA="
-        },
-        "control": {
-          "range": "bytes=666-2298",
-          "checksum": "sha1-DD+ZCO6gahU3mrx5xtm9/b8luHw="
-        },
-        "data": {
-          "range": "bytes=2299-",
-          "checksum": "sha256-SWbMW79a/YQeH0lX7KQI8lXCSHV8VJ/vy+PZ21fdd80="
-        }
-      },
-      {
         "name": "musl",
         "version": "1.2.4_git20230717-r2",
         "architecture": "x86_64",
@@ -43,6 +25,24 @@
         "data": {
           "range": "bytes=1231-",
           "checksum": "sha256-BEDUjs8id32t4l9xhzFKSVDrEOOuxHeKIAjyg/cmIE8="
+        }
+      },
+      {
+        "name": "busybox",
+        "version": "1.36.1-r8",
+        "architecture": "x86_64",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/busybox-1.36.1-r8.apk",
+        "signature": {
+          "range": "bytes=0-668",
+          "checksum": "sha256-ZsVnBkSwSUDU503sqGyxLRw9M0j3x5MKPNk3WkfKfnI="
+        },
+        "control": {
+          "range": "bytes=669-2302",
+          "checksum": "sha1-yUyBAl1hksZXxUYlinKcmpP25Mg="
+        },
+        "data": {
+          "range": "bytes=2303-",
+          "checksum": "sha256-Zs0o1FRREtYAGgLCGNlYeePF3JMce+XMufu7XMhRoyU="
         }
       }
     ]

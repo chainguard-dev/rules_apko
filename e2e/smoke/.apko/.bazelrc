@@ -2,4 +2,5 @@
 # Required for making http range requests when fetching the apk packages.
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests
 
-common --credential_helper="%workspace%/.apko/range.sh"
+common --credential_helper="dl-cdn.alpinelinux.org=%workspace%/.apko/range.sh"
+common --credential_helper="packages.wolfi.dev=%workspace%/.apko/range.sh"

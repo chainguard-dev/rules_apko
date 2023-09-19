@@ -4,6 +4,8 @@
 
 # Required until this is the default; expected in Bazel 7
 common --enable_bzlmod
+# Disable lockfile for now. It is unstable.
+common --lockfile_mode=off
 
 # Required for rules_apko to make range requests
 try-import %workspace%/.apko/.bazelrc

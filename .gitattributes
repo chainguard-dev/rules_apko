@@ -2,3 +2,4 @@ docs/*.md linguist-generated=true
 docs/initial-setup.md linguist-generated=false
 docs/apko-cache.md linguist-generated=false
 MODULE.bazel.lock linguist-generated=true
+**/apko.lock.json linguist-generated=true
