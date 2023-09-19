@@ -64,9 +64,12 @@ For more examples checkout the [examples](/examples) directory.
 ## apko_bazelrc
 
 <pre>
-apko_bazelrc(<a href="#apko_bazelrc-name">name</a>, <a href="#apko_bazelrc-kwargs">kwargs</a>)
+apko_bazelrc(<a href="#apko_bazelrc-name">name</a>, <a href="#apko_bazelrc-repositories">repositories</a>, <a href="#apko_bazelrc-kwargs">kwargs</a>)
 </pre>
 
+Helper macro for generating `.bazelrc` and `range.sh` files to allow for partial package fetches.
+
+See [initial setup](./initial-setup.md) documentation for more information.
 
 
 **PARAMETERS**
@@ -74,7 +77,8 @@ apko_bazelrc(<a href="#apko_bazelrc-name">name</a>, <a href="#apko_bazelrc-kwarg
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="apko_bazelrc-name"></a>name |  <p align="center"> - </p>   |  <code>"apko_bazelrc"</code> |
-| <a id="apko_bazelrc-kwargs"></a>kwargs |  <p align="center"> - </p>   |  none |
+| <a id="apko_bazelrc-name"></a>name |  name of the target   |  <code>"apko_bazelrc"</code> |
+| <a id="apko_bazelrc-repositories"></a>repositories |  list of repositories to generate .bazelrc for   |  <code>["dl-cdn.alpinelinux.org", "packages.wolfi.dev"]</code> |
+| <a id="apko_bazelrc-kwargs"></a>kwargs |  passed to expanding targets. only well known attributes such as <code>tags</code> <code>testonly</code> ought to be present.   |  none |
 
 
