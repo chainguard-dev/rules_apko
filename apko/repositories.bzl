@@ -49,7 +49,7 @@ _ATTRS = {
 }
 
 def _apko_repo_impl(repository_ctx):
-    url = "https://github.com/thesayyn/apko/releases/download/v{version}/apko_{version}_{platform}.tar.gz".format(
+    url = "https://github.com/chainguard-dev/apko/releases/download/v{version}/apko_{version}_{platform}.tar.gz".format(
         version = repository_ctx.attr.apko_version.lstrip("v"),
         platform = repository_ctx.attr.platform,
     )
