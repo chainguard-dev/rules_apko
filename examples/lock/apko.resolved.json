@@ -12,38 +12,38 @@
     "packages": [
       {
         "name": "musl",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/musl-1.2.4_git20230717-r2.apk",
-        "version": "1.2.4_git20230717-r2",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/musl-1.2.4_git20230717-r3.apk",
+        "version": "1.2.4_git20230717-r3",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-663",
-          "checksum": "sha1-ANg2OFHCs6IsHHmIoXifycdNICo="
+          "range": "bytes=0-664",
+          "checksum": "sha1-NNQ75vr/hK4jV2vPfqjHBLXY/TM="
         },
         "control": {
-          "range": "bytes=664-1230",
-          "checksum": "sha1-0QcZQhy2GxzaRF4Kip4NVG0pgrc="
+          "range": "bytes=665-1230",
+          "checksum": "sha1-mG43yRO1rMNfnDquG8JNnxoYTo8="
         },
         "data": {
           "range": "bytes=1231-667648",
-          "checksum": "sha256-BEDUjs8id32t4l9xhzFKSVDrEOOuxHeKIAjyg/cmIE8="
+          "checksum": "sha256-ORxgfIRz5cUD3/rXyYZEjCstaJLVkRenlWO+wP5AjTE="
         }
       },
       {
         "name": "busybox",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/busybox-1.36.1-r8.apk",
-        "version": "1.36.1-r8",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/busybox-1.36.1-r13.apk",
+        "version": "1.36.1-r13",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-668",
-          "checksum": "sha1-pSFhEF15QuR0fTfB4gsrKiR9mGE="
+          "range": "bytes=0-665",
+          "checksum": "sha1-oH8hu95JyOShO0oPRBI3ZPlsc8c="
         },
         "control": {
-          "range": "bytes=669-2302",
-          "checksum": "sha1-yUyBAl1hksZXxUYlinKcmpP25Mg="
+          "range": "bytes=666-2298",
+          "checksum": "sha1-sjQ/UUfq8kIct0jBd/Kn9xTGfrk="
         },
         "data": {
-          "range": "bytes=2303-946176",
-          "checksum": "sha256-Zs0o1FRREtYAGgLCGNlYeePF3JMce+XMufu7XMhRoyU="
+          "range": "bytes=2299-946176",
+          "checksum": "sha256-1+CUivTOQwYueQba2+pigHUw2TwBErH4xehbc2TYkFQ="
         }
       }
     ]

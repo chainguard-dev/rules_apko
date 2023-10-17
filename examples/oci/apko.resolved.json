@@ -58,56 +58,56 @@
       },
       {
         "name": "ld-linux",
-        "url": "https://packages.wolfi.dev/os/aarch64/ld-linux-2.38-r4.apk",
-        "version": "2.38-r4",
+        "url": "https://packages.wolfi.dev/os/aarch64/ld-linux-2.38-r5.apk",
+        "version": "2.38-r5",
         "architecture": "aarch64",
         "signature": {
-          "range": "bytes=0-701",
-          "checksum": "sha1-VrQHL4/4WkESJJKGwzo4W69SiZU="
+          "range": "bytes=0-702",
+          "checksum": "sha1-aH8ZN12tAaPnT4Aw/hJuoERJIKA="
         },
         "control": {
-          "range": "bytes=702-1082",
-          "checksum": "sha1-fEjlH2UibUBTtkWQySgs981a97c="
+          "range": "bytes=703-1082",
+          "checksum": "sha1-8/M0yEAgqQ3jqVOcRGGLBkBgTtc="
         },
         "data": {
           "range": "bytes=1083-265292",
-          "checksum": "sha256-FW5sUim5xjh4g8t62SFOckOCRLggW3/9obhz5WMtBLs="
+          "checksum": "sha256-cc1gzWdor8ICfMstalLxu6iiVvwcTC3gFcrQTdEoHr0="
         }
       },
       {
         "name": "glibc-locale-posix",
-        "url": "https://packages.wolfi.dev/os/aarch64/glibc-locale-posix-2.38-r4.apk",
-        "version": "2.38-r4",
+        "url": "https://packages.wolfi.dev/os/aarch64/glibc-locale-posix-2.38-r5.apk",
+        "version": "2.38-r5",
         "architecture": "aarch64",
         "signature": {
-          "range": "bytes=0-703",
-          "checksum": "sha1-ExYvtwS/9ZckTPHIoR2hSIxyyGk="
+          "range": "bytes=0-701",
+          "checksum": "sha1-BtvtMwa73foDRk9FFY8vfOjKlcA="
         },
         "control": {
-          "range": "bytes=704-1046",
-          "checksum": "sha1-nRybgp0BFjtWgjyaS9KGUPmJCD8="
+          "range": "bytes=702-1043",
+          "checksum": "sha1-P4sTiJm/tqHhC3EkyEYv6WIhELg="
         },
         "data": {
-          "range": "bytes=1047-416968",
-          "checksum": "sha256-OBwvYsWYWZ7yJhexp77CPEWKZ2i3DOukGNsYiqnw/Yc="
+          "range": "bytes=1044-416968",
+          "checksum": "sha256-0b2RdCPyUbNNAQSIIJUm8f6Tk0IJwqmvFdpbMpLMExo="
         }
       },
       {
         "name": "glibc",
-        "url": "https://packages.wolfi.dev/os/aarch64/glibc-2.38-r4.apk",
-        "version": "2.38-r4",
+        "url": "https://packages.wolfi.dev/os/aarch64/glibc-2.38-r5.apk",
+        "version": "2.38-r5",
         "architecture": "aarch64",
         "signature": {
           "range": "bytes=0-699",
-          "checksum": "sha1-wVu0suc4naxLiF1QCwPunOg+32A="
+          "checksum": "sha1-j2AQEBUim9hUaC/OJprkdj25+uU="
         },
         "control": {
-          "range": "bytes=700-1303",
-          "checksum": "sha1-ZA7IqbremBHLHlQ7f1dSFT56ulo="
+          "range": "bytes=700-1304",
+          "checksum": "sha1-vupFS8FOeEUOyb6COYGFhQdAonk="
         },
         "data": {
-          "range": "bytes=1304-5592271",
-          "checksum": "sha256-Jj84GdOHfCbFXurgPz3PgOKIEZxfwUknD0IIKLh8SqE="
+          "range": "bytes=1305-5592271",
+          "checksum": "sha256-vrOifwV6UX3fC1CQQbccbTKbsZtZAZQHRD0VOfrNGYU="
         }
       },
       {
@@ -202,20 +202,20 @@
       },
       {
         "name": "libcrypt1",
-        "url": "https://packages.wolfi.dev/os/aarch64/libcrypt1-2.38-r4.apk",
-        "version": "2.38-r4",
+        "url": "https://packages.wolfi.dev/os/aarch64/libcrypt1-2.38-r5.apk",
+        "version": "2.38-r5",
         "architecture": "aarch64",
         "signature": {
-          "range": "bytes=0-705",
-          "checksum": "sha1-cyWYaN4OXOhwbJlSSs/G6ed4lt0="
+          "range": "bytes=0-694",
+          "checksum": "sha1-iDrfPe5FhU3bHhxbaAZ3qyxQTrY="
         },
         "control": {
-          "range": "bytes=706-1090",
-          "checksum": "sha1-0eToluB1+usL3vR5ImPbMaDlzOo="
+          "range": "bytes=695-1082",
+          "checksum": "sha1-aSYR0I4tmd4gEFAXxOMSezg18GI="
         },
         "data": {
-          "range": "bytes=1091-101348",
-          "checksum": "sha256-1s88kvKB0VoonHKsBtOHoiAA7OABM7rwWJQQY3rhplM="
+          "range": "bytes=1083-101348",
+          "checksum": "sha256-QI8ZnzVe4Hw3niiRdbL9u+aBuDMD+cA5Q0Z6Z3TSAmc="
         }
       },
       {
@@ -310,56 +310,56 @@
       },
       {
         "name": "ld-linux",
-        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.38-r4.apk",
-        "version": "2.38-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.38-r5.apk",
+        "version": "2.38-r5",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-695",
-          "checksum": "sha1-/FxEfFGVAbtxtCSLpVMWvuqv7fs="
+          "range": "bytes=0-702",
+          "checksum": "sha1-oAK7/0OTHBqjV/x0qqWORgyzoLU="
         },
         "control": {
-          "range": "bytes=696-1080",
-          "checksum": "sha1-3oEy5WjftVPxhrr0LI3GtnmIsxM="
+          "range": "bytes=703-1086",
+          "checksum": "sha1-iWbLQvCYR2Y6zYJrlKokB14B8hk="
         },
         "data": {
-          "range": "bytes=1081-266151",
-          "checksum": "sha256-4eZZfqUqkO+7axjIHCebfmc6r1/Chwp4ri3kaem7h6k="
+          "range": "bytes=1087-266151",
+          "checksum": "sha256-1CNocW3KOzKCJK5++DeAGStj2EAKsnyxIDEDBRRLUDk="
         }
       },
       {
         "name": "glibc-locale-posix",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-locale-posix-2.38-r4.apk",
-        "version": "2.38-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-locale-posix-2.38-r5.apk",
+        "version": "2.38-r5",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-700",
-          "checksum": "sha1-5xEv5lBijD6VZYV8Qz6SqOPTPEY="
+          "range": "bytes=0-704",
+          "checksum": "sha1-XGqaE5/cq6rT85KSaVpHqmBeW4o="
         },
         "control": {
-          "range": "bytes=701-1046",
-          "checksum": "sha1-JzVSmXBhSE+NalrHMrp1ksadsL4="
+          "range": "bytes=705-1049",
+          "checksum": "sha1-vY6oBBxN635Sy2L6y/wgvjpBeh0="
         },
         "data": {
-          "range": "bytes=1047-416967",
-          "checksum": "sha256-tGh/DvGFVq+2+Hx8jie/1KUn2mRUB6ZRCKydx/LSex0="
+          "range": "bytes=1050-416967",
+          "checksum": "sha256-hpdMXniZw63PaegccAq9UvA4G8bZ1OkNxIdAMjdYE70="
         }
       },
       {
         "name": "glibc",
-        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.38-r4.apk",
-        "version": "2.38-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.38-r5.apk",
+        "version": "2.38-r5",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-697",
-          "checksum": "sha1-B09z0L/wix/T/zhYkOtKTuHwwNc="
+          "range": "bytes=0-698",
+          "checksum": "sha1-1AptYsIx6ZylY2U2/emVcesdBZ0="
         },
         "control": {
-          "range": "bytes=698-1304",
-          "checksum": "sha1-Z7HBHy5WI5PY9nZ1UxLIyMC8ok8="
+          "range": "bytes=699-1306",
+          "checksum": "sha1-jk31YFY5xASRDIRznifI1V6yg5A="
         },
         "data": {
-          "range": "bytes=1305-6656589",
-          "checksum": "sha256-HlRfUzL0ktItVOePqKA4QuzU4KJf0fLTvUarEAd6yYU="
+          "range": "bytes=1307-6656589",
+          "checksum": "sha256-FffcStTm+crzwRilK1F0C4pYgKd8dNhrTky1FRYQJEQ="
         }
       },
       {
@@ -454,20 +454,20 @@
       },
       {
         "name": "libcrypt1",
-        "url": "https://packages.wolfi.dev/os/x86_64/libcrypt1-2.38-r4.apk",
-        "version": "2.38-r4",
+        "url": "https://packages.wolfi.dev/os/x86_64/libcrypt1-2.38-r5.apk",
+        "version": "2.38-r5",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-706",
-          "checksum": "sha1-c3rfRkmh7sNGcUxOO08a6FObwJY="
+          "range": "bytes=0-703",
+          "checksum": "sha1-x1MdJ+zveYiBpI0dOT+jhRvF+4g="
         },
         "control": {
-          "range": "bytes=707-1098",
-          "checksum": "sha1-n+N4hUZxluqt+un56eFC7L+9E7c="
+          "range": "bytes=704-1094",
+          "checksum": "sha1-FfEelnNTmSQEFGZPgTTjebuQc8M="
         },
         "data": {
-          "range": "bytes=1099-74699",
-          "checksum": "sha256-aljP9Rli63HrOWlJUkcMC1fZnya6gml46yMmCyeP82o="
+          "range": "bytes=1095-74699",
+          "checksum": "sha256-F5X+REDiSp7sVaeoifQDbP75IFgus+1HWA6jBDjva1Y="
         }
       },
       {
