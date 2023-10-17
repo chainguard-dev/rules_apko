@@ -13,6 +13,6 @@ apko = use_extension(
 )
 apko.translate_lock(
     name = "example_lock",
-    lock = "//:apko.lock.json",
+    lock = "//:apko.resolved.json",
 )
 use_repo(apko, "example_lock")

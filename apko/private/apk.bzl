@@ -53,8 +53,6 @@ def _apk_import_impl(rctx):
     data_output = "{}/{}.dat.tar.gz".format(output, data_sha256)
     apk_output = "{}/{}/{}-{}.apk".format(repo_escaped, rctx.attr.architecture, rctx.attr.package_name, rctx.attr.version)
 
-    _check_initial_setup(rctx)
-
     rctx.download(
         url = [_range(rctx.attr.url, rctx.attr.signature_range)],
         output = sig_output,
@@ -109,6 +107,7 @@ filegroup(
 def _apk_repository_impl(rctx):
     repo = util.repo_url(rctx.attr.url, rctx.attr.architecture)
     repo_escaped = util.url_escape(repo)
+    _check_initial_setup(rctx)
     rctx.download(
         url = [rctx.attr.url],
         output = "{}/{}/APKINDEX/latest.tar.gz".format(repo_escaped, rctx.attr.architecture),

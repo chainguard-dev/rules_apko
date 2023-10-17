@@ -10,3 +10,4 @@ cmd: /bin/sh -l
 
 archs:
   - x86_64
+  - aarch64

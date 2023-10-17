@@ -6,7 +6,7 @@ module(
     compatibility_level = 1,
 )
 
-bazel_dep(name = "bazel_skylib", version = "1.4.1")
+bazel_dep(name = "bazel_skylib", version = "1.4.2")
 bazel_dep(name = "platforms", version = "0.0.5")
 bazel_dep(name = "aspect_bazel_lib", version = "1.34.5")
 
@@ -31,19 +31,19 @@ apk = use_extension(
 )
 apk.translate_lock(
     name = "examples_lock",
-    lock = "//examples/lock:apko.lock.json",
+    lock = "//examples/lock:apko.resolved.json",
 )
 apk.translate_lock(
     name = "examples_wolfi_base",
-    lock = "//examples/wolfi-base:apko.lock.json",
+    lock = "//examples/wolfi-base:apko.resolved.json",
 )
 apk.translate_lock(
     name = "examples_oci",
-    lock = "//examples/oci:apko.lock.json",
+    lock = "//examples/oci:apko.resolved.json",
 )
 apk.translate_lock(
     name = "examples_multi_arch_and_repo",
-    lock = "//examples/multi_arch_and_repo:apko.lock.json",
+    lock = "//examples/multi_arch_and_repo:apko.resolved.json",
 )
 use_repo(apk, "examples_multi_arch_and_repo")
 use_repo(apk, "examples_lock")
