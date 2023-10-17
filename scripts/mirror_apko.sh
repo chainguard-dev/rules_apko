@@ -4,7 +4,7 @@ set -o errexit -o nounset -o pipefail
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 RAW=$(mktemp)
 
-REPOSITORY=${1:-"thesayyn/apko"}
+REPOSITORY=${1:-"chainguard-dev/apko"}
 TOOL=${2:-"apko"}
 
 # per_page=1 to just mirror the most recent release
