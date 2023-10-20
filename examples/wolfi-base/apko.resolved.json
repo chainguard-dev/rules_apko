@@ -166,20 +166,20 @@
       },
       {
         "name": "zlib",
-        "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.3-r0.apk",
-        "version": "1.3-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.3-r1.apk",
+        "version": "1.3-r1",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-694",
-          "checksum": "sha1-wLEvCLf24LATq+f5KWJSwgmcAJ0="
+          "range": "bytes=0-703",
+          "checksum": "sha1-/Jk5bXHOt0V2n9D4C+Gx7hgKHlU="
         },
         "control": {
-          "range": "bytes=695-1078",
-          "checksum": "sha1-2c/3NY/o7FDtGM4k93d8nDACYWk="
+          "range": "bytes=704-1085",
+          "checksum": "sha1-C2wS5x5vrJbz/DE/uBsR5vNazy8="
         },
         "data": {
-          "range": "bytes=1079-148702",
-          "checksum": "sha256-ZwQMNfeiOo2duE+cxSybjb283bIAphOkpJgXFEXtW7g="
+          "range": "bytes=1086-156557",
+          "checksum": "sha256-wNV8B31etngwZFQhu6Oh2IZ2yNKCAJSb0kJc/0xXMc4="
         }
       },
       {
@@ -418,20 +418,20 @@
       },
       {
         "name": "zlib",
-        "url": "https://packages.wolfi.dev/os/aarch64/zlib-1.3-r0.apk",
-        "version": "1.3-r0",
+        "url": "https://packages.wolfi.dev/os/aarch64/zlib-1.3-r1.apk",
+        "version": "1.3-r1",
         "architecture": "aarch64",
         "signature": {
-          "range": "bytes=0-701",
-          "checksum": "sha1-iJS8f/TSENQs2Eu9BB7caD4rH50="
+          "range": "bytes=0-699",
+          "checksum": "sha1-BE9hw48pQ/4tg+RyoN+z0KP0sko="
         },
         "control": {
-          "range": "bytes=702-1097",
-          "checksum": "sha1-R07tRo77NrCkG/+XBgAedcCD8nc="
+          "range": "bytes=700-1097",
+          "checksum": "sha1-tN0HwtJtpOkMRrRk2w1rfM2mE3Y="
         },
         "data": {
-          "range": "bytes=1098-181319",
-          "checksum": "sha256-t5kF44HTqexBesECOSIZKTAQ31+qknxkJ1JCJ3cHNGc="
+          "range": "bytes=1098-191294",
+          "checksum": "sha256-Xzfhp8cXnqEo8ywHmOf2KzBX9JLNU27d2LNZ9MA20pU="
         }
       },
       {
