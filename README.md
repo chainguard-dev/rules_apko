@@ -21,14 +21,14 @@ using the GitHub-provided source archive like
 ## Usage
 
 Apko usage begins with an `apko.yaml` configuration file. The `apko resolve` tool will create a corresponding
-`apko.lock.json` file, and this is where Bazel will read to fetch external content.
+`apko.resolved.json` file, and this is where Bazel will read to fetch external content.
 
 First you import these base layers into Bazel:
 
 - With Bazel 6 and [bzlmod], call `apk.translate_lock` in `MODULE.bazel`
 - Otherwise, call `translate_apko_lock` in `WORKSPACE`
 
-Then, call `apko resolve path/to/apko.yaml` to generate `apko.lock.json` and use the `apko_image` rule to build the image, producing an OCI format output.
+Then, call `apko resolve path/to/apko.yaml` to generate `apko.resolved.json` and use the `apko_image` rule to build the image, producing an OCI format output.
 
 Finally, we recommend using <https://github.com/bazel-contrib/rules_oci> as the next step in your Bazel build
 to add application code from your repo as the next layers of the image.
@@ -39,5 +39,5 @@ Also see the `e2e` folder in this repository, where we declare our end-to-end te
 
 ## Public API
 
-- [translate_lock](./docs/translate_lock.md) Repository rules for translating `apko.lock.json`
+- [translate_lock](./docs/translate_lock.md) Repository rules for translating `apko.resolved.json`
 - [rules](./docs/rules.md) Build OCI images from APK packages directly without `Dockerfile`
