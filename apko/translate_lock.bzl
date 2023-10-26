@@ -1,8 +1,8 @@
-"""Repository rules for translating apko.lock.json"""
+"""Repository rules for translating apko.resolved.json"""
 
 load("//apko/private:util.bzl", "util")
 
-_DOC = """Repository rule to generate starlark code from an `apko.lock.json` file.
+_DOC = """Repository rule to generate starlark code from an `apko.resolved.json` file.
 
 See [apko-cache.md](./apko-cache.md) documentation.
 """
@@ -112,7 +112,7 @@ def _translate_apko_lock_impl(rctx):
 translate_apko_lock = repository_rule(
     implementation = _translate_apko_lock_impl,
     attrs = {
-        "lock": attr.label(doc = "label to the `apko.lock.json` file.", mandatory = True),
+        "lock": attr.label(doc = "label to the `apko.resolved.json` file.", mandatory = True),
         "target_name": attr.string(doc = "internal. do not use!"),
     },
     doc = _DOC,
