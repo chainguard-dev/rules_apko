@@ -4,46 +4,46 @@
     "keyring": [],
     "repositories": [
       {
-        "name": "dl-cdn.alpinelinux.org/alpine/edge/main/x86_64",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/APKINDEX.tar.gz",
+        "name": "dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/APKINDEX.tar.gz",
         "architecture": "x86_64"
       }
     ],
     "packages": [
       {
         "name": "musl",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/musl-1.2.4_git20230717-r3.apk",
-        "version": "1.2.4_git20230717-r3",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/musl-1.2.4-r2.apk",
+        "version": "1.2.4-r2",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-664",
-          "checksum": "sha1-NNQ75vr/hK4jV2vPfqjHBLXY/TM="
+          "range": "bytes=0-666",
+          "checksum": "sha1-MiA7YiamUyscxmdGiRBGiJjcW8U="
         },
         "control": {
-          "range": "bytes=665-1230",
-          "checksum": "sha1-mG43yRO1rMNfnDquG8JNnxoYTo8="
+          "range": "bytes=667-1224",
+          "checksum": "sha1-odtIYtKyOCg6suF/cDaYpygL7hw="
         },
         "data": {
-          "range": "bytes=1231-667648",
-          "checksum": "sha256-ORxgfIRz5cUD3/rXyYZEjCstaJLVkRenlWO+wP5AjTE="
+          "range": "bytes=1225-634880",
+          "checksum": "sha256-KPwSgRdeAcnVvczowX1F54Aszov9ZI1cRXgtFZzepfg="
         }
       },
       {
         "name": "busybox",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/busybox-1.36.1-r13.apk",
-        "version": "1.36.1-r13",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/busybox-1.36.1-r5.apk",
+        "version": "1.36.1-r5",
         "architecture": "x86_64",
         "signature": {
           "range": "bytes=0-665",
-          "checksum": "sha1-oH8hu95JyOShO0oPRBI3ZPlsc8c="
+          "checksum": "sha1-oXF25kDE6Jja1iQ2psyt9nV+ddE="
         },
         "control": {
-          "range": "bytes=666-2298",
-          "checksum": "sha1-sjQ/UUfq8kIct0jBd/Kn9xTGfrk="
+          "range": "bytes=666-2301",
+          "checksum": "sha1-aBWv1Kn2ASOLShUeDPoSLaozuMs="
         },
         "data": {
-          "range": "bytes=2299-946176",
-          "checksum": "sha256-1+CUivTOQwYueQba2+pigHUw2TwBErH4xehbc2TYkFQ="
+          "range": "bytes=2302-946176",
+          "checksum": "sha256-pDdzepugl8LYISmpJ2wGr885gfpwo2hi9ZMf4dQTi5s="
         }
       }
     ]
