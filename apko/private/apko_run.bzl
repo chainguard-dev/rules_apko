@@ -1,6 +1,12 @@
 "A rule for running apko - convenience layer to stay within consistent versions."
 
+_WORKDIR_DOC = """
+  The dir where apko will get executed:
+    - working - the dir where bazel was called.
+    - workspace - the root directory of the bazel workspace (usually repository root)"""
+
 _ATTRS = {
+    "workdir": attr.string(default = "working", doc = _WORKDIR_DOC, mandatory = False, values = ["working", "workspace"]),
 }
 
 _DOC = """
@@ -15,8 +21,8 @@ LAUNCHER_TEMPLATE = """
 
 set -e
 LAUNCHER_DIR="${PWD}"
-if test "${BUILD_WORKING_DIRECTORY+x}"; then
-  cd $BUILD_WORKING_DIRECTORY
+if test "${{{workdir_env}}+x}"; then
+  cd ${{workdir_env}}
 fi
 
 echo "Workdir: ${PWD}" >&2
@@ -27,7 +33,13 @@ def _impl(ctx):
     output = ctx.actions.declare_file("_{}_run.sh".format(ctx.label.name))
     apko_info = ctx.toolchains["@rules_apko//apko:toolchain_type"].apko_info
 
-    ctx.actions.write(output = output, content = LAUNCHER_TEMPLATE.replace("{{apko_binary}}", apko_info.binary.path), is_executable = True)
+    ctx.actions.write(
+        output = output,
+        content = LAUNCHER_TEMPLATE
+            .replace("{{apko_binary}}", apko_info.binary.path)
+            .replace("{{workdir_env}}", "BUILD_" + ctx.attr.workdir.upper() + "_DIRECTORY"),
+        is_executable = True,
+    )
 
     return DefaultInfo(executable = output, runfiles = ctx.runfiles(files = [apko_info.binary]))
 

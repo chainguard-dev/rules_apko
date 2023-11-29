@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Resolves all targets in the examples.
+
 set -e -x
 
-find . -name apko.yaml | xargs bazel run @rules_apko//apko resolve
+TARGETS=$(bazel query 'filter(".resolve$", kind("apko_run", ...))')
+for target in ${TARGETS}; do 
+  bazel run "${target}"
+done
+

@@ -59,6 +59,10 @@ For more examples checkout the [examples](/examples) directory.
 | <a id="apko_image-tag"></a>tag |  tag to apply to the resulting docker tarball. only applicable when <code>output</code> is <code>docker</code>   | String | required |  |
 
 
+When standard conventions are obeyed (the config `.yaml` file and `.resolved.json.file` are in the same package as `apko_image`) there
+is additional target generated named `.resolve`.
+For the example above: `bazel run alpine_base.resolve` can be called to regenerate the `apko.resolved.json` file.
+
 <a id="apko_bazelrc"></a>
 
 ## apko_bazelrc
