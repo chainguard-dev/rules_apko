@@ -1,9 +1,8 @@
 contents:
   repositories:
-    - https://dl-cdn.alpinelinux.org/alpine/edge/main
+    - https://dl-cdn.alpinelinux.org/alpine/v3.18/main
   packages:
     - busybox
-
 
 # optional environment configuration
 environment:
@@ -15,10 +14,9 @@ cmd: /bin/sh -l
 # in the image
 os-release:
   id: alpine
-  version-id: '3.16.0'
-  name: 'Alpine Slim'
-  pretty-name: 'Alpine Slim (apko)'
+  version-id: "3.16.0"
+  name: "Alpine Slim"
+  pretty-name: "Alpine Slim (apko)"
 
 archs:
   - amd64
-  
