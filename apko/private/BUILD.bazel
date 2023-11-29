@@ -14,6 +14,13 @@ bzl_library(
     name = "apko_image",
     srcs = ["apko_image.bzl"],
     visibility = ["//apko:__subpackages__"],
+    deps = ["apko_run"],
+)
+
+bzl_library(
+    name = "apko_run",
+    srcs = ["apko_run.bzl"],
+    visibility = ["//apko:__subpackages__"],
 )
 
 bzl_library(
