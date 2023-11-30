@@ -1,42 +1,44 @@
 "utility functions"
 
 # Define the list of reserved characters and their percent-encoded values
-_reserved_chars = {
-    " ": "%20",
-    "!": "%21",
-    '"': "%22",
-    "#": "%23",
-    "$": "%24",
-    "%": "%25",
-    "&": "%26",
-    "'": "%27",
-    "(": "%28",
-    ")": "%29",
-    "*": "%2A",
-    "+": "%2B",
-    ",": "%2C",
-    "/": "%2F",
-    ":": "%3A",
-    ";": "%3B",
-    "<": "%3C",
-    "=": "%3D",
-    ">": "%3E",
-    "?": "%3F",
-    "@": "%40",
-    "[": "%5B",
-    "\\": "%5C",
-    "]": "%5D",
-    "^": "%5E",
-    "`": "%60",
-    "{": "%7B",
-    "|": "%7C",
-    "}": "%7D",
-    "~": "%7E",
-}
+_reserved_chars = [
+    # To avoid double-escaping, percent must be handled before any other replacements.
+    ("%", "%25"),
+    #
+    (" ", "%20"),
+    ("!", "%21"),
+    ('"', "%22"),
+    ("#", "%23"),
+    ("$", "%24"),
+    ("&", "%26"),
+    ("'", "%27"),
+    ("(", "%28"),
+    (")", "%29"),
+    ("*", "%2A"),
+    ("+", "%2B"),
+    (",", "%2C"),
+    ("/", "%2F"),
+    (":", "%3A"),
+    (";", "%3B"),
+    ("<", "%3C"),
+    ("=", "%3D"),
+    (">", "%3E"),
+    ("?", "%3F"),
+    ("@", "%40"),
+    ("[", "%5B"),
+    ("\\", "%5C"),
+    ("]", "%5D"),
+    ("^", "%5E"),
+    ("`", "%60"),
+    ("{", "%7B"),
+    ("|", "%7C"),
+    ("}", "%7D"),
+    ("~", "%7E"),
+]
 
 def _url_escape(url):
     """Replace reserved characters with their percent-encoded values"""
-    for char, encoded_value in _reserved_chars.items():
+    for char, encoded_value in _reserved_chars:
         url = url.replace(char, encoded_value)
 
     return url
