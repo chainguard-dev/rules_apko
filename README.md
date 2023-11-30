@@ -30,8 +30,12 @@ Than you import these base layers into Bazel:
 - With Bazel 6 and [bzlmod], call `apk.translate_lock` in `MODULE.bazel`
 - Otherwise, call `translate_apko_lock` in `WORKSPACE`
 
-Periodically one can call `apko resolve path/to/apko.yaml` or `bazel run @rules_apko//apko resolve path/to/apko.yaml`
-to regenerate `apko.resolved.json` and use the `apko_image` rule to build the image, producing an OCI format output.
+Now you can use the `apko_image` rule to build the image, producing an OCI format output.
+As long as the apko `.yaml` file is in the same directory as the `apko_image` you can periodically refresh the
+`apko.resolved.json` file by just calling: `bazel run path/to/image.resolve`.
+Alternatively you can call `apko resolve path/to/apko.yaml` or `bazel run @rules_apko//apko resolve path/to/apko.yaml`
+to regenerate the `apko.resolved.json` file manually.
+To resolve all the files in the repository, such a [snippet](./examples/resolve.sh) can be useful.
 
 Finally, we recommend using <https://github.com/bazel-contrib/rules_oci> as the next step in your Bazel build
 to add application code from your repo as the next layers of the image.
