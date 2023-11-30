@@ -39,5 +39,5 @@ This means that any usage of `@rules_apko` on your system will point to this fol
 ## Releasing
 
 1. Determine the next release version, following semver (could automate in the future from changelog)
-1. Tag the repo and push it (or create a tag in GH UI)
+1. Tag the repo and push it (the GitHub website has no way to create a tog without also creating a release, so that doesn't work)
 1. Watch the automation run on GitHub actions
