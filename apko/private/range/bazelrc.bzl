@@ -28,7 +28,7 @@ def apko_bazelrc(name = "apko_bazelrc", repositories = DEFAULT_REPOSITORIES, **k
     bazelrc_out_file = "_{}_bazelrc".format(name)
 
     expand_template(
-        name = bazelrc_out_file,
+        name = "_" + bazelrc_out_file,
         out = bazelrc_out_file,
         substitutions = {
             "{common_entries}": "".join([
@@ -42,7 +42,7 @@ def apko_bazelrc(name = "apko_bazelrc", repositories = DEFAULT_REPOSITORIES, **k
 
     write_source_file(
         name = "_{}.range.sh".format(name),
-        in_file = bazelrc_out_file,
+        in_file = ":_" + bazelrc_out_file,
         out_file = ".apko/.bazelrc",
         **kwargs
     )
