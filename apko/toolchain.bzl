@@ -4,6 +4,9 @@ ApkoInfo = provider(
     doc = "Information about how to invoke the apko executable.",
     fields = {
         "binary": "Path to an apko binary",
+        "version": "Version of the apko binary, e.g (0.12.3-foo)",
+        "version_major": "Version of the apko binary (e.g. 0)",
+        "version_minor": "Version of the apko binary (e.g. 12)",
     },
 )
 
@@ -16,7 +19,14 @@ def _apko_toolchain_impl(ctx):
         files = depset([binary]),
         runfiles = ctx.runfiles(files = [binary]),
     )
-    apko_info = ApkoInfo(binary = binary)
+    version = ctx.attr.version
+    split_version = version.split(".", 3)
+    apko_info = ApkoInfo(
+        binary = binary,
+        version = version,
+        version_major = int(split_version[0]),
+        version_minor = int(split_version[1]),
+    )
     toolchain_info = platform_common.ToolchainInfo(
         apko_info = apko_info,
         template_variables = template_variables,
@@ -37,6 +47,10 @@ apko_toolchain = rule(
             allow_single_file = True,
             executable = True,
             cfg = "exec",
+        ),
+        "version": attr.string(
+            doc = "A version of the apko binary.",
+            mandatory = True,
         ),
     },
     doc = "Defines an apko toolchain. See: https://docs.bazel.build/versions/main/toolchains.html#defining-toolchains.",
