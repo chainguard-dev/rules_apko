@@ -43,7 +43,7 @@ def _impl(ctx):
     supports_lockfile = (apko_info.version_major > 0) or (apko_info.version_minor >= 13)
     if supports_lockfile:
         inputs.append(lockfile)
-        args.add("--resolved-file={}".format(lockfile.path))
+        args.add("--lockfile={}".format(lockfile.path))
     else:
         deps.append(indexes)
 
