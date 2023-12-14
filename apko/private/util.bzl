@@ -95,7 +95,11 @@ def _normalize_sri(rctx, checksum):
     """
     checksum = checksum.split("-", 1)[1]
     p = rctx.path("sri.sh")
-    rctx.file(p, """echo "$1" | base64 -d | xxd -p -c 10000000 | tr -d '\\n'""", executable = True)
+    rctx.file(p, "\n".join([
+        """#!/usr/bin/env bash""",
+        """set -euxo pipefail""",
+        """echo "$1" | base64 -d | xxd -p -c 10000000 | tr -d '\\n'""",
+    ]), executable = True)
     r = rctx.execute([p, checksum])
     if r.return_code != 0:
         fail("""normalize_sri failed.\nstderr: {}\nstdout: {}""".format(r.stdout, r.stderr))
