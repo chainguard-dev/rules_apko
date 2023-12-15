@@ -53,12 +53,26 @@ def _apk_import_impl(rctx):
     data_output = "{}/{}.dat.tar.gz".format(output, data_sha256)
     apk_output = "{}/{}/{}-{}.apk".format(repo_escaped, rctx.attr.architecture, rctx.attr.package_name, rctx.attr.version)
 
-    rctx.download(
+    # TODO: Migrate to block API: https://github.com/bazelbuild/bazel/issues/19674 when released in bazel (7.1?).
+    sig_download_res1 = rctx.download(
         url = [_range(rctx.attr.url, rctx.attr.signature_range)],
         output = sig_output,
-        # TODO: signatures does not have stable checksums. find a way to fail gracefully.
         integrity = rctx.attr.signature_checksum,
+        allow_fail = True,
     )
+    if not sig_download_res1.success:
+        sig_download_res2 = rctx.download(
+            url = [_range(rctx.attr.url, rctx.attr.signature_range)],
+            output = sig_output,
+            allow_fail = False,
+        )
+        print(("Signature of pkg:{package_name} out of sync with the lock-file (downloaded: {down} expected: {exp})." +
+               " The signatures are known to be unstable. Please regenerate the lock-files.").format(
+            package_name = rctx.attr.package_name,
+            down = rctx.attr.signature_checksum,
+            exp = sig_download_res2.integrity,
+        ))  # buildifier: disable=print
+
     rctx.download(
         url = [_range(rctx.attr.url, rctx.attr.control_range)],
         output = control_output,
