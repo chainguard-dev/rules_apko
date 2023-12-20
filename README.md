@@ -25,7 +25,7 @@ Apko usage begins with an `apko.yaml` configuration file. The `apko resolve` too
 Assuming `apko_rules` are already loaded in your `MODULE.bazel` or `WORKSPACE` file one can call:
 `bazel run @rules_apko//apko resolve ./apko.yaml` to lock the dependencies and generate `apko.resolved.json` file.
 
-Than you import these base layers into Bazel:
+Then you import these base layers into Bazel:
 
 - With Bazel 6 and [bzlmod], call `apk.translate_lock` in `MODULE.bazel`
 - Otherwise, call `translate_apko_lock` in `WORKSPACE`
