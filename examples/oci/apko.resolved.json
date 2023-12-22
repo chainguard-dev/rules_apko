@@ -250,22 +250,22 @@
       },
       {
         "name": "wolfi-keys",
-        "url": "https://packages.wolfi.dev/os/aarch64/wolfi-keys-1-r5.apk",
-        "version": "1-r5",
+        "url": "https://packages.wolfi.dev/os/aarch64/wolfi-keys-1-r6.apk",
+        "version": "1-r6",
         "architecture": "aarch64",
         "signature": {
-          "range": "bytes=0-649",
-          "checksum": "sha1-gzWC3AAj7YIsQDzN/gvn8c9yAIU="
+          "range": "bytes=0-701",
+          "checksum": "sha1-hujpMZIRkPAAxrON0XvumHz0E34="
         },
         "control": {
-          "range": "bytes=650-927",
-          "checksum": "sha1-bv8UpjnaKOuomrjzKID7FZ1yh6Y="
+          "range": "bytes=702-1024",
+          "checksum": "sha1-i5TiiioECEGcPLeZ9X0T3hJRRCU="
         },
         "data": {
-          "range": "bytes=928-63884",
-          "checksum": "sha256-zf3o3DKaAdttzXGdVIQQtMqTadLz9zKJK5ZDblXbxSU="
+          "range": "bytes=1025-63940",
+          "checksum": "sha256-JM8ffY4kBK5YNH0R0aKboo7ERTqSzDxw1uefd6yn1WM="
         },
-        "checksum": "Q1bv8UpjnaKOuomrjzKID7FZ1yh6Y="
+        "checksum": "Q1i5TiiioECEGcPLeZ9X0T3hJRRCU="
       },
       {
         "name": "wolfi-base",
@@ -516,22 +516,22 @@
       },
       {
         "name": "wolfi-keys",
-        "url": "https://packages.wolfi.dev/os/x86_64/wolfi-keys-1-r5.apk",
-        "version": "1-r5",
+        "url": "https://packages.wolfi.dev/os/x86_64/wolfi-keys-1-r6.apk",
+        "version": "1-r6",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-648",
-          "checksum": "sha1-gRoSbfAGT9dw1PUvlDYIZQBVtig="
+          "range": "bytes=0-701",
+          "checksum": "sha1-piGtsGBZUszZkGt4ugAcIZUFhhw="
         },
         "control": {
-          "range": "bytes=649-957",
-          "checksum": "sha1-0fpy9hX9x84izBkTlUFtNXLEeqk="
+          "range": "bytes=702-1026",
+          "checksum": "sha1-EVYdBGaTpZ+jYyInPjD309oS3e0="
         },
         "data": {
-          "range": "bytes=958-63883",
-          "checksum": "sha256-33hX1bPb8tpZMsxDs8sUQchU8T7ptX3dpgoJd6GSZqo="
+          "range": "bytes=1027-63939",
+          "checksum": "sha256-IwQgSOqKOlqdQjav83oKKRiMuajvTbm3CpqSvC754ek="
         },
-        "checksum": "Q10fpy9hX9x84izBkTlUFtNXLEeqk="
+        "checksum": "Q1EVYdBGaTpZ+jYyInPjD309oS3e0="
       },
       {
         "name": "wolfi-base",
