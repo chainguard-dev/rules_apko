@@ -124,7 +124,7 @@ def _translate_apko_lock_impl(rctx):
 translate_apko_lock = repository_rule(
     implementation = _translate_apko_lock_impl,
     attrs = {
-        "lock": attr.label(doc = "label to the `apko.resolved.json` file.", mandatory = True),
+        "lock": attr.label(doc = "label to the `apko.lock.json` file.", mandatory = True),
         "target_name": attr.string(doc = "internal. do not use!"),
     },
     doc = _DOC,
