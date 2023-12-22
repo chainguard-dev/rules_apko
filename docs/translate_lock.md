@@ -1,6 +1,6 @@
 <!-- Generated with Stardoc: http://skydoc.bazel.build -->
 
-Repository rules for translating apko.resolved.json
+Repository rules for translating apko.lock.json
 
 <a id="translate_apko_lock"></a>
 
@@ -10,7 +10,7 @@ Repository rules for translating apko.resolved.json
 translate_apko_lock(<a href="#translate_apko_lock-name">name</a>, <a href="#translate_apko_lock-lock">lock</a>, <a href="#translate_apko_lock-repo_mapping">repo_mapping</a>, <a href="#translate_apko_lock-target_name">target_name</a>)
 </pre>
 
-Repository rule to generate starlark code from an `apko.resolved.json` file.
+Repository rule to generate starlark code from an `apko.lock.json` file.
 
 See [apko-cache.md](./apko-cache.md) documentation.
 

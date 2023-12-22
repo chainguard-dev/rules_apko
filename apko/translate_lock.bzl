@@ -1,8 +1,8 @@
-"""Repository rules for translating apko.resolved.json"""
+"""Repository rules for translating apko.lock.json"""
 
 load("//apko/private:util.bzl", "util")
 
-_DOC = """Repository rule to generate starlark code from an `apko.resolved.json` file.
+_DOC = """Repository rule to generate starlark code from an `apko.lock.json` file.
 
 See [apko-cache.md](./apko-cache.md) documentation.
 """
@@ -64,7 +64,7 @@ APK_KEYRING_TMPL = """\
 def _translate_apko_lock_impl(rctx):
     lock_file = util.parse_lock(rctx.read(rctx.attr.lock))
 
-    # We copy the lockfile (.resolved.json) to avoid visibility problems when we reference it from another module.
+    # We copy the lockfile (.lock.json) to avoid visibility problems when we reference it from another module.
     lock_file_local = "lockfile_copy"
     rctx.symlink(rctx.attr.lock, lock_file_local)
 
