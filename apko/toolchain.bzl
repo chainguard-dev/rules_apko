@@ -5,8 +5,6 @@ ApkoInfo = provider(
     fields = {
         "binary": "Path to an apko binary",
         "version": "Version of the apko binary, e.g (0.12.3-foo)",
-        "version_major": "Version of the apko binary (e.g. 0)",
-        "version_minor": "Version of the apko binary (e.g. 12)",
     },
 )
 
@@ -20,12 +18,9 @@ def _apko_toolchain_impl(ctx):
         runfiles = ctx.runfiles(files = [binary]),
     )
     version = ctx.attr.version
-    split_version = version.split(".", 3)
     apko_info = ApkoInfo(
         binary = binary,
         version = version,
-        version_major = int(split_version[0]),
-        version_minor = int(split_version[1]),
     )
     toolchain_info = platform_common.ToolchainInfo(
         apko_info = apko_info,

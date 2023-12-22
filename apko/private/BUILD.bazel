@@ -17,6 +17,7 @@ bzl_library(
     deps = [
         "apko_run",
         "@bazel_skylib//lib:paths",
+        "@bazel_skylib//lib:versions",
     ],
 )
 
