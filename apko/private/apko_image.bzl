@@ -41,7 +41,7 @@ def _impl(ctx):
     inputs = [ctx.file.config]
     deps = [apks, keyrings]
 
-    supports_lockfile = versions.is_at_least(apko_info.version, "0.13.0")
+    supports_lockfile = versions.is_at_least("0.13.0", apko_info.version)
     if supports_lockfile:
         inputs.append(lockfile)
         args.add("--lockfile={}".format(lockfile.path))
