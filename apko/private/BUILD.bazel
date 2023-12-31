@@ -16,7 +16,8 @@ bzl_library(
     visibility = ["//apko:__subpackages__"],
     deps = [
         "apko_run",
-        "@bazel_skylib//:lib",
+        "@bazel_skylib//lib:paths",
+        "@bazel_skylib//lib:versions",
     ],
 )
 
