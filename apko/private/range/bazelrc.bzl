@@ -1,6 +1,6 @@
 "helper macros for .bazelrc generation"
 
-load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_file")
 load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
 
 DEFAULT_REPOSITORIES = [
@@ -25,9 +25,11 @@ def apko_bazelrc(name = "apko_bazelrc", repositories = DEFAULT_REPOSITORIES, **k
     if native.package_name() != "":
         fail("apko_bazelrc() should only be called from the root BUILD file.")
 
+    bazelrc_out_file = "_{}_bazelrc".format(name)
+
     expand_template(
-        name = "{}_bazelrc".format(name),
-        out = "{}.bazelrc".format(name),
+        name = "_" + bazelrc_out_file,
+        out = bazelrc_out_file,
         substitutions = {
             "{common_entries}": "".join([
                 COMMON_TMPL.format(repo)
@@ -37,11 +39,18 @@ def apko_bazelrc(name = "apko_bazelrc", repositories = DEFAULT_REPOSITORIES, **k
         template = "@rules_apko//apko/private/range:range.bazelrc",
         **kwargs
     )
-    write_source_files(
+
+    write_source_file(
+        name = "_{}.range.sh".format(name),
+        in_file = ":_" + bazelrc_out_file,
+        out_file = ".apko/.bazelrc",
+        **kwargs
+    )
+    write_source_file(
         name = name,
-        files = {
-            ".apko/.bazelrc": "{}_bazelrc".format(name),
-            ".apko/range.sh": "@rules_apko//apko/private/range:range.sh",
-        },
+        additional_update_targets = ["_{}.range.sh".format(name)],
+        out_file = ".apko/range.sh",
+        in_file = "@rules_apko//apko/private/range:range.sh",
+        executable = True,
         **kwargs
     )
