@@ -68,8 +68,8 @@ bzl_library(
 )
 
 # Enables calling apko tool directly by bazel.
-# To resolve given `./apko.yaml` file into `./apko.resolved.json`, once can call:
-#   e.g. (cd ./examples/oci; bazel run @rules_apko//apko resolve ./apko.yaml)
+# To resolve given `./apko.yaml` file into `./apko.lock.json`, once can call:
+#   e.g. (cd ./examples/oci; bazel run @rules_apko//apko lock ./apko.yaml)
 apko_run(
     name = "apko",
     visibility = ["//visibility:public"],

@@ -7,6 +7,6 @@ apko="$output_base/$external_apko"
 
 
 for yaml in "./examples/"*"/apko.yaml" "./e2e/"*"/apko.yaml"; do
-  $apko resolve $yaml
+  $apko lock $yaml
 done
 

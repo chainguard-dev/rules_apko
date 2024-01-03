@@ -31,19 +31,19 @@ apk = use_extension(
 )
 apk.translate_lock(
     name = "examples_lock",
-    lock = "//examples/lock:apko.resolved.json",
+    lock = "//examples/lock:apko.lock.json",
 )
 apk.translate_lock(
     name = "examples_wolfi_base",
-    lock = "//examples/wolfi-base:apko.resolved.json",
+    lock = "//examples/wolfi-base:apko.lock.json",
 )
 apk.translate_lock(
     name = "examples_oci",
-    lock = "//examples/oci:apko.resolved.json",
+    lock = "//examples/oci:apko.lock.json",
 )
 apk.translate_lock(
     name = "examples_multi_arch_and_repo",
-    lock = "//examples/multi_arch_and_repo:apko.resolved.json",
+    lock = "//examples/multi_arch_and_repo:apko.lock.json",
 )
 use_repo(apk, "examples_multi_arch_and_repo")
 use_repo(apk, "examples_lock")

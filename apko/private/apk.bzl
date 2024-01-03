@@ -180,7 +180,7 @@ def _apk_filegroup_impl(ctx):
 apk_filegroup = rule(
     implementation = _apk_filegroup_impl,
     attrs = {
-        "lockfile": attr.label(doc = "Label to the `apko.resolved.json` file.", allow_single_file = True, mandatory = True),
+        "lockfile": attr.label(doc = "Label to the `apko.lock.json` file.", allow_single_file = True, mandatory = True),
         "keyrings": attr.label_list(doc = "Labels of the keyring (public key) files.", allow_files = True, mandatory = True),
         "apks": attr.label_list(doc = "Labels of the package (apk) files.", allow_files = True, mandatory = True),
         "indexes": attr.label_list(doc = "Labels of the APKINDEX files.", allow_files = True, mandatory = True),
