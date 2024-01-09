@@ -26,7 +26,8 @@
         "data": {
           "range": "bytes=1225-634880",
           "checksum": "sha256-KPwSgRdeAcnVvczowX1F54Aszov9ZI1cRXgtFZzepfg="
-        }
+        },
+        "checksum": "Q1odtIYtKyOCg6suF/cDaYpygL7hw="
       },
       {
         "name": "busybox",
@@ -44,7 +45,8 @@
         "data": {
           "range": "bytes=2302-946176",
           "checksum": "sha256-pDdzepugl8LYISmpJ2wGr885gfpwo2hi9ZMf4dQTi5s="
-        }
+        },
+        "checksum": "Q1aBWv1Kn2ASOLShUeDPoSLaozuMs="
       }
     ]
   }

@@ -4,7 +4,7 @@ commandTests:
     command: "curl"
     args: ["--version"]
     expectedOutput:
-      - curl 8.4.0
+      - curl 8.5.0
   - name: "os-release"
     command: "cat"
     args: ["/etc/os-release"]
