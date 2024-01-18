@@ -24,7 +24,7 @@ load("@rules_apko//apko:translate_lock.bzl", "translate_apko_lock")
 
 translate_apko_lock(
     name = "example_lock",
-    lock = "@//:apko.resolved.json",
+    lock = "@//:apko.lock.json",
 )
 
 load("@example_lock//:repositories.bzl", "apko_repositories")
