@@ -36,7 +36,7 @@ def _impl(ctx):
     ctx.actions.write(
         output = output,
         content = LAUNCHER_TEMPLATE
-            .replace("{{apko_binary}}", apko_info.binary.path)
+            .replace("{{apko_binary}}", apko_info.binary.short_path)
             .replace("{{workdir_env}}", "BUILD_" + ctx.attr.workdir.upper() + "_DIRECTORY"),
         is_executable = True,
     )
