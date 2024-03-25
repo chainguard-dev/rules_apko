@@ -1,6 +1,6 @@
 "Repository rules for importing remote apk packages"
 
-load(":bazelversion.bzl", "bazel_version_gte")
+load("@bazel_skylib//lib:versions.bzl", "versions")
 load(":util.bzl", "util")
 
 APK_IMPORT_TMPL = """\
@@ -43,7 +43,7 @@ To resolve this issue and enable partial package fetching, please follow the ste
 """.format(bytes[0]))
 
 def _download(rctx, url, rng, **kwargs):
-    if bazel_version_gte("7.1.0"):
+    if versions.is_at_least("7.1.0", native.bazel_version):
         return rctx.download(
             url = [url],
             headers = {"Range": [rng]},

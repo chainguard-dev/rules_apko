@@ -67,9 +67,3 @@ bzl_library(
     srcs = ["versions.bzl"],
     visibility = ["//apko:__subpackages__"],
 )
-
-bzl_library(
-    name = "bazelversion",
-    srcs = ["bazelversion.bzl"],
-    visibility = ["//apko:__subpackages__"],
-)

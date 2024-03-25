@@ -1,4 +1,4 @@
-name: CI
+name: test
 
 # Controls when the action will run.
 on:
@@ -48,7 +48,7 @@ jobs:
       - id: bazel_from_bazelversion
         run: echo "bazelversion=$(head -n 1 .bazelversion)" >> $GITHUB_OUTPUT
       - id: bazel_6
-        run: echo "bazelversion=6.4.0" >> $GITHUB_OUTPUT
+        run: echo "bazelversion=6.3.0" >> $GITHUB_OUTPUT
     outputs:
       # Will look like ["<version from .bazelversion>", "x.y.z"]
       bazelversions: ${{ toJSON(steps.*.outputs.bazelversion) }}
@@ -73,7 +73,7 @@ jobs:
         bzlmodEnabled: [true, false]
         exclude:
           # Root module is BZLMOD only, do not test it without bzlmod enabled.
-          - bzlmodEnable: false
+          - bzlmodEnabled: false
             folder: .
 
     # Steps represent a sequence of tasks that will be executed as part of the job
