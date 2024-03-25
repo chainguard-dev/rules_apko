@@ -73,7 +73,7 @@ jobs:
         bzlmodEnabled: [true, false]
         exclude:
           # Root module is BZLMOD only, do not test it without bzlmod enabled.
-          - bzlmodEnable: false
+          - bzlmodEnabled: false
             folder: .
 
     # Steps represent a sequence of tasks that will be executed as part of the job
