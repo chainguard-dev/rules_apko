@@ -1,8 +1,9 @@
 # Initial setup
 
-rules_apko requires a one-time setup to configure bazel to be able to make partial fetches.
+You can skip initial setup if you are using Bazel 7.1 or above. Users who are still Bazel 6.x should perform this one time initial setup.
+If you have already performed this initial setup but have already upgraded to Bazel >=7.1, you can revert changes proposed by this document.
 
-> See the issue: https://github.com/bazelbuild/bazel/issues/17829
+rules_apko requires a one-time setup to configure bazel to be able to make partial fetches.
 
 Paste this into your root BUILD file
 

@@ -16,17 +16,87 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # matrix-prep-* steps generate JSON used to create a dynamic actions matrix.
+  # Inspired from
+  # https://stackoverflow.com/questions/65384420/how-to-make-a-github-action-matrix-element-conditional
+
+  matrix-prep-os:
+    # Prepares the 'os' axis of the test matrix, to reduce costs since GitHub hosted runners cost more on some platforms.
+    # https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#included-storage-and-minutes
+    runs-on: ubuntu-latest
+    steps:
+      - id: linux
+        run: echo "os=ubuntu-latest" >> $GITHUB_OUTPUT
+      - id: windows
+        run: echo "os=windows-latest" >> $GITHUB_OUTPUT
+        # Only run on main branch (or PR branches that contain 'windows') to minimize Windows minutes (billed at 2X)
+        if: (github.ref == 'refs/heads/main' || contains(github.head_ref, 'windows')) && !inputs.exclude_windows
+      - id: macos
+        run: echo "os=macos-latest" >> $GITHUB_OUTPUT
+        # Only run on main branch (or PR branches that contain 'macos') to minimize macOS minutes (billed at 10X)
+        if: github.ref == 'refs/heads/main' || contains(github.head_ref, 'macos')
+    outputs:
+      # Will look like ["ubuntu-latest", "windows-latest", "macos-latest"]
+      os: ${{ toJSON(steps.*.outputs.os) }}
+
+  matrix-prep-bazelversion:
+    # Prepares the 'bazelversion' axis of the test matrix
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # NB: we assume this is Bazel 7
+      - id: bazel_from_bazelversion
+        run: echo "bazelversion=$(head -n 1 .bazelversion)" >> $GITHUB_OUTPUT
+      - id: bazel_6
+        run: echo "bazelversion=6.4.0" >> $GITHUB_OUTPUT
+    outputs:
+      # Will look like ["<version from .bazelversion>", "x.y.z"]
+      bazelversions: ${{ toJSON(steps.*.outputs.bazelversion) }}
+
   test:
-    uses: bazel-contrib/.github/.github/workflows/bazel.yaml@29e53247c6366e30acbedfc767f58f79fc05836c
-    with:
-      folders: |
-        [
-          ".",
-          "e2e/smoke"
-        ]
-      exclude: |
-        [
-          {"bazelversion": "5.4.0"},
-          {"os": "windows-latest"},
-          {"os": "macos-latest"}
-        ]
+    # The type of runner that the job will run on
+    runs-on: ${{ matrix.os }}
+
+    needs:
+      - matrix-prep-bazelversion
+      - matrix-prep-os
+
+    # Run bazel test in each workspace with each version of Bazel supported
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJSON(needs.matrix-prep-os.outputs.os) }}
+        bazelversion: ${{ fromJSON(needs.matrix-prep-bazelversion.outputs.bazelversions) }}
+        folder:
+          - .
+          - e2e/smoke
+        bzlmodEnabled: [true, false]
+        exclude:
+          # Root module is BZLMOD only, do not test it without bzlmod enabled.
+          - bzlmodEnable: false
+            folder: .
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      - uses: bazel-contrib/setup-bazel@0.8.0
+        with:
+          repository-cache: true
+          bazelrc: |
+            common --announce_rc --color=yes --enable_bzlmod=${{ matrix.bzlmodEnabled }} 
+            ${{  (matrix.bazelversion == '6.4.0' && 'try-import %workspace%/.apko/.bazelrc') || '' }}
+
+      - name: Configure Bazel version
+        working-directory: ${{ matrix.folder }}
+        run: echo "${{ matrix.bazelversion }}" > .bazelversion
+
+      # See https://github.com/bazel-contrib/publish-to-bcr#including-patches
+      - name: verify bcr patches
+        if: matrix.bzlmodEnabled && hashFiles('.bcr/patches/*.patch') != ''
+        run: patch --dry-run -p1 < .bcr/patches/*.patch
+
+      - name: Test
+        working-directory: ${{ matrix.folder }}
+        run: bazel test //...
