@@ -153,8 +153,9 @@ def apko_image(name, contents, config, tag, output = "oci", architecture = None,
         for _ in native.glob([lock_json_name]):
             apko_run(
                 name = name + ".lock",
-                args = ["lock", config_label.package + "/" + config_label.name],
+                args = ["lock", "$(location {})".format(config), "--output={}".format(lock_json_name)],
                 workdir = "workspace",
+                data = [config],
             )
 
         resolved_json_name = config_label.name.removesuffix(".yaml") + ".resolved.json"
@@ -163,7 +164,8 @@ def apko_image(name, contents, config, tag, output = "oci", architecture = None,
         for _ in native.glob([resolved_json_name]):
             apko_run(
                 name = name + ".resolve",
-                args = ["resolve", config_label.package + "/" + config_label.name],
+                args = ["resolve", "$(location {})".format(config), "--output={}".format(lock_json_name)],
                 workdir = "workspace",
+                data = [config],
                 deprecated = "Please use .lock target instead. Rename your .resolve.json file to .lock.json file.",
             )
