@@ -5,8 +5,13 @@ _WORKDIR_DOC = """
     - working - the dir where bazel was called.
     - workspace - the root directory of the bazel workspace (usually repository root)"""
 
+_DATA_DOC = """
+  Any files that will be used for the apko run
+"""
+
 _ATTRS = {
     "workdir": attr.string(default = "working", doc = _WORKDIR_DOC, mandatory = False, values = ["working", "workspace"]),
+    "data": attr.label_list(allow_files = True, doc = _DATA_DOC),
 }
 
 _DOC = """
@@ -41,7 +46,13 @@ def _impl(ctx):
         is_executable = True,
     )
 
-    return DefaultInfo(executable = output, runfiles = ctx.runfiles(files = [apko_info.binary]))
+    return DefaultInfo(
+        executable = output,
+        files = depset(ctx.files.data),
+        runfiles = ctx.runfiles(
+            files = [apko_info.binary],
+        ),
+    )
 
 apko_run_lib = struct(
     attrs = _ATTRS,
