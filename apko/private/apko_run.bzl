@@ -46,7 +46,13 @@ def _impl(ctx):
         is_executable = True,
     )
 
-    return DefaultInfo(executable = output, runfiles = ctx.runfiles(files = [apko_info.binary]))
+    return DefaultInfo(
+        executable = output,
+        files = depset(ctx.files.data),
+        runfiles = ctx.runfiles(
+            files = [apko_info.binary],
+        ),
+    )
 
 apko_run_lib = struct(
     attrs = _ATTRS,
