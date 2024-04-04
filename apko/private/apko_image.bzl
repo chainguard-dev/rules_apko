@@ -153,7 +153,8 @@ def apko_image(name, contents, config, tag, output = "oci", architecture = None,
         for _ in native.glob([lock_json_name]):
             apko_run(
                 name = name + ".lock",
-                args = ["lock", "$(execpath {})".format(config), "--output={}".format(lock_json_name)],
+                # args is subject to make variables substitution: https://bazel.build/reference/be/common-definitions#common-attributes-binaries
+                args = ["lock", "$(execpath {})".format(config), "--output={}/{}".format(config_label.package, lock_json_name)],
                 workdir = "workspace",
                 data = [config],
             )
@@ -164,7 +165,8 @@ def apko_image(name, contents, config, tag, output = "oci", architecture = None,
         for _ in native.glob([resolved_json_name]):
             apko_run(
                 name = name + ".resolve",
-                args = ["resolve", "$(execpath {})".format(config), "--output={}".format(lock_json_name)],
+                # args is subject to make variables substitution: https://bazel.build/reference/be/common-definitions#common-attributes-binaries
+                args = ["resolve", "$(execpath {})".format(config), "--output={}/{}".format(config_label.package, lock_json_name)],
                 workdir = "workspace",
                 data = [config],
                 deprecated = "Please use .lock target instead. Rename your .resolve.json file to .lock.json file.",
