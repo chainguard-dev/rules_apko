@@ -64,9 +64,10 @@ APK_KEYRING_TMPL = """\
 def _translate_apko_lock_impl(rctx):
     lock_file = util.parse_lock(rctx.read(rctx.attr.lock))
 
-    # We copy the lockfile (.lock.json) to avoid visibility problems when we reference it from another module.
+    # We copy the lockfile (.lock.json) to avoid visibility problems when we reference it from another module,
+    # and instead of symlinking in order to avoid "missing input file '@@<lock_repo>//:lockfile_copy'" errors.
     lock_file_local = "lockfile_copy"
-    rctx.symlink(rctx.attr.lock, lock_file_local)
+    rctx.file(lock_file_local, rctx.read(rctx.attr.lock))
 
     apks = []
     indexes = []
