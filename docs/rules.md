@@ -48,7 +48,7 @@ See [initial setup](./initial-setup.md) documentation for more information.
 ## apko_image
 
 <pre>
-apko_image(<a href="#apko_image-name">name</a>, <a href="#apko_image-contents">contents</a>, <a href="#apko_image-config">config</a>, <a href="#apko_image-tag">tag</a>, <a href="#apko_image-output">output</a>, <a href="#apko_image-architecture">architecture</a>, <a href="#apko_image-args">args</a>, <a href="#apko_image-kwargs">kwargs</a>)
+apko_image(<a href="#apko_image-name">name</a>, <a href="#apko_image-contents">contents</a>, <a href="#apko_image-config">config</a>, <a href="#apko_image-tag">tag</a>, <a href="#apko_image-output">output</a>, <a href="#apko_image-architecture">architecture</a>, <a href="#apko_image-args">args</a>, <a href="#apko_image-lockfile_basename">lockfile_basename</a>, <a href="#apko_image-kwargs">kwargs</a>)
 </pre>
 
 Build OCI images from APK packages directly without Dockerfile
@@ -98,6 +98,7 @@ For more examples checkout the [examples](/examples) directory.
 | <a id="apko_image-output"></a>output |  "oci" of  "docker",   |  <code>"oci"</code> |
 | <a id="apko_image-architecture"></a>architecture |  the CPU architecture which this image should be built to run on. See https://github.com/chainguard-dev/apko/blob/main/docs/apko_file.md#archs-top-level-element"),   |  <code>None</code> |
 | <a id="apko_image-args"></a>args |  additional arguments to provide when running the <code>apko build</code> command.   |  <code>[]</code> |
+| <a id="apko_image-lockfile_basename"></a>lockfile_basename |  basename of the lockfile. If provided, .lock target will be generated if such file exists in the same package as the rule instantiation.   |  <code>None</code> |
 | <a id="apko_image-kwargs"></a>kwargs |  other common arguments like: tags, visibility.   |  none |
 
 
