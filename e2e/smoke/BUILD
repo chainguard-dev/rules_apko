@@ -3,6 +3,7 @@
 load("@rules_apko//apko:defs.bzl", "apko_bazelrc", "apko_image")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
+load(":apko_config.bzl", "apko_config_example")
 
 apko_bazelrc()
 
@@ -28,7 +29,27 @@ copy_file(
 
 apko_image(
     name = "lock_from_generated",
-    config = ":apko.generated.yaml",
+    config = ":apko.yaml",
     contents = "@example_lock//:contents",
     tag = "lock:latest",
+)
+
+apko_config_example(
+    name = "generated_config_with_extra_files",
+    config = ":apko.yaml",
+)
+
+apko_image(
+    name = "image_from_config_with_extra_files",
+    config = ":generated_config_with_extra_files",
+    contents = "@example_lock//:contents",
+    lockfile_basename = "apko.lock.json",
+    tag = "lock:latest",
+)
+
+build_test(
+    name = "test_generated_config",
+    targets = [
+        ":image_from_config_with_extra_files",
+    ],
 )
