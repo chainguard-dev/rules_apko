@@ -29,9 +29,16 @@ copy_file(
 
 apko_image(
     name = "lock_from_generated",
-    config = ":apko.yaml",
+    config = ":apko.generated.yaml",
     contents = "@example_lock//:contents",
     tag = "lock:latest",
+)
+
+build_test(
+    name = "test_generated_config",
+    targets = [
+        ":lock_from_generated",
+    ],
 )
 
 apko_config_example(
@@ -48,7 +55,7 @@ apko_image(
 )
 
 build_test(
-    name = "test_generated_config",
+    name = "test_generated_config_with_extra_files",
     targets = [
         ":image_from_config_with_extra_files",
     ],
