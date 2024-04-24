@@ -84,22 +84,22 @@
       },
       {
         "name": "libcrypto3",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/aarch64/libcrypto3-3.1.4-r5.apk",
-        "version": "3.1.4-r5",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/aarch64/libcrypto3-3.1.4-r6.apk",
+        "version": "3.1.4-r6",
         "architecture": "aarch64",
         "signature": {
           "range": "bytes=0-665",
-          "checksum": "sha1-++51ng2bvqTQmtEQTEcpqJI52ns="
+          "checksum": "sha1-ORBh6wB10JlodByGJBfJhdL8+yI="
         },
         "control": {
-          "range": "bytes=666-1218",
-          "checksum": "sha1-KyotT8RRUF/l4aWw1cJc8mDcdNY="
+          "range": "bytes=666-1216",
+          "checksum": "sha1-tNCzY/HqkUVqboa969DYTpnv8VQ="
         },
         "data": {
-          "range": "bytes=1219-4329472",
-          "checksum": "sha256-pflJdPm0TPd6Y/Cz9Nwx8Jx3gSbTVKdlH1FLBUmeQow="
+          "range": "bytes=1217-4329472",
+          "checksum": "sha256-Lbq9vgZ5aR7KX4v1ecxezFLns/2XliBNMngu32QTFf0="
         },
-        "checksum": "Q1KyotT8RRUF/l4aWw1cJc8mDcdNY="
+        "checksum": "Q1tNCzY/HqkUVqboa969DYTpnv8VQ="
       },
       {
         "name": "ca-certificates",
@@ -331,22 +331,22 @@
       },
       {
         "name": "libssl3",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/aarch64/libssl3-3.1.4-r5.apk",
-        "version": "3.1.4-r5",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/aarch64/libssl3-3.1.4-r6.apk",
+        "version": "3.1.4-r6",
         "architecture": "aarch64",
         "signature": {
-          "range": "bytes=0-665",
-          "checksum": "sha1-cWufQyqlRcRnBp+UFDJEPJV260c="
+          "range": "bytes=0-666",
+          "checksum": "sha1-rrwJJ+fMY8GNmq3sH+PL7T11Tqk="
         },
         "control": {
-          "range": "bytes=666-1221",
-          "checksum": "sha1-hOGQ01jBuIj0dH8HfrTRAhODZNI="
+          "range": "bytes=667-1221",
+          "checksum": "sha1-CqkbbEwhHQwvD/gATYe2H8TDxCg="
         },
         "data": {
           "range": "bytes=1222-622592",
-          "checksum": "sha256-wSLIfB9gxp5XbkEb2cOHJhiK2toXVdOcrGm2E/YYR+Q="
+          "checksum": "sha256-t7nj5+gxxx3iHA54IppV8QEDIIGS+KGHFOad0wS+lYk="
         },
-        "checksum": "Q1hOGQ01jBuIj0dH8HfrTRAhODZNI="
+        "checksum": "Q1CqkbbEwhHQwvD/gATYe2H8TDxCg="
       },
       {
         "name": "libcurl",
@@ -768,22 +768,22 @@
       },
       {
         "name": "openssl",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/aarch64/openssl-3.1.4-r5.apk",
-        "version": "3.1.4-r5",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/aarch64/openssl-3.1.4-r6.apk",
+        "version": "3.1.4-r6",
         "architecture": "aarch64",
         "signature": {
           "range": "bytes=0-666",
-          "checksum": "sha1-oaq+tbjyhlm9D8NGvdQj8xhE/qk="
+          "checksum": "sha1-TePa3u/5R1kcq2+MQ1YqaFh8IZA="
         },
         "control": {
-          "range": "bytes=667-1267",
-          "checksum": "sha1-f9lnNFYK+jN6/xlEn81CoYP2Qaw="
+          "range": "bytes=667-1263",
+          "checksum": "sha1-ZIrUlYfXQLaOs3f6rIBZgqHVjEc="
         },
         "data": {
-          "range": "bytes=1268-905216",
-          "checksum": "sha256-jKM6xWPK2GOQjGowcw95XRHfjvBKgUdTR2xQZLzbf3w="
+          "range": "bytes=1264-905216",
+          "checksum": "sha256-82IUwC1M1p3Guw3ntxJ97xZ98SBEtVxEoJFMQTHMhtA="
         },
-        "checksum": "Q1f9lnNFYK+jN6/xlEn81CoYP2Qaw="
+        "checksum": "Q1ZIrUlYfXQLaOs3f6rIBZgqHVjEc="
       },
       {
         "name": "unzip",
@@ -863,22 +863,22 @@
       },
       {
         "name": "libcrypto3",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/libcrypto3-3.1.4-r5.apk",
-        "version": "3.1.4-r5",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/libcrypto3-3.1.4-r6.apk",
+        "version": "3.1.4-r6",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-662",
-          "checksum": "sha1-jP7OFAa9aPGCF2+1QWQE0S1H15A="
+          "range": "bytes=0-665",
+          "checksum": "sha1-EuLCcdRSVLnDE3wsX8xj33stuEw="
         },
         "control": {
-          "range": "bytes=663-1239",
-          "checksum": "sha1-YpyAJrqoHxUEdsRMkv4VogQf05U="
+          "range": "bytes=666-1241",
+          "checksum": "sha1-K7Yw02pPtGF9Ai8krUa1XWcUTCw="
         },
         "data": {
-          "range": "bytes=1240-4579328",
-          "checksum": "sha256-9K8JgK2zLlGpGr+LI7O+VOJL4ZR7806jpgKKrDbgfOg="
+          "range": "bytes=1242-4579328",
+          "checksum": "sha256-Esgr0wAe7QJlt+K0v8nE4F22rnhmYkrvsSFD5CLVHtQ="
         },
-        "checksum": "Q1YpyAJrqoHxUEdsRMkv4VogQf05U="
+        "checksum": "Q1K7Yw02pPtGF9Ai8krUa1XWcUTCw="
       },
       {
         "name": "ca-certificates",
@@ -1110,22 +1110,22 @@
       },
       {
         "name": "libssl3",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/libssl3-3.1.4-r5.apk",
-        "version": "3.1.4-r5",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/libssl3-3.1.4-r6.apk",
+        "version": "3.1.4-r6",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-662",
-          "checksum": "sha1-dnb2ITQHAQ0oWtbnBnE92r2wZcQ="
+          "range": "bytes=0-667",
+          "checksum": "sha1-bhUbbQECDSQB7HNE/cE2dyO41Bk="
         },
         "control": {
-          "range": "bytes=663-1240",
-          "checksum": "sha1-UDFBsIBmN9KL+EE457Ud1NN0XSE="
+          "range": "bytes=668-1246",
+          "checksum": "sha1-/Xzu2/9Vk56wJ44nNWD5cRwl3Tw="
         },
         "data": {
-          "range": "bytes=1241-565248",
-          "checksum": "sha256-YFYj0ixbdez2rcUcPpY6wAk8O0AbPzjWXRnqKmdjzh8="
+          "range": "bytes=1247-565248",
+          "checksum": "sha256-/T+4bsigAoE0nBxPSvM0lvQoVhk4gdq7WIz34+ZsL5o="
         },
-        "checksum": "Q1UDFBsIBmN9KL+EE457Ud1NN0XSE="
+        "checksum": "Q1/Xzu2/9Vk56wJ44nNWD5cRwl3Tw="
       },
       {
         "name": "libcurl",
@@ -1547,22 +1547,22 @@
       },
       {
         "name": "openssl",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/openssl-3.1.4-r5.apk",
-        "version": "3.1.4-r5",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/openssl-3.1.4-r6.apk",
+        "version": "3.1.4-r6",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-667",
-          "checksum": "sha1-z1KgEgjBwJYCoFurAo3AvU3jIhE="
+          "range": "bytes=0-666",
+          "checksum": "sha1-X9gwtgSmSOuJLB1zTsLThL0x7VM="
         },
         "control": {
-          "range": "bytes=668-1289",
-          "checksum": "sha1-buKVPeknXdNPIJh08QXgHLkE/hU="
+          "range": "bytes=667-1287",
+          "checksum": "sha1-UKPr3nKGqu3TVr8uIpttvy4TuE8="
         },
         "data": {
-          "range": "bytes=1290-770048",
-          "checksum": "sha256-8xpZMDurXq5IGFlvAJoMxTC192fYTEyvuKu4VdjJwHg="
+          "range": "bytes=1288-770048",
+          "checksum": "sha256-UC4Z30suf9f2yH82Nk/xZhQluWJ2lXKKucyrm/McNII="
         },
-        "checksum": "Q1buKVPeknXdNPIJh08QXgHLkE/hU="
+        "checksum": "Q1UKPr3nKGqu3TVr8uIpttvy4TuE8="
       },
       {
         "name": "unzip",
