@@ -2,6 +2,24 @@
 
 Public API re-exports
 
+<a id="ApkoConfigInfo"></a>
+
+## ApkoConfigInfo
+
+<pre>
+ApkoConfigInfo(<a href="#ApkoConfigInfo-files">files</a>)
+</pre>
+
+Information about apko config. May be used when generating apko config file instead of using hardcoded ones.
+
+**FIELDS**
+
+
+| Name  | Description |
+| :------------- | :------------- |
+| <a id="ApkoConfigInfo-files"></a>files |  depset of files that will be needed for building.    |
+
+
 <a id="apko_bazelrc"></a>
 
 ## apko_bazelrc

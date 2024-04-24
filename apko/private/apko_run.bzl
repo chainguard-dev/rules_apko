@@ -1,5 +1,7 @@
 "A rule for running apko - convenience layer to stay within consistent versions."
 
+load("//apko/private:image_config.bzl", "ApkoConfigInfo")
+
 _WORKDIR_DOC = """
   The dir where apko will get executed:
     - working - the dir where bazel was called.
@@ -46,9 +48,14 @@ def _impl(ctx):
         is_executable = True,
     )
 
+    additional_files = []
+    for data in ctx.attr.data:
+        if ApkoConfigInfo in data:
+            additional_files += data[ApkoConfigInfo].files.to_list()
+
     return DefaultInfo(
         executable = output,
-        files = depset(ctx.files.data),
+        files = depset(ctx.files.data + additional_files),
         runfiles = ctx.runfiles(
             files = [apko_info.binary],
         ),

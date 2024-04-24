@@ -150,6 +150,7 @@ def apko_image(name, contents, config, tag, output = "oci", architecture = None,
 
     # We generate the `.lock` (or `.resolve`)s target only if the config (apko.yaml file) is in the same package as the apko_image rule.
     if config_label.workspace_name == "" and config_label.package == native.package_name() and config_label.name.endswith(".yaml"):
+        package_prefix = config_label.package + "/" if config_label.package else ""
         lock_json_name = config_label.name.removesuffix(".yaml") + ".lock.json"
 
         # We generate the .lock target only if the `.apko.lock.json` file exists in the same package.
@@ -157,7 +158,7 @@ def apko_image(name, contents, config, tag, output = "oci", architecture = None,
             apko_run(
                 name = name + ".lock",
                 # args is subject to make variables substitution: https://bazel.build/reference/be/common-definitions#common-attributes-binaries
-                args = ["lock", "$(execpath {})".format(config), "--output={}/{}".format(config_label.package, lock_json_name)],
+                args = ["lock", "$(execpath {})".format(config), "--output={}{}".format(package_prefix, lock_json_name)],
                 workdir = "workspace",
                 data = [config],
             )
@@ -169,7 +170,7 @@ def apko_image(name, contents, config, tag, output = "oci", architecture = None,
             apko_run(
                 name = name + ".resolve",
                 # args is subject to make variables substitution: https://bazel.build/reference/be/common-definitions#common-attributes-binaries
-                args = ["resolve", "$(execpath {})".format(config), "--output={}/{}".format(config_label.package, lock_json_name)],
+                args = ["resolve", "$(execpath {})".format(config), "--output={}{}".format(package_prefix, resolved_json_name)],
                 workdir = "workspace",
                 data = [config],
                 deprecated = "Please use .lock target instead. Rename your .resolve.json file to .lock.json file.",
