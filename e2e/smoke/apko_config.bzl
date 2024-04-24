@@ -20,6 +20,5 @@ apko_config_example = rule(
     implementation = _apko_config_example_impl,
     attrs = {
         "config": attr.label(allow_single_file = True),
-        "out": attr.output(),
     },
 )
