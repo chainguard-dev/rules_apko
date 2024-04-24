@@ -1,6 +1,7 @@
 "A rule for running apko with prepopulated cache"
 
 load("//apko/private:apko_run.bzl", "apko_run")
+load("//apko/private:image_config.bzl", "ApkoConfigInfo")
 load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@bazel_skylib//lib:versions.bzl", "versions")
 
@@ -39,6 +40,8 @@ def _impl(ctx):
     keyrings = ctx.attr.contents[OutputGroupInfo].keyrings
 
     inputs = [ctx.file.config]
+    if ApkoConfigInfo in ctx.attr.config:
+        inputs += ctx.atrr.config[ApkoConfigInfo].files.to_list()
     deps = [apks, keyrings]
 
     supports_lockfile = versions.is_at_least("0.13.0", apko_info.version)
