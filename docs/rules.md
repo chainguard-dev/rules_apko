@@ -2,6 +2,26 @@
 
 Public API re-exports
 
+<a id="apko_config"></a>
+
+## apko_config
+
+<pre>
+apko_config(<a href="#apko_config-name">name</a>, <a href="#apko_config-config">config</a>, <a href="#apko_config-include">include</a>)
+</pre>
+
+
+
+**ATTRIBUTES**
+
+
+| Name  | Description | Type | Mandatory | Default |
+| :------------- | :------------- | :------------- | :------------- | :------------- |
+| <a id="apko_config-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
+| <a id="apko_config-config"></a>config |  -   | <a href="https://bazel.build/concepts/labels">Label</a> | optional | <code>None</code> |
+| <a id="apko_config-include"></a>include |  -   | <a href="https://bazel.build/concepts/labels">Label</a> | optional | <code>None</code> |
+
+
 <a id="ApkoConfigInfo"></a>
 
 ## ApkoConfigInfo
@@ -48,7 +68,7 @@ See [initial setup](./initial-setup.md) documentation for more information.
 ## apko_image
 
 <pre>
-apko_image(<a href="#apko_image-name">name</a>, <a href="#apko_image-contents">contents</a>, <a href="#apko_image-config">config</a>, <a href="#apko_image-tag">tag</a>, <a href="#apko_image-output">output</a>, <a href="#apko_image-architecture">architecture</a>, <a href="#apko_image-args">args</a>, <a href="#apko_image-lockfile_basename">lockfile_basename</a>, <a href="#apko_image-kwargs">kwargs</a>)
+apko_image(<a href="#apko_image-name">name</a>, <a href="#apko_image-contents">contents</a>, <a href="#apko_image-config">config</a>, <a href="#apko_image-tag">tag</a>, <a href="#apko_image-output">output</a>, <a href="#apko_image-architecture">architecture</a>, <a href="#apko_image-args">args</a>, <a href="#apko_image-kwargs">kwargs</a>)
 </pre>
 
 Build OCI images from APK packages directly without Dockerfile
@@ -98,7 +118,26 @@ For more examples checkout the [examples](/examples) directory.
 | <a id="apko_image-output"></a>output |  "oci" of  "docker",   |  <code>"oci"</code> |
 | <a id="apko_image-architecture"></a>architecture |  the CPU architecture which this image should be built to run on. See https://github.com/chainguard-dev/apko/blob/main/docs/apko_file.md#archs-top-level-element"),   |  <code>None</code> |
 | <a id="apko_image-args"></a>args |  additional arguments to provide when running the <code>apko build</code> command.   |  <code>[]</code> |
-| <a id="apko_image-lockfile_basename"></a>lockfile_basename |  basename of the lockfile. If provided, .lock target will be generated if such file exists in the same package as the rule instantiation.   |  <code>None</code> |
 | <a id="apko_image-kwargs"></a>kwargs |  other common arguments like: tags, visibility.   |  none |
+
+
+<a id="apko_lock"></a>
+
+## apko_lock
+
+<pre>
+apko_lock(<a href="#apko_lock-name">name</a>, <a href="#apko_lock-config">config</a>, <a href="#apko_lock-lockfile_name">lockfile_name</a>)
+</pre>
+
+
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="apko_lock-name"></a>name |  <p align="center"> - </p>   |  none |
+| <a id="apko_lock-config"></a>config |  <p align="center"> - </p>   |  none |
+| <a id="apko_lock-lockfile_name"></a>lockfile_name |  <p align="center"> - </p>   |  none |
 
 

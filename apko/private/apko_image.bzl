@@ -99,7 +99,6 @@ def apko_image(
         output = "oci",
         architecture = None,
         args = [],
-        lockfile_basename = None,
         **kwargs):
     """Build OCI images from APK packages directly without Dockerfile
 
@@ -143,7 +142,6 @@ def apko_image(
      architecture: the CPU architecture which this image should be built to run on. See https://github.com/chainguard-dev/apko/blob/main/docs/apko_file.md#archs-top-level-element"),
      tag:          tag to apply to the resulting docker tarball. only applicable when `output` is `docker`
      args:         additional arguments to provide when running the `apko build` command.
-     lockfile_basename: basename of the lockfile. If provided, .lock target will be generated if such file exists in the same package as the rule instantiation.
      **kwargs:       other common arguments like: tags, visibility.
     """
     _apko_image(
@@ -159,16 +157,15 @@ def apko_image(
     config_label = native.package_relative_label(config)
 
     # We generate the `.lock` (or `.resolve`)s target only if the config (apko.yaml file) is in the same package as the apko_image rule.
-    if config_label.workspace_name == "" and config_label.package == native.package_name() and (config_label.name.endswith(".yaml") or lockfile_basename):
-        package_prefix = config_label.package + "/" if config_label.package else ""
-        lock_json_name = lockfile_basename if lockfile_basename else config_label.name.removesuffix(".yaml") + ".lock.json"
+    if config_label.workspace_name == "" and config_label.package == native.package_name() and config_label.name.endswith(".yaml"):
+        lock_json_name = config_label.name.removesuffix(".yaml") + ".lock.json"
 
         # We generate the .lock target only if the `.apko.lock.json` file exists in the same package.
         for _ in native.glob([lock_json_name]):
             apko_run(
                 name = name + ".lock",
                 # args is subject to make variables substitution: https://bazel.build/reference/be/common-definitions#common-attributes-binaries
-                args = ["lock", "$(execpath {})".format(config), "--output={}{}".format(package_prefix, lock_json_name)],
+                args = ["lock", "$(execpath {})".format(config), "--output={}/{}".format(config_label.package, lock_json_name)],
                 workdir = "workspace",
                 data = [config],
             )
@@ -180,7 +177,7 @@ def apko_image(
             apko_run(
                 name = name + ".resolve",
                 # args is subject to make variables substitution: https://bazel.build/reference/be/common-definitions#common-attributes-binaries
-                args = ["resolve", "$(execpath {})".format(config), "--output={}{}".format(package_prefix, resolved_json_name)],
+                args = ["resolve", "$(execpath {})".format(config), "--output={}/{}".format(config_label.package, lock_json_name)],
                 workdir = "workspace",
                 data = [config],
                 deprecated = "Please use .lock target instead. Rename your .resolve.json file to .lock.json file.",

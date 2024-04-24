@@ -1,9 +1,8 @@
 """Provides a simple way to test your rules as an external workspace."""
 
-load("@rules_apko//apko:defs.bzl", "apko_bazelrc", "apko_image")
+load("@rules_apko//apko:defs.bzl", "apko_bazelrc", "apko_config", "apko_image", "apko_lock")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
-load(":apko_config.bzl", "apko_config_example")
 
 apko_bazelrc()
 
@@ -27,9 +26,25 @@ copy_file(
     out = "apko.generated.yaml",
 )
 
+apko_config(
+    name = "apko_config_include",
+    include = ":apko.generated.yaml",
+)
+
+apko_config(
+    name = "apko_config_with_config",
+    include = ":apko_config_include",
+    config = ":environment_only.apko.yaml",
+)
+
+apko_config(
+    name = "apko_config",
+    config = ":apko_config_with_config",
+)
+
 apko_image(
-    name = "lock_from_generated",
-    config = ":apko.generated.yaml",
+    name = "image_from_generated_config",
+    config = ":apko_config",
     contents = "@example_lock//:contents",
     tag = "lock:latest",
 )
@@ -37,26 +52,12 @@ apko_image(
 build_test(
     name = "test_generated_config",
     targets = [
-        ":lock_from_generated",
+        ":image_from_generated_config",
     ],
 )
 
-apko_config_example(
-    name = "generated_config_with_extra_files",
-    config = ":apko.yaml",
-)
-
-apko_image(
-    name = "image_from_config_with_extra_files",
-    config = ":generated_config_with_extra_files",
-    contents = "@example_lock//:contents",
-    lockfile_basename = "apko.lock.json",
-    tag = "lock:latest",
-)
-
-build_test(
-    name = "test_generated_config_with_extra_files",
-    targets = [
-        ":image_from_config_with_extra_files",
-    ],
+apko_lock(
+    name = "lock_from_generated_config",
+    config = ":apko_config",
+    lockfile_name = "apko.generated.lock.json",
 )

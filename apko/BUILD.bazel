@@ -56,6 +56,7 @@ bzl_library(
     visibility = ["//visibility:public"],
     deps = [
         "//apko/private:apko_image",
+        "//apko/private:apko_lock",
         "//apko/private:image_config",
         "//apko/private/range:bazelrc",
         "@aspect_bazel_lib//lib:write_source_files",

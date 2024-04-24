@@ -1,0 +1,2 @@
+environment:
+  MY_VAR: /usr/sbin:/sbin:/usr/bin:/bin
