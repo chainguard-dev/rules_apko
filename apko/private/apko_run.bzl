@@ -48,14 +48,14 @@ def _impl(ctx):
         is_executable = True,
     )
 
-    additional_files = []
+    transitive_data = []
     for data in ctx.attr.data:
         if ApkoConfigInfo in data:
-            additional_files += data[ApkoConfigInfo].files.to_list()
+            transitive_data.append(data[ApkoConfigInfo].files)
 
     return DefaultInfo(
         executable = output,
-        files = depset(ctx.files.data + additional_files),
+        files = depset(ctx.files.data, transitive = transitive_data),
         runfiles = ctx.runfiles(
             files = [apko_info.binary],
         ),
