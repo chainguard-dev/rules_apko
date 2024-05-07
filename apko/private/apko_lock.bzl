@@ -1,6 +1,67 @@
-""""""
+"""Rule for generating apko locks."""
 
-load("//apko/private:apko_run.bzl", "apko_run")
+load("//apko/private:image_config.bzl", "ApkoConfigInfo")
+load("@bazel_skylib//lib:paths.bzl", "paths")
+
+_ATTRS = {
+    "config": attr.label(allow_single_file = True),
+    "lockfile_name": attr.string(),
+}
+
+_DOC = """
+apko_lock generates the lock file based on the provided config.
+"""
+
+LAUNCHER_TEMPLATE = """
+#!#!/usr/bin/env sh
+
+config={{config}}
+output={{output}}
+
+set -e
+LAUNCHER_DIR="${PWD}"
+cd $BUILD_WORKSPACE_DIRECTORY
+
+WORKSPACE_DIR="${PWD}"
+
+cd $0.runfiles/_main
+
+echo ${WORKSPACE_DIR}/${output}
+
+${LAUNCHER_DIR}/{{apko_binary}} lock $config --output=${WORKSPACE_DIR}/${output}
+"""
+
+def _impl(ctx):
+    output = ctx.actions.declare_file("_{}_run.sh".format(ctx.label.name))
+    apko_info = ctx.toolchains["@rules_apko//apko:toolchain_type"].apko_info
+
+    ctx.actions.write(
+        output = output,
+        content = LAUNCHER_TEMPLATE
+            .replace("{{apko_binary}}", apko_info.binary.path)
+            .replace("{{config}}", ctx.file.config.short_path)
+            .replace("{{output}}", ctx.attr.lockfile_name),
+        is_executable = True,
+    )
+
+    transitive_data = []
+    if ApkoConfigInfo in ctx.attr.config:
+        transitive_data.append(ctx.attr.config[ApkoConfigInfo].files)
+
+    return DefaultInfo(
+        executable = output,
+        runfiles = ctx.runfiles(
+            files = [apko_info.binary] + depset(ctx.files.config, transitive = transitive_data).to_list(),
+        ),
+    )
+
+_apko_lock = rule(
+    implementation = _impl,
+    attrs = _ATTRS,
+    doc = _DOC,
+    executable = True,
+    toolchains = ["@rules_apko//apko:toolchain_type"],
+)
 
 def apko_lock(name, config, lockfile_name):
     """Generates executable rule for producing apko lock files.
@@ -15,12 +76,8 @@ def apko_lock(name, config, lockfile_name):
         lockfile_name: name of the lockfile
     """
     config_label = native.package_relative_label(config)
-
-    package_prefix = config_label.package + "/" if config_label.package else ""
-    apko_run(
+    _apko_lock(
         name = name,
-        # args is subject to make variables substitution: https://bazel.build/reference/be/common-definitions#common-attributes-binaries
-        args = ["lock", "$(execpath {})".format(config), "--output={}{}".format(package_prefix, lockfile_name)],
-        workdir = "workspace",
-        data = [config],
+        config = config,
+        lockfile_name = paths.join(config_label.package, lockfile_name),
     )
