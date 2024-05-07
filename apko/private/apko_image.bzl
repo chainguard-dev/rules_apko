@@ -40,7 +40,6 @@ def _impl(ctx):
     args.add(ctx.file.config.short_path)
     args.add(ctx.attr.tag)
 
-    # TODO this varies.
     args.add("../" + output.basename)
 
     args.add("--vcs=false")

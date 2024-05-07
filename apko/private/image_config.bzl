@@ -18,11 +18,9 @@ ApkoConfigInfo = provider(
 def _apko_config_impl(ctx):
     config = ctx.file.config
     out = ctx.actions.declare_file(ctx.attr.name)
-
-    ctx.actions.run_shell(
-        command = "cp {} {}".format(config.path, out.path),
-        inputs = [config],
-        outputs = [out],
+    ctx.actions.symlink(
+        target_file = config,
+        output = out,
     )
 
     apko_depsets = []

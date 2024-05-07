@@ -1,17 +1,10 @@
 load("@rules_apko//apko:defs.bzl", "apko_config", "apko_image", "apko_lock")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
-load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
-
-copy_file(
-    name = "generated_config",
-    src = ":base_config.apko.yaml",
-    out = "base_config.generated.yaml",
-)
 
 apko_config(
     name = "intermediate_config",
     config = ":intermediate_config.apko.yaml",
-    deps = [":base_config.generated.yaml"],
+    deps = [":base_config.apko.yaml"],
 )
 
 apko_config(
