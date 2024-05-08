@@ -6,7 +6,6 @@ load("@bazel_skylib//lib:paths.bzl", "paths")
 _ATTRS = {
     "config": attr.label(allow_single_file = True),
     "lockfile_name": attr.string(),
-    "_bash_tool": attr.label(allow_single_file = True, default = "@bazel_tools//tools/bash/runfiles"),
 }
 
 _DOC = """
@@ -44,7 +43,7 @@ def _impl(ctx):
     return DefaultInfo(
         executable = output,
         runfiles = ctx.runfiles(
-            files = [apko_info.binary, ctx.file._bash_tool] + depset(ctx.files.config, transitive = transitive_data).to_list(),
+            files = [apko_info.binary] + depset(ctx.files.config, transitive = transitive_data).to_list(),
         ),
     )
 
