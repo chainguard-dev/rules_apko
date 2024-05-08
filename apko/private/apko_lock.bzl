@@ -6,6 +6,7 @@ load("@bazel_skylib//lib:paths.bzl", "paths")
 _ATTRS = {
     "config": attr.label(allow_single_file = True),
     "lockfile_name": attr.string(),
+    "_bash_tool": attr.label(allow_single_file = True, default = "@bazel_tools//tools/bash/runfiles"),
 }
 
 _DOC = """
@@ -15,20 +16,12 @@ apko_lock generates the lock file based on the provided config.
 LAUNCHER_TEMPLATE = """
 #!#!/usr/bin/env sh
 
+set -e
+
 config={{config}}
 output={{output}}
 
-set -e
-LAUNCHER_DIR="${PWD}"
-cd $BUILD_WORKSPACE_DIRECTORY
-
-WORKSPACE_DIR="${PWD}"
-
-cd $0.runfiles/_main
-
-echo ${WORKSPACE_DIR}/${output}
-
-${LAUNCHER_DIR}/{{apko_binary}} lock $config --output=${WORKSPACE_DIR}/${output}
+{{apko_binary}} lock $config --output=${BUILD_WORKSPACE_DIRECTORY}/${output}
 """
 
 def _impl(ctx):
@@ -51,7 +44,7 @@ def _impl(ctx):
     return DefaultInfo(
         executable = output,
         runfiles = ctx.runfiles(
-            files = [apko_info.binary] + depset(ctx.files.config, transitive = transitive_data).to_list(),
+            files = [apko_info.binary, ctx.file._bash_tool] + depset(ctx.files.config, transitive = transitive_data).to_list(),
         ),
     )
 
