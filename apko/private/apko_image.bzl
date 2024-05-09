@@ -1,7 +1,7 @@
 "A rule for running apko with prepopulated cache"
 
 load("//apko/private:apko_run.bzl", "apko_run")
-load("//apko/private:image_config.bzl", "ApkoConfigInfo")
+load("//apko/private:apko_config.bzl", "ApkoConfigInfo")
 load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@bazel_skylib//lib:versions.bzl", "versions")
 
@@ -110,7 +110,7 @@ def _impl(ctx):
     inputs.append(apko_binary)
 
     ctx.actions.run_shell(
-        command = "cd {}/{} && {} $@".format(paths.join(ctx.bin_dir.path, ctx.label.workspace_root, ctx.label.package), workdir, apko_info.binary.short_path),
+        command = "cd {} && {} $@".format(paths.join(ctx.bin_dir.path, ctx.label.workspace_root, ctx.label.package, workdir), apko_info.binary.short_path),
         arguments = [args],
         inputs = inputs,
         tools = [apko_info.binary],
