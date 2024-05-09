@@ -54,7 +54,10 @@ def _impl(ctx):
     inputs = []
     if ApkoConfigInfo in ctx.attr.config:
         for f in ctx.attr.config[ApkoConfigInfo].files.to_list():
-            input_entry = ctx.actions.declare_file(paths.join(workdir, f.short_path))
+            if f.is_directory:
+                input_entry = ctx.actions.declare_directory(paths.join(workdir, f.short_path))
+            else:
+                input_entry = ctx.actions.declare_file(paths.join(workdir, f.short_path))
             ctx.actions.symlink(
                 target_file = f,
                 output = input_entry,
