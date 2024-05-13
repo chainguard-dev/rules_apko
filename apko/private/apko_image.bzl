@@ -23,7 +23,7 @@ def _impl(ctx):
     # - target.short_path for source files. (example path/to/source_config)
     #
     # For each input file we create a symlink as workdir/input.short_path
-    # Since the symlink is a generated target, it's path is
+    # Since the symlink is a generated target, its path is:
     # bin_dir/workspace_root/package/workdir/input.short_path
     #
     # Then when we move to bin_dir/workspace_root/package and the relative path become target.short_path for all kinds of input files.
