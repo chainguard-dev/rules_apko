@@ -17,7 +17,7 @@ _ATTRS = {
 def _impl(ctx):
     apko_info = ctx.toolchains["@rules_apko//apko:toolchain_type"].apko_info
 
-    # We execute apko build within ctx.bin_dir.path/workdir and make all the files availeble within the workdir.
+    # We execute apko build within ctx.bin_dir.path/workdir and make all the files available within the workdir.
     # The key part here is that the path to input file in action is:
     # - bin_dir/target.short_path for generated targets (example bazel-out/.../path/to/my_config)
     # - target.short_path for source files. (example path/to/source_config)
