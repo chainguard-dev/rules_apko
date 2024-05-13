@@ -26,7 +26,7 @@ def _impl(ctx):
     # Since the symlink is a generated target, its path is:
     # bin_dir/workspace_root/package/workdir/input.short_path
     #
-    # Then when we move to bin_dir/workspace_root/package and the relative path become target.short_path for all kinds of input files.
+    # Then when we move to bin_dir/workspace_root/package the relative path become target.short_path for all kinds of input files.
     workdir = "workdir_{}".format(ctx.label.name)
     cache_name = "cache_{}".format(ctx.label.name)
 
