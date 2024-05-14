@@ -137,7 +137,7 @@ apko_lock(<a href="#apko_lock-name">name</a>, <a href="#apko_lock-config">config
 
 Generates executable rule for producing apko lock files.
 
-When run, the rule will output the lockfile to the lockfilename in the directory of the package where the rule is defined.
+When run, the rule will output the lockfile to the lockfile_name in the directory of the package where the rule is defined.
 That is, if you define `apko_lock` in `foo/bar/BUILD.bazel` with `lockfile_name="baz.lock.json` the rule will output the lock into
 `foo/bar/baz.lock.json`.
 
