@@ -1,5 +1,13 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 
+exports_files(srcs = ["apko_config.tmpl.sh"])
+
+bzl_library(
+    name = "apko_config",
+    srcs = ["apko_config.bzl"],
+    visibility = ["//apko:__subpackages__"],
+)
+
 bzl_library(
     name = "apk",
     srcs = ["apk.bzl"],
@@ -16,6 +24,7 @@ bzl_library(
     visibility = ["//apko:__subpackages__"],
     deps = [
         "apko_run",
+        ":apko_config",
         "@bazel_skylib//lib:paths",
         "@bazel_skylib//lib:versions",
     ],
@@ -25,6 +34,14 @@ bzl_library(
     name = "apko_run",
     srcs = ["apko_run.bzl"],
     visibility = ["//apko:__subpackages__"],
+    deps = [":apko_config"],
+)
+
+bzl_library(
+    name = "apko_lock",
+    srcs = ["apko_lock.bzl"],
+    visibility = ["//apko:__subpackages__"],
+    deps = [":apko_run"],
 )
 
 bzl_library(

@@ -1,6 +1,7 @@
 "A rule for running apko with prepopulated cache"
 
 load("//apko/private:apko_run.bzl", "apko_run")
+load("//apko/private:apko_config.bzl", "ApkoConfigInfo")
 load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@bazel_skylib//lib:versions.bzl", "versions")
 
@@ -16,6 +17,17 @@ _ATTRS = {
 def _impl(ctx):
     apko_info = ctx.toolchains["@rules_apko//apko:toolchain_type"].apko_info
 
+    # We execute apko build within ctx.bin_dir.path/workdir and make all the files available within the workdir.
+    # The key part here is that the path to input file in action is:
+    # - bin_dir/target.short_path for generated targets (example bazel-out/.../path/to/my_config)
+    # - target.short_path for source files. (example path/to/source_config)
+    #
+    # For each input file we create a symlink as workdir/input.short_path
+    # Since the symlink is a generated target, its path is:
+    # bin_dir/workspace_root/package/workdir/input.short_path
+    #
+    # Then when we move to bin_dir/workspace_root/package the relative path become target.short_path for all kinds of input files.
+    workdir = "workdir_{}".format(ctx.label.name)
     cache_name = "cache_{}".format(ctx.label.name)
 
     if ctx.attr.output == "oci":
@@ -25,9 +37,10 @@ def _impl(ctx):
 
     args = ctx.actions.args()
     args.add("build")
-    args.add(ctx.file.config.path)
+    args.add(ctx.file.config.short_path)
     args.add(ctx.attr.tag)
-    args.add(output.path)
+
+    args.add("../" + output.basename)
 
     args.add("--vcs=false")
 
@@ -38,17 +51,41 @@ def _impl(ctx):
     indexes = ctx.attr.contents[OutputGroupInfo].indexes
     keyrings = ctx.attr.contents[OutputGroupInfo].keyrings
 
-    inputs = [ctx.file.config]
+    inputs = []
+    if ApkoConfigInfo in ctx.attr.config:
+        for f in ctx.attr.config[ApkoConfigInfo].files.to_list():
+            if f.is_directory:
+                input_entry = ctx.actions.declare_directory(paths.join(workdir, f.short_path))
+            else:
+                input_entry = ctx.actions.declare_file(paths.join(workdir, f.short_path))
+            ctx.actions.symlink(
+                target_file = f,
+                output = input_entry,
+            )
+            inputs.append(input_entry)
+    else:
+        config_symlink = ctx.actions.declare_file(paths.join(workdir, ctx.file.config.short_path))
+        ctx.actions.symlink(
+            target_file = ctx.file.config,
+            output = config_symlink,
+        )
+        inputs.append(config_symlink)
+
     deps = [apks, keyrings]
 
     supports_lockfile = versions.is_at_least("0.13.0", apko_info.version)
     if supports_lockfile:
-        inputs.append(lockfile)
-        args.add("--lockfile={}".format(lockfile.path))
+        lockfile_symlink = ctx.actions.declare_file(paths.join(workdir, lockfile.short_path))
+        ctx.actions.symlink(
+            target_file = lockfile,
+            output = lockfile_symlink,
+        )
+        inputs.append(lockfile_symlink)
+        args.add("--lockfile={}".format(lockfile.short_path))
     else:
         deps.append(indexes)
 
-    args.add("--cache-dir={}".format(paths.join(ctx.bin_dir.path, ctx.label.workspace_root, ctx.label.package, cache_name)))
+    args.add("--cache-dir={}".format(cache_name))
     args.add("--offline")
 
     if ctx.attr.architecture:
@@ -58,17 +95,25 @@ def _impl(ctx):
     for content in depset(transitive = deps).to_list():
         content_owner = content.owner.workspace_name
         content_cache_entry_key = content.path[content.path.find(content_owner) + len(content_owner) + 1:]
-        content_entry = ctx.actions.declare_file("/".join([cache_name, content_cache_entry_key]))
+        content_entry = ctx.actions.declare_file(paths.join(workdir, cache_name, content_cache_entry_key))
         ctx.actions.symlink(
             target_file = content,
             output = content_entry,
         )
         inputs.append(content_entry)
 
-    ctx.actions.run(
-        executable = apko_info.binary,
+    apko_binary = ctx.actions.declare_file(paths.join(workdir, apko_info.binary.short_path))
+    ctx.actions.symlink(
+        target_file = apko_info.binary,
+        output = apko_binary,
+    )
+    inputs.append(apko_binary)
+
+    ctx.actions.run_shell(
+        command = "cd {} && {} $@".format(paths.join(ctx.bin_dir.path, ctx.label.workspace_root, ctx.label.package, workdir), apko_info.binary.short_path),
         arguments = [args],
         inputs = inputs,
+        tools = [apko_info.binary],
         outputs = [output],
     )
 
@@ -88,7 +133,15 @@ _apko_image = rule(
     toolchains = apko_image_lib.toolchains,
 )
 
-def apko_image(name, contents, config, tag, output = "oci", architecture = None, args = [], **kwargs):
+def apko_image(
+        name,
+        contents,
+        config,
+        tag,
+        output = "oci",
+        architecture = None,
+        args = [],
+        **kwargs):
     """Build OCI images from APK packages directly without Dockerfile
 
     This rule creates images using the 'apko.yaml' configuration file and relies on cache contents generated by [translate_lock](./translate_lock.md) to be fast.
@@ -126,7 +179,8 @@ def apko_image(name, contents, config, tag, output = "oci", architecture = None,
     Args:
      name:         of the target for the generated image.
      contents:     Label to the contents repository generated by translate_lock. See [apko-cache](./apko-cache.md) documentation.
-     config:       Label to the `apko.yaml` file.
+     config:       Label to the `apko.yaml` file.  For more advanced use-cases (multi-file configuration), use target providing `ApkoConfigInfo`
+        (e.g. output of `apko_config` rule).
      output:       "oci" of  "docker",
      architecture: the CPU architecture which this image should be built to run on. See https://github.com/chainguard-dev/apko/blob/main/docs/apko_file.md#archs-top-level-element"),
      tag:          tag to apply to the resulting docker tarball. only applicable when `output` is `docker`

@@ -1,0 +1,4 @@
+include: multifile_config/intermediate_config
+
+environment:
+  MY_VAR: /usr/sbin:/sbin:/usr/bin:/bin
