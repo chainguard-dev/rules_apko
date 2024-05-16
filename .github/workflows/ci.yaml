@@ -97,6 +97,10 @@ jobs:
         if: matrix.bzlmodEnabled && hashFiles('.bcr/patches/*.patch') != ''
         run: patch --dry-run -p1 < .bcr/patches/*.patch
 
+      # Required for rules_apko to make range requests
+      - name: Add bazel 6 workaround
+        run: echo 'try-import %workspace%/.apko/.bazelrc' >> .bazelrc
+
       - name: Test
         working-directory: ${{ matrix.folder }}
         run: bazel test //...
