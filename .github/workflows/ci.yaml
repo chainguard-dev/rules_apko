@@ -99,6 +99,7 @@ jobs:
 
       # Required for rules_apko to make range requests
       - name: Add bazel 6 workaround
+        if: ${{ matrix.bazelversion == '6.3.0' }}
         run: echo 'try-import %workspace%/.apko/.bazelrc' >> .bazelrc
 
       - name: Test
