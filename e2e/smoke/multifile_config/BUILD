@@ -16,7 +16,7 @@ apko_config(
 apko_image(
     name = "image_from_generated_config",
     config = ":final_config",
-    contents = "@example_lock//:contents",
+    contents = "@example_multifile_lock//:contents",
     tag = "lock:latest",
 )
 

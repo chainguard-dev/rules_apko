@@ -7,21 +7,6 @@
         "name": "dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64",
         "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/APKINDEX.tar.gz",
         "architecture": "x86_64"
-      },
-      {
-        "name": "dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/APKINDEX.tar.gz",
-        "architecture": "x86_64"
-      },
-      {
-        "name": "dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/APKINDEX.tar.gz",
-        "architecture": "x86_64"
-      },
-      {
-        "name": "dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/APKINDEX.tar.gz",
-        "architecture": "x86_64"
       }
     ],
     "packages": [
