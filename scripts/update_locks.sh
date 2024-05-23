@@ -10,3 +10,14 @@ for yaml in "./examples/"*"/apko.yaml" "./e2e/"*"/apko.yaml"; do
   $apko lock $yaml
 done
 
+repo_root=$(pwd)
+
+for workspace in "." "./e2e/smoke"; do
+  cd $workspace
+  for target in $(bazel query "kind(apko_lock, //...)"); do 
+    echo $target
+    #bazel run $target
+  done
+  cd $repo_root
+done
+
