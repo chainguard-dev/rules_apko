@@ -63,16 +63,16 @@ bzl_library(
     ],
 )
 
-bzl_library(
-    name = "toolchain",
-    srcs = ["toolchain.bzl"],
-    visibility = ["//visibility:public"],
-)
-
 # Enables calling apko tool directly by bazel.
 # To resolve given `./apko.yaml` file into `./apko.lock.json`, once can call:
 #   e.g. (cd ./examples/oci; bazel run @rules_apko//apko lock ./apko.yaml)
 apko_run(
     name = "apko",
+    visibility = ["//visibility:public"],
+)
+
+bzl_library(
+    name = "toolchain",
+    srcs = ["toolchain.bzl"],
     visibility = ["//visibility:public"],
 )
