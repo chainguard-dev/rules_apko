@@ -7,8 +7,6 @@ common --enable_bzlmod
 # Disable lockfile for now. It is unstable.
 common --lockfile_mode=off
 
-# Required for rules_apko to make range requests
-try-import %workspace%/.apko/.bazelrc
 
 # Load any settings specific to the current user.
 # .bazelrc.user should appear in .gitignore so that settings are not shared with team members
