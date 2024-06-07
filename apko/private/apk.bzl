@@ -1,5 +1,6 @@
 "Repository rules for importing remote apk packages"
 
+load("@bazel_skylib//lib:versions.bzl", "versions")
 load(":util.bzl", "util")
 
 APK_IMPORT_TMPL = """\
@@ -19,8 +20,10 @@ def _range(url, range):
 
 def _check_initial_setup(rctx):
     output = rctx.path(".rangecheck/output")
-    rctx.download(
-        url = [_range(rctx.attr.url, "bytes=0-0")],
+    _download(
+        rctx,
+        url = rctx.attr.url,
+        rng = "bytes=0-0",
         output = output,
     )
     r = rctx.execute(["wc", "-c", output])
@@ -42,6 +45,19 @@ To resolve this issue and enable partial package fetching, please follow the ste
 
 """.format(bytes[0]))
 
+def _download(rctx, url, rng, **kwargs):
+    if versions.is_at_least("7.1.0", native.bazel_version):
+        return rctx.download(
+            url = [url],
+            headers = {"Range": [rng]},
+            **kwargs
+        )
+    else:
+        return rctx.download(
+            url = [_range(url, rng)],
+            **kwargs
+        )
+
 def _apk_import_impl(rctx):
     repo = util.repo_url(rctx.attr.url, rctx.attr.architecture)
     repo_escaped = util.url_escape(repo)
@@ -56,19 +72,25 @@ def _apk_import_impl(rctx):
     data_output = "{}/{}.dat.tar.gz".format(output, data_sha256)
     apk_output = "{}/{}/{}-{}.apk".format(repo_escaped, rctx.attr.architecture, rctx.attr.package_name, rctx.attr.version)
 
-    rctx.download(
-        url = [_range(rctx.attr.url, rctx.attr.signature_range)],
+    _download(
+        rctx,
+        url = rctx.attr.url,
+        rng = rctx.attr.signature_range,
         output = sig_output,
         # TODO: signatures does not have stable checksums. find a way to fail gracefully.
-        integrity = rctx.attr.signature_checksum,
+        # integrity = rctx.attr.signature_checksum,
     )
-    rctx.download(
-        url = [_range(rctx.attr.url, rctx.attr.control_range)],
+    _download(
+        rctx,
+        url = rctx.attr.url,
+        rng = rctx.attr.control_range,
         output = control_output,
         integrity = rctx.attr.control_checksum,
     )
-    rctx.download(
-        url = [_range(rctx.attr.url, rctx.attr.data_range)],
+    _download(
+        rctx,
+        url = rctx.attr.url,
+        rng = rctx.attr.data_range,
         output = data_output,
         integrity = rctx.attr.data_checksum,
     )
