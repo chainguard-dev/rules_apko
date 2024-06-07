@@ -55,18 +55,6 @@ jobs:
 
   test:
     uses: bazel-contrib/.github/.github/workflows/bazel.yaml@v6
-    with:
-      folders: |
-        [
-          ".",
-          "e2e/smoke"
-        ]
-      exclude: |
-        [
-          {"bazelversion": "5.4.0"},
-          {"os": "windows-latest"},
-          {"os": "macos-latest"}
-        ]
         
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
