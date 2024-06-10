@@ -23,7 +23,7 @@ using the GitHub-provided source archive like
 Apko usage begins with an `apko.yaml` configuration file. The `apko lock` tool will create a corresponding
 `apko.lock.json` file, and this is where Bazel will read to fetch external content.
 Assuming `rules_apko` is already loaded in your `MODULE.bazel` or `WORKSPACE` file one can call:
-`bazel run @rules_apko//apko lock ./apko.yaml` to lock the dependencies and generate `apko.lock.json` file.
+`bazel run @rules_apko//apko -- lock ./apko.yaml` to lock the dependencies and generate `apko.lock.json` file.
 
 Then you import these base layers into Bazel:
 
