@@ -75,7 +75,7 @@ toolchain(
             platform = platform,
             name = repository_ctx.attr.name,
             user_repository_name = repository_ctx.attr.user_repository_name,
-            compatible_with = repository_ctx.attr.compatible_with,
+            compatible_with = meta.compatible_with,
         )
 
     # Base BUILD file for this repository
