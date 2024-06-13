@@ -24,7 +24,7 @@ bazel_dep(name = "bazel_skylib_gazelle_plugin", version = "1.5.0", dev_dependenc
 bazel_dep(name = "buildifier_prebuilt", version = "6.1.2", dev_dependency = True)
 
 toolchain = use_extension("//apko:extensions.bzl", "apko")
-toolchain.toolchain(apko_version = "v0.14.2")
+toolchain.toolchain(apko_version = "v0.14.9")
 use_repo(toolchain, "apko_toolchains")
 
 register_toolchains("@apko_toolchains//:all")

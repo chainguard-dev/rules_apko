@@ -35,22 +35,22 @@
       },
       {
         "name": "busybox",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/busybox-1.36.1-r6.apk",
-        "version": "1.36.1-r6",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/busybox-1.36.1-r7.apk",
+        "version": "1.36.1-r7",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-662",
-          "checksum": "sha1-d4qZgWeuvCwk1xxY8sqtpRDHT4E="
+          "range": "bytes=0-666",
+          "checksum": "sha1-a//l3+A49R6SnnktH1+pQuZE2qI="
         },
         "control": {
-          "range": "bytes=663-2297",
-          "checksum": "sha1-KNW4neQTQeKuinldJ+uwTCbJUYw="
+          "range": "bytes=667-2300",
+          "checksum": "sha1-ierGKl33AY17yZdo8YN+z8NeMPg="
         },
         "data": {
-          "range": "bytes=2298-946176",
-          "checksum": "sha256-EidJnLmLObMUZKKi4DrYHofZ+y5ltrdMR8hChYiRWrs="
+          "range": "bytes=2301-946176",
+          "checksum": "sha256-FzlpW4Mq56716OmdQnwYlES9hohBM0ouq62EWds3kDI="
         },
-        "checksum": "Q1KNW4neQTQeKuinldJ+uwTCbJUYw="
+        "checksum": "Q1ierGKl33AY17yZdo8YN+z8NeMPg="
       }
     ]
   }

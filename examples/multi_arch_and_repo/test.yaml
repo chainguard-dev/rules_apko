@@ -12,4 +12,4 @@ commandTests:
       - ID=custom_alpine
       - NAME="Custom Alpine"
       - VERSION_ID=0.0.0
-      - HOME_URL="https://github.com/chainguard-dev/apko"
+      - HOME_URL="https://chainguard.dev/apko"
