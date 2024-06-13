@@ -75,7 +75,7 @@ toolchain(
             platform = platform,
             name = repository_ctx.attr.name,
             user_repository_name = repository_ctx.attr.user_repository_name,
-            compatible_with = meta.compatible_with,
+            compatible_with = repository_ctx.attr.compatible_with,
         )
 
     # Base BUILD file for this repository
@@ -87,5 +87,6 @@ toolchains_repo = repository_rule(
      which can be registered or selected.""",
     attrs = {
         "user_repository_name": attr.string(doc = "what the user chose for the base name"),
+        "platforms": attr.string_list(default = PLATFORMS.keys()),
     },
 )

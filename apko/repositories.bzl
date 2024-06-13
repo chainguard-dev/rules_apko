@@ -44,23 +44,18 @@ def rules_apko_dependencies():
 ########
 _DOC = "Fetch external tools needed for apko toolchain"
 _ATTRS = {
-    "apko_version": attr.string(mandatory = True, values = APKO_VERSIONS.keys()),
-    "platform": attr.string(mandatory = True, values = PLATFORMS.keys()),
+    "apko_version": attr.string(mandatory = True),
+    "platform": attr.string(mandatory = True),
+    "sha256": attr.string(mandatory = True),
+    "url": attr.string(mandatory = True),
+    "strip_prefix": attr.string(mandatory = False, default = ""),
 }
 
 def _apko_repo_impl(repository_ctx):
-    version = repository_ctx.attr.apko_version.lstrip("v")
-    url = "https://github.com/chainguard-dev/apko/releases/download/v{version}/apko_{version}_{platform}.tar.gz".format(
-        version = version,
-        platform = repository_ctx.attr.platform,
-    )
     repository_ctx.download_and_extract(
-        integrity = APKO_VERSIONS[repository_ctx.attr.apko_version][repository_ctx.attr.platform],
-        stripPrefix = "apko_{}_{}".format(
-            repository_ctx.attr.apko_version.lstrip("v"),
-            repository_ctx.attr.platform,
-        ),
-        url = url,
+        integrity = repository_ctx.attr.sha256,
+        stripPrefix = repository_ctx.attr.strip_prefix,
+        url = repository_ctx.attr.url,
     )
     repository_ctx.file(
         "BUILD.bazel",
@@ -74,7 +69,7 @@ apko_toolchain(
     apko = "apko",
     version = "{version}",
 )
-""".format(version = version),
+""".format(version = repository_ctx.attr.apko_version),
     )
 
 apko_repositories = repository_rule(
@@ -83,8 +78,32 @@ apko_repositories = repository_rule(
     attrs = _ATTRS,
 )
 
+def apko_binary_spec(url, sha256, version, strip_prefix):
+    return struct(url = url, sha256 = sha256, version = version, strip_prefix = strip_prefix)
+
+def _build_platform_to_apko_binary_map(apko_version):
+    version = apko_version.lstrip("v")
+    result = {}
+    for platform in PLATFORMS.keys():
+        url = "https://github.com/chainguard-dev/apko/releases/download/v{version}/apko_{version}_{platform}.tar.gz".format(
+            version = version,
+            platform = platform,
+        )
+        sha256 = APKO_VERSIONS[apko_version][platform]
+        strip_prefix = "apko_{}_{}".format(
+            version,
+            platform,
+        )
+        result[platform] = apko_binary_spec(
+            url = url,
+            sha256 = sha256,
+            version = version,
+            strip_prefix = strip_prefix,
+        )
+    return result
+
 # Wrapper macro around everything above, this is the primary API
-def apko_register_toolchains(name, apko_version = LATEST_APKO_VERSION, register = True):
+def apko_register_toolchains(name, apko_version = LATEST_APKO_VERSION, platform_to_apko_binary_map = None, register = True):
     """Convenience macro for users which does typical setup.
 
     - create a repository for each built-in platform like "apko_linux_amd64" -
@@ -97,12 +116,19 @@ def apko_register_toolchains(name, apko_version = LATEST_APKO_VERSION, register 
         register: whether to call through to native.register_toolchains.
             Should be True for WORKSPACE users, but false when used under bzlmod extension
         apko_version: version of apko
+        platform_to_apko_binary_map: specialized way of providing urls of apko binaries for the toolchains. Map of platform string
     """
-    for platform in PLATFORMS.keys():
+    map = platform_to_apko_binary_map
+    if map == None:
+        map = _build_platform_to_apko_binary_map(apko_version)
+    for platform, apko_spec in map.items():
         apko_repositories(
             name = name + "_" + platform,
             platform = platform,
-            apko_version = apko_version,
+            sha256 = apko_spec.sha256,
+            url = apko_spec.url,
+            apko_version = apko_spec.version,
+            strip_prefix = apko_spec.strip_prefix,
         )
         if register:
             native.register_toolchains("@%s_toolchains//:%s_toolchain" % (name, platform))
@@ -110,4 +136,5 @@ def apko_register_toolchains(name, apko_version = LATEST_APKO_VERSION, register 
     toolchains_repo(
         name = name + "_toolchains",
         user_repository_name = name,
+        platforms = map.keys(),
     )
