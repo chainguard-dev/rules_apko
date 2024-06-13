@@ -116,7 +116,12 @@ def apko_register_toolchains(name, apko_version = LATEST_APKO_VERSION, platform_
         register: whether to call through to native.register_toolchains.
             Should be True for WORKSPACE users, but false when used under bzlmod extension
         apko_version: version of apko
-        platform_to_apko_binary_map: specialized way of providing urls of apko binaries for the toolchains. Map of platform string
+        platform_to_apko_binary_map: specialized way of providing urls of apko binaries for the toolchains.
+            If specified, apko_version is ignored. It is a dict of platform string to struct produced by
+            apko_binary_spec macro that consists of url to the archive with apko binary, it's sha256, version
+            of apko and prefix that should be stripped after unpacking the archive. The prefix
+            should specified, so that apko binary lands in top level directory after stripping.
+            The intention here is to allow using apko versions that are not included in versions.bzl
     """
     map = platform_to_apko_binary_map
     if map == None:
