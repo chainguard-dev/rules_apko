@@ -127,6 +127,8 @@ def apko_register_toolchains(name, apko_version = LATEST_APKO_VERSION, platform_
     if map == None:
         map = _build_platform_to_apko_binary_map(apko_version)
     for platform, apko_spec in map.items():
+        if platform not in PLATFORMS.keys():
+            fail("Unsupported platform: {}".format(platform))
         apko_repositories(
             name = name + "_" + platform,
             platform = platform,
