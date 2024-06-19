@@ -44,6 +44,20 @@ def _impl(ctx):
 
     args.add("--vcs=false")
 
+    # This is a solution for building apko images with base image that's configs are declared in remote repositories.
+    # 1. short paths in Bazel depend on the caller context. For example. There are
+    #     - //foo:bar and //foo:baz targets in repo A,
+    #     - //foo:bar depends on //foo:baz.
+    #     - When calling bazel build //foo:bar within A, the shortpath of //foo:baz is foo/baz.
+    #     - But if one calls bazel build @A//foo:bar from repo B, the short path of foo:baz is ../A/foo/baz
+    # 2. On the other hand apko dumps the checksum of config file into lockfile, so we cannot generate config files that would very depending on
+    #    where they are called from.
+    # 3. This is a problem only when foo/bar is called both from A and from B - we need to choose one of the short paths in the config. The other possibility
+    #    is added with include-paths flag.
+    supports_include_paths = versions.is_at_least("0.15.0", apko_info.version)
+    if supports_include_paths:
+        args.add("--include-paths=../{}".format(ctx.label.workspace_name))
+
     args.add_all(ctx.attr.args)
 
     lockfile = ctx.attr.contents[OutputGroupInfo].lockfile.to_list()[0]
