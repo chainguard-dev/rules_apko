@@ -230,12 +230,12 @@ def apko_image(
         resolved_json_name = config_label.name.removesuffix(".yaml") + ".resolved.json"
 
         # We generate the .resolve target only if the `.apko.resolved.json` file exists in the same package.
-        for _ in native.glob([resolved_json_name]):
+        for _ in native.glob([resolved_json_name], allow_empty = True):
             apko_run(
                 name = name + ".resolve",
                 # args is subject to make variables substitution: https://bazel.build/reference/be/common-definitions#common-attributes-binaries
                 args = ["resolve", "$(execpath {})".format(config), "--output={}/{}".format(config_label.package, lock_json_name)],
                 workdir = "workspace",
                 data = [config],
-                deprecated = "Please use .lock target instead. Rename your .resolve.json file to .lock.json file.",
+                deprecation = "Please use .lock target instead. Rename your .resolve.json file to .lock.json file.",
             )
