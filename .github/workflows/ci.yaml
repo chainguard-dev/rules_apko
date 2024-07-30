@@ -54,7 +54,7 @@ jobs:
         uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
         with:
           egress-policy: audit
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       # NB: we assume this is Bazel 7
       - id: bazel_from_bazelversion
         run: echo "bazelversion=$(head -n 1 .bazelversion)" >> $GITHUB_OUTPUT
@@ -94,9 +94,9 @@ jobs:
         with:
           egress-policy: audit
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
-      - uses: bazel-contrib/setup-bazel@e403ad507104847c3539436f64a9e9eecc73eeec
+      - uses: bazel-contrib/setup-bazel@e403ad507104847c3539436f64a9e9eecc73eeec # v0.8.5
         with:
           repository-cache: true
           bazelrc: |
