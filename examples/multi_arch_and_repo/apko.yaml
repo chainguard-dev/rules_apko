@@ -1,7 +1,7 @@
 contents:
   repositories:
-    - https://dl-cdn.alpinelinux.org/alpine/v3.18/main
-    - https://dl-cdn.alpinelinux.org/alpine/v3.18/community
+    - https://dl-cdn.alpinelinux.org/alpine/v3.20/main
+    - https://dl-cdn.alpinelinux.org/alpine/v3.20/community
   packages:
     - ca-certificates
     - libc6-compat
