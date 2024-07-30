@@ -8,9 +8,12 @@ on:
     tags:
       - "v*.*.*"
 
+permissions:
+  contents: write
+
 jobs:
   release:
-    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@v5
+    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@29e53247c6366e30acbedfc767f58f79fc05836c
     with:
       prerelease: false
       release_files: rules_apko-*.tar.gz
