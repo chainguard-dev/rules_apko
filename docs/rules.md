@@ -7,6 +7,8 @@ Public API re-exports
 ## apko_config
 
 <pre>
+load("@rules_apko//apko:defs.bzl", "apko_config")
+
 apko_config(<a href="#apko_config-name">name</a>, <a href="#apko_config-deps">deps</a>, <a href="#apko_config-config">config</a>)
 </pre>
 
@@ -27,6 +29,8 @@ apko_config(<a href="#apko_config-name">name</a>, <a href="#apko_config-deps">de
 ## ApkoConfigInfo
 
 <pre>
+load("@rules_apko//apko:defs.bzl", "ApkoConfigInfo")
+
 ApkoConfigInfo(<a href="#ApkoConfigInfo-files">files</a>)
 </pre>
 
@@ -38,7 +42,6 @@ When referencing other files in the config yaml file use paths relative to your 
 
 **FIELDS**
 
-
 | Name  | Description |
 | :------------- | :------------- |
 | <a id="ApkoConfigInfo-files"></a>files |  depset of files that will be needed for building. All of them will be added to the execution of apko commands when built with Bazel.    |
@@ -49,6 +52,8 @@ When referencing other files in the config yaml file use paths relative to your 
 ## apko_bazelrc
 
 <pre>
+load("@rules_apko//apko:defs.bzl", "apko_bazelrc")
+
 apko_bazelrc(<a href="#apko_bazelrc-name">name</a>, <a href="#apko_bazelrc-repositories">repositories</a>, <a href="#apko_bazelrc-kwargs">kwargs</a>)
 </pre>
 
@@ -72,6 +77,8 @@ See [initial setup](./initial-setup.md) documentation for more information.
 ## apko_image
 
 <pre>
+load("@rules_apko//apko:defs.bzl", "apko_image")
+
 apko_image(<a href="#apko_image-name">name</a>, <a href="#apko_image-contents">contents</a>, <a href="#apko_image-config">config</a>, <a href="#apko_image-tag">tag</a>, <a href="#apko_image-output">output</a>, <a href="#apko_image-architecture">architecture</a>, <a href="#apko_image-args">args</a>, <a href="#apko_image-kwargs">kwargs</a>)
 </pre>
 
@@ -130,6 +137,8 @@ For more examples checkout the [examples](/examples) directory.
 ## apko_lock
 
 <pre>
+load("@rules_apko//apko:defs.bzl", "apko_lock")
+
 apko_lock(<a href="#apko_lock-name">name</a>, <a href="#apko_lock-config">config</a>, <a href="#apko_lock-lockfile_name">lockfile_name</a>)
 </pre>
 

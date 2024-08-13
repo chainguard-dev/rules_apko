@@ -86,6 +86,9 @@ jobs:
           # Root module is BZLMOD only, do not test it without bzlmod enabled.
           - bzlmodEnabled: false
             folder: .
+          # Root module uses newer stardoc that requires Bazel 7 or greater
+          - bazelversion: 6.3.0
+            folder: .
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:

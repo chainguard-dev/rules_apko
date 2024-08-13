@@ -7,6 +7,8 @@ Repository rules for translating apko.lock.json
 ## translate_apko_lock
 
 <pre>
+load("@rules_apko//apko:translate_lock.bzl", "translate_apko_lock")
+
 translate_apko_lock(<a href="#translate_apko_lock-name">name</a>, <a href="#translate_apko_lock-lock">lock</a>, <a href="#translate_apko_lock-repo_mapping">repo_mapping</a>, <a href="#translate_apko_lock-target_name">target_name</a>)
 </pre>
 
