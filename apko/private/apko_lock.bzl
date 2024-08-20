@@ -30,7 +30,7 @@ def _impl(ctx):
     ctx.actions.write(
         output = output,
         content = LAUNCHER_TEMPLATE
-            .replace("{{apko_binary}}", apko_info.binary.path)
+            .replace("{{apko_binary}}", apko_info.binary.short_path)
             .replace("{{config}}", ctx.file.config.short_path)
             .replace("{{output}}", ctx.attr.lockfile_name),
         is_executable = True,
