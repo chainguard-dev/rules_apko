@@ -1,0 +1,59 @@
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_tarball")
+load("@rules_apko//apko:defs.bzl", "apko_config", "apko_image", "apko_lock")
+
+# This example assumes you run on arm64 host. If not, you will need to use platform_transition_filegroup.
+oci_image(
+    name = "python_base",
+    base = "@chainguard_python_linux_arm64",
+)
+
+# base image for apko needs to be an OCI index.
+oci_image_index(
+    name = "python_index",
+    images = [":python_base"],
+)
+
+# Just for convenience so it's easy to extract lib/apk/db/installed manually
+oci_tarball(
+    name = "python_tarball",
+    image = "python_base",
+    repo_tags = [],
+)
+
+# This is the core piece for building with base image - you need to encapsulate all the files the config references with deps.
+apko_config(
+    name = "apko_config",
+    config = ":apko.config.yaml",
+    deps = [
+        ":python_index",
+        "//:python_apkindex/aarch64/APKINDEX",
+    ],
+)
+
+# Run this to refresh lockfile.
+apko_lock(
+    name = "apko_lock",
+    config = ":apko_config",
+    lockfile_name = "apko.lock.json",
+)
+
+apko_image(
+    name = "apko_image",
+    config = ":apko_config",
+    contents = "@apko_lock//:contents",
+    tag = "python_and_node:latest",
+)
+
+oci_image(
+    name = "node_and_python",
+    base = "apko_image",
+)
+
+# bazel run //:node_and_python.tarball
+# docker run --entrypoint '/usr/bin/node' node_and_python:latest  --version
+# docker run  node_and_python:latest  --version
+oci_tarball(
+    name = "node_and_python.tarball",
+    image = "node_and_python",
+    repo_tags = ["node_and_python:latest"],
+)

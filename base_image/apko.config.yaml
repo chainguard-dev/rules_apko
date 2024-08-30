@@ -1,0 +1,13 @@
+contents:
+  baseimage:
+    image: ./python_index
+    apkindex: ./python_apkindex
+  repositories:
+    - https://packages.wolfi.dev/os
+  keyring:
+    - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+  packages:
+    - nodejs
+
+archs:
+  - aarch64
