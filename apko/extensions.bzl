@@ -113,7 +113,6 @@ def _apko_extension_impl(module_ctx):
         root_module_direct_dev_deps = root_direct_dev_deps,
     )
 
-
 apko = module_extension(
     implementation = _apko_extension_impl,
     tag_classes = {
