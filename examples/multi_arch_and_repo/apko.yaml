@@ -19,7 +19,3 @@ archs:
   - arm64
   - amd64
 
-os-release:
-  id: custom_alpine
-  version-id: "0.0.0"
-  name: "Custom Alpine"
