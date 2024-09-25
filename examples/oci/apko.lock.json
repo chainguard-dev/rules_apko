@@ -11,6 +11,7 @@
         "url": "https://packages.wolfi.dev/os/wolfi-signing.rsa.pub"
       }
     ],
+    "build_repositories": [],
     "repositories": [
       {
         "name": "packages.wolfi.dev/os/aarch64",
@@ -38,7 +39,7 @@
           "checksum": "sha1-HnzYmuMLrQWaA5Ie+DCRV38GOzY="
         },
         "data": {
-          "range": "bytes=1029-61107",
+          "range": "bytes=1029-2983",
           "checksum": "sha256-aw2O8Q5wDTwd9uikJQmfLxYBraCssy6jAhjx242Wi94="
         },
         "checksum": "Q1HnzYmuMLrQWaA5Ie+DCRV38GOzY="
@@ -57,7 +58,7 @@
           "checksum": "sha1-GL1kaSxDtLquOYyNLB/uAT/o/+g="
         },
         "data": {
-          "range": "bytes=1026-254655",
+          "range": "bytes=1026-130530",
           "checksum": "sha256-gXyNoCqO2y+3OwJ0kYK4+uTTGwO0gR5hrDgi+vquRoE="
         },
         "checksum": "Q1GL1kaSxDtLquOYyNLB/uAT/o/+g="
@@ -76,7 +77,7 @@
           "checksum": "sha1-xRkIGUU69f7/jQY052mWfgWpYrA="
         },
         "data": {
-          "range": "bytes=1047-122510",
+          "range": "bytes=1047-12154",
           "checksum": "sha256-XbprEl9LYlD0CtA/fPP/gAsavxZ8jm+DT6+dItHFOw8="
         },
         "checksum": "Q1xRkIGUU69f7/jQY052mWfgWpYrA="
@@ -95,7 +96,7 @@
           "checksum": "sha1-ybIZiETo71rXu0K54Hqb1YfDY4E="
         },
         "data": {
-          "range": "bytes=1099-263833",
+          "range": "bytes=1099-107421",
           "checksum": "sha256-G8Mm+BTHS4hoNf8VPMgjlnZZUZldBvc7xpUVxVBeOcs="
         },
         "checksum": "Q1ybIZiETo71rXu0K54Hqb1YfDY4E="
@@ -114,7 +115,7 @@
           "checksum": "sha1-KdYqBqqBFyzrDLBOXY8VfcUKUL8="
         },
         "data": {
-          "range": "bytes=1044-408840",
+          "range": "bytes=1044-75721",
           "checksum": "sha256-DYhPNuZs5MwUEhjVs+jIhawpt29MOvLOlkjxbcSqfrc="
         },
         "checksum": "Q1KdYqBqqBFyzrDLBOXY8VfcUKUL8="
@@ -133,7 +134,7 @@
           "checksum": "sha1-UBBH+olJI92cbCVFS7wGx63NeCk="
         },
         "data": {
-          "range": "bytes=1305-5216631",
+          "range": "bytes=1305-2058862",
           "checksum": "sha256-XRXa79po2UML40QEmno36WWp2AI+OQc5ypnTXBWC2XE="
         },
         "checksum": "Q1UBBH+olJI92cbCVFS7wGx63NeCk="
@@ -152,7 +153,7 @@
           "checksum": "sha1-PIFHBnTWjxCrgpIq/qepeOH3zBU="
         },
         "data": {
-          "range": "bytes=1099-189969",
+          "range": "bytes=1099-51455",
           "checksum": "sha256-6ipnvWDbexn8TGPbyqrEgHygLnnQSvAosJu2jFJT8uY="
         },
         "checksum": "Q1PIFHBnTWjxCrgpIq/qepeOH3zBU="
@@ -171,7 +172,7 @@
           "checksum": "sha1-YH3gSxK/PTDShjd4hRVDEkZqZvY="
         },
         "data": {
-          "range": "bytes=1079-5404967",
+          "range": "bytes=1079-2157321",
           "checksum": "sha256-56ET5dWFFL2f1sbF26gD3Z2r0ujbRyhywGWj/6R5zOA="
         },
         "checksum": "Q1YH3gSxK/PTDShjd4hRVDEkZqZvY="
@@ -190,7 +191,7 @@
           "checksum": "sha1-bW1IvyE7GZB5+0tUzNjwQCgiV18="
         },
         "data": {
-          "range": "bytes=1081-1334096",
+          "range": "bytes=1081-501860",
           "checksum": "sha256-Ex+lWNjk8Rphu/xEzFcgQPPXqD9IgamEcX91Xeq/0CA="
         },
         "checksum": "Q1bW1IvyE7GZB5+0tUzNjwQCgiV18="
@@ -209,7 +210,7 @@
           "checksum": "sha1-fuLaiCRAC8ZEv0uNlOdUL/49Z9A="
         },
         "data": {
-          "range": "bytes=1136-588727",
+          "range": "bytes=1136-183938",
           "checksum": "sha256-tO7czZHVKPNo5SgB+zIQ5nt+GKW7Q6+FBOWzkJ+5l2M="
         },
         "checksum": "Q1fuLaiCRAC8ZEv0uNlOdUL/49Z9A="
@@ -228,7 +229,7 @@
           "checksum": "sha1-WnkcoQvww/RbnbJKzN/j1mTmKxc="
         },
         "data": {
-          "range": "bytes=1100-245667",
+          "range": "bytes=1100-91602",
           "checksum": "sha256-TUzmZwe+uRVhiVHMNEVWGZiuZZboc6NZG4uBrMquBNw="
         },
         "checksum": "Q1WnkcoQvww/RbnbJKzN/j1mTmKxc="
@@ -247,7 +248,7 @@
           "checksum": "sha1-Vt+c97kjgKSolC+KwusQwRDfujc="
         },
         "data": {
-          "range": "bytes=1093-22170",
+          "range": "bytes=1093-2141",
           "checksum": "sha256-QV0sqYDdpzE5jWlvm8aIhp5yClreMUBwLiQxI7Dohz4="
         },
         "checksum": "Q1Vt+c97kjgKSolC+KwusQwRDfujc="
@@ -266,7 +267,7 @@
           "checksum": "sha1-z6P2Oc3Icb3jNky7NEsfxsvkTEU="
         },
         "data": {
-          "range": "bytes=1188-801468",
+          "range": "bytes=1188-428996",
           "checksum": "sha256-Gu3tlP90JK8UWxIxseecAKtK6W9CRsfx57Xan+sK3ak="
         },
         "checksum": "Q1z6P2Oc3Icb3jNky7NEsfxsvkTEU="
@@ -285,7 +286,7 @@
           "checksum": "sha1-uR9YHhW84LuBjpxtLoDWO1fIo1k="
         },
         "data": {
-          "range": "bytes=1057-21843",
+          "range": "bytes=1057-1978",
           "checksum": "sha256-Jgv6F0BBma9uDppDvvqRL0T4UsXQZtiVnMq8CwtpWMQ="
         },
         "checksum": "Q1uR9YHhW84LuBjpxtLoDWO1fIo1k="
@@ -304,7 +305,7 @@
           "checksum": "sha1-YLOq6c+iCrZS7vrBuNCCQqVXu/0="
         },
         "data": {
-          "range": "bytes=1035-61106",
+          "range": "bytes=1035-2989",
           "checksum": "sha256-BU5bWPVBD6l68QnI5pOnx7zTm1jpj+jPMoO4nOSiv2Q="
         },
         "checksum": "Q1YLOq6c+iCrZS7vrBuNCCQqVXu/0="
@@ -323,7 +324,7 @@
           "checksum": "sha1-WR9MGKU+cJh6dJFEXnr3zU1qsMM="
         },
         "data": {
-          "range": "bytes=1035-254654",
+          "range": "bytes=1035-130539",
           "checksum": "sha256-EkOhtSivoLErXsK2J9ri39thkwb2kJGYHVou4n6dMKA="
         },
         "checksum": "Q1WR9MGKU+cJh6dJFEXnr3zU1qsMM="
@@ -342,7 +343,7 @@
           "checksum": "sha1-zmkTyK0dOGvhVXVa63sB0Rv/atY="
         },
         "data": {
-          "range": "bytes=1054-122509",
+          "range": "bytes=1054-12163",
           "checksum": "sha256-xXPt586efA0TcVdlBeBb/ZMRhMaTVySkyYTie5J6E94="
         },
         "checksum": "Q1zmkTyK0dOGvhVXVa63sB0Rv/atY="
@@ -361,7 +362,7 @@
           "checksum": "sha1-qMcGwmanPGYt0N34jBQPHfyPTNQ="
         },
         "data": {
-          "range": "bytes=1090-273256",
+          "range": "bytes=1090-127604",
           "checksum": "sha256-e64nrftAWw3tA32vSLdRzoE51S4ZBHHzhCPjaLUfZiM="
         },
         "checksum": "Q1qMcGwmanPGYt0N34jBQPHfyPTNQ="
@@ -380,7 +381,7 @@
           "checksum": "sha1-3EHESqHJii62e3OussPLCd1P6uM="
         },
         "data": {
-          "range": "bytes=1052-408839",
+          "range": "bytes=1052-75729",
           "checksum": "sha256-j/Y1x9xJ1gg5aKerSLHWKwrpOEGARyqNOQRU+9w6ulA="
         },
         "checksum": "Q13EHESqHJii62e3OussPLCd1P6uM="
@@ -399,7 +400,7 @@
           "checksum": "sha1-svwEotg0cosWmMSmj/Df0tgRzxo="
         },
         "data": {
-          "range": "bytes=1309-6045765",
+          "range": "bytes=1309-2822200",
           "checksum": "sha256-l98ENO3Z/YnVV8gpj4aEmbUIBQl0tH0S103FlOwbyE0="
         },
         "checksum": "Q1svwEotg0cosWmMSmj/Df0tgRzxo="
@@ -418,7 +419,7 @@
           "checksum": "sha1-BERCewGJVIkPpMoG7t13ter7+Go="
         },
         "data": {
-          "range": "bytes=1078-159464",
+          "range": "bytes=1078-61438",
           "checksum": "sha256-+JOPvMTzIWTLR+5cccK4AXWXO2kvBp1mH9/AGlFSD5c="
         },
         "checksum": "Q1BERCewGJVIkPpMoG7t13ter7+Go="
@@ -437,7 +438,7 @@
           "checksum": "sha1-PMBsIOKNPxp97HYM1j6l38H+dUI="
         },
         "data": {
-          "range": "bytes=1066-6093310",
+          "range": "bytes=1066-2305029",
           "checksum": "sha256-YHLY6ISR63RD/hpfXcEQmM8OpkBCkqZAIxhzFgZLoWo="
         },
         "checksum": "Q1PMBsIOKNPxp97HYM1j6l38H+dUI="
@@ -456,7 +457,7 @@
           "checksum": "sha1-GTeRSLBxTc14VkyumqRbJAQ4Ou8="
         },
         "data": {
-          "range": "bytes=1067-1261919",
+          "range": "bytes=1067-509818",
           "checksum": "sha256-BOxmhcGlG3RaGIku6tOdC1i0/LNzUsIcvIxUAI1hybM="
         },
         "checksum": "Q1GTeRSLBxTc14VkyumqRbJAQ4Ou8="
@@ -475,7 +476,7 @@
           "checksum": "sha1-d6KWlsyysrLbDnqZNOxD3yXQArs="
         },
         "data": {
-          "range": "bytes=1136-483558",
+          "range": "bytes=1136-182567",
           "checksum": "sha256-PxwHUjByuYsDLfP2+E4x8ywCE2Lkk9mzYgRm2w4ayNk="
         },
         "checksum": "Q1d6KWlsyysrLbDnqZNOxD3yXQArs="
@@ -494,7 +495,7 @@
           "checksum": "sha1-IbvTzcXUyY3M4HSurKCl4pqkI2o="
         },
         "data": {
-          "range": "bytes=1093-234546",
+          "range": "bytes=1093-84765",
           "checksum": "sha256-/rIlvPr9j1TCCfCup07Nn1XGUs3HVoAbLFHd12zyzII="
         },
         "checksum": "Q1IbvTzcXUyY3M4HSurKCl4pqkI2o="
@@ -513,7 +514,7 @@
           "checksum": "sha1-FhQh9fRIa6oEmeHK7DcBanfViEU="
         },
         "data": {
-          "range": "bytes=1099-22169",
+          "range": "bytes=1099-2147",
           "checksum": "sha256-R8hnnJmRGOkhn8PbWNTi8sYQXRKrr/fApyzFsp0+j3Y="
         },
         "checksum": "Q1FhQh9fRIa6oEmeHK7DcBanfViEU="
@@ -532,7 +533,7 @@
           "checksum": "sha1-fROOa9odUYFJr/gAQc48JpGA4IU="
         },
         "data": {
-          "range": "bytes=1193-760651",
+          "range": "bytes=1193-420262",
           "checksum": "sha256-zTIGYfK7lGSC71H6rz9tQV/9Vs1bE9i5lgkyd5/nUjc="
         },
         "checksum": "Q1fROOa9odUYFJr/gAQc48JpGA4IU="
@@ -551,7 +552,7 @@
           "checksum": "sha1-lrNusYOBmqA3J4Yfe63FzIt6Ezs="
         },
         "data": {
-          "range": "bytes=1069-21842",
+          "range": "bytes=1069-1993",
           "checksum": "sha256-cS8VKmEnrdhVCd7QuHhNqpkGSTsq/BJWlxYr9AJ1KP0="
         },
         "checksum": "Q1lrNusYOBmqA3J4Yfe63FzIt6Ezs="
