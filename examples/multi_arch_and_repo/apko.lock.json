@@ -2,7 +2,7 @@
   "version": "v1",
   "config": {
     "name": "./examples/multi_arch_and_repo/apko.yaml",
-    "checksum": "sha256-uk5++SQ6xte2CZcxKAYSqD11RaMYNtH1kky+dD1kHTs="
+    "checksum": "sha256-HS2ZfS0F7bnnY2D6b5XbjFi5aiuy+JXlSwnsaf1L9Hg="
   },
   "contents": {
     "keyring": [],

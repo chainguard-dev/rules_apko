@@ -2,7 +2,7 @@
   "version": "v1",
   "config": {
     "name": "./examples/lock/apko.yaml",
-    "checksum": "sha256-96whh4cZM02Dmy3DbzSxTEKeU2WegEylLSKQpJEkfBw="
+    "checksum": "sha256-L9ZQk0UrCQraNSeIENpO3B5dYASrSKBdSnRWG3Hr5qM="
   },
   "contents": {
     "keyring": [],
