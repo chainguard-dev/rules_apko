@@ -103,7 +103,8 @@ jobs:
         with:
           repository-cache: true
           bazelrc: |
-            common --announce_rc --color=yes --enable_bzlmod=${{ matrix.bzlmodEnabled }} 
+            common --announce_rc --color=yes --enable_bzlmod=${{ matrix.bzlmodEnabled }}
+            test --test_output=errors
             ${{  (matrix.bazelversion == '6.4.0' && 'try-import %workspace%/.apko/.bazelrc') || '' }}
 
       - name: Configure Bazel version

@@ -2,10 +2,11 @@
   "version": "v1",
   "config": {
     "name": "./e2e/smoke/apko.yaml",
-    "checksum": "sha256-96whh4cZM02Dmy3DbzSxTEKeU2WegEylLSKQpJEkfBw="
+    "checksum": "sha256-L9ZQk0UrCQraNSeIENpO3B5dYASrSKBdSnRWG3Hr5qM="
   },
   "contents": {
     "keyring": [],
+    "build_repositories": [],
     "repositories": [
       {
         "name": "dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64",
@@ -28,7 +29,7 @@
           "checksum": "sha1-odtIYtKyOCg6suF/cDaYpygL7hw="
         },
         "data": {
-          "range": "bytes=1225-634880",
+          "range": "bytes=1225-390426",
           "checksum": "sha256-KPwSgRdeAcnVvczowX1F54Aszov9ZI1cRXgtFZzepfg="
         },
         "checksum": "Q1odtIYtKyOCg6suF/cDaYpygL7hw="
@@ -47,7 +48,7 @@
           "checksum": "sha1-ierGKl33AY17yZdo8YN+z8NeMPg="
         },
         "data": {
-          "range": "bytes=2301-946176",
+          "range": "bytes=2301-510094",
           "checksum": "sha256-FzlpW4Mq56716OmdQnwYlES9hohBM0ouq62EWds3kDI="
         },
         "checksum": "Q1ierGKl33AY17yZdo8YN+z8NeMPg="

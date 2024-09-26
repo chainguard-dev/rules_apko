@@ -1,25 +1,23 @@
 contents:
   repositories:
-    - https://dl-cdn.alpinelinux.org/alpine/v3.20/main
-    - https://dl-cdn.alpinelinux.org/alpine/v3.20/community
+    - https://packages.wolfi.dev/os
+    - https://packages.cgr.dev/extras
+  keyring:
+    - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    - https://packages.cgr.dev/extras/chainguard-extras.rsa.pub
   packages:
     - ca-certificates
-    - libc6-compat
     - git
     - less
     - openssh
     - jq
     - unzip
-    - curl
-    - cdrkit
-    - ethtool
+    - curl~8.9.0
     - openssl
+    - chainctl # something from extras
+    - busybox
 
 archs:
   - arm64
   - amd64
 
-os-release:
-  id: custom_alpine
-  version-id: "0.0.0"
-  name: "Custom Alpine"

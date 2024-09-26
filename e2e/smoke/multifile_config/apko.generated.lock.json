@@ -2,10 +2,11 @@
   "version": "v1",
   "config": {
     "name": "multifile_config/final_config",
-    "checksum": "sha256-MSnniHz70jvjVUCXoODhAlzNWxY5Vdjb8UOK8gFF0bk="
+    "checksum": "sha256-cbLPq0rolyTr2T+etXlonp07UpkdECuX+ficViK7Tng="
   },
   "contents": {
     "keyring": [],
+    "build_repositories": [],
     "repositories": [
       {
         "name": "dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64",
@@ -28,7 +29,7 @@
           "checksum": "sha1-odtIYtKyOCg6suF/cDaYpygL7hw="
         },
         "data": {
-          "range": "bytes=1225-634880",
+          "range": "bytes=1225-390426",
           "checksum": "sha256-KPwSgRdeAcnVvczowX1F54Aszov9ZI1cRXgtFZzepfg="
         },
         "checksum": "Q1odtIYtKyOCg6suF/cDaYpygL7hw="
@@ -47,7 +48,7 @@
           "checksum": "sha1-ierGKl33AY17yZdo8YN+z8NeMPg="
         },
         "data": {
-          "range": "bytes=2301-946176",
+          "range": "bytes=2301-510094",
           "checksum": "sha256-FzlpW4Mq56716OmdQnwYlES9hohBM0ouq62EWds3kDI="
         },
         "checksum": "Q1ierGKl33AY17yZdo8YN+z8NeMPg="
