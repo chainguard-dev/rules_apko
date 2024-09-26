@@ -2,7 +2,7 @@
   "version": "v1",
   "config": {
     "name": "./examples/multi_arch_and_repo/apko.yaml",
-    "checksum": "sha256-rEQDw0oRNtFkfFN/j1I6UBUSX4FXCabmW5DVfAXbnok="
+    "checksum": "sha256-mpmfsBLXgMybjBpH9TQn3C4DTVmucQJf0zszkKGksVA="
   },
   "contents": {
     "keyring": [
@@ -516,22 +516,22 @@
       },
       {
         "name": "curl",
-        "url": "https://packages.wolfi.dev/os/aarch64/curl-8.10.1-r0.apk",
-        "version": "8.10.1-r0",
+        "url": "https://packages.wolfi.dev/os/aarch64/curl-8.9.0-r0.apk",
+        "version": "8.9.0-r0",
         "architecture": "aarch64",
         "signature": {
-          "range": "bytes=0-706",
-          "checksum": "sha1-q1254I0WIIufqwLRyMxNK1Lg6KE="
+          "range": "bytes=0-698",
+          "checksum": "sha1-mTuB0Kq5HGOBDdCkwLfHnm4xrdE="
         },
         "control": {
-          "range": "bytes=707-1090",
-          "checksum": "sha1-VYRzOATpMKFvVYOkAQW1lKn/tMg="
+          "range": "bytes=699-1082",
+          "checksum": "sha1-Ngw6cgCHro/20VclF8/+u3ZENZY="
         },
         "data": {
-          "range": "bytes=1091-184500",
-          "checksum": "sha256-QBMz15feKu3DKjQ6SVjwQKcROLKVnMHSYCNN8hVEwWM="
+          "range": "bytes=1083-183577",
+          "checksum": "sha256-AqWOixptee6aE2woUyce6ChFOxiHzLJxbP6Klv8vjjE="
         },
-        "checksum": "Q1VYRzOATpMKFvVYOkAQW1lKn/tMg="
+        "checksum": "Q1Ngw6cgCHro/20VclF8/+u3ZENZY="
       },
       {
         "name": "libexpat1",
@@ -1352,22 +1352,22 @@
       },
       {
         "name": "curl",
-        "url": "https://packages.wolfi.dev/os/x86_64/curl-8.10.1-r0.apk",
-        "version": "8.10.1-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/curl-8.9.0-r0.apk",
+        "version": "8.9.0-r0",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-698",
-          "checksum": "sha1-oPtd/MlfM5xoob9ZqDU7CYmeWSs="
+          "range": "bytes=0-694",
+          "checksum": "sha1-XGcDXhl2qckVboeX2GdW0bunaKs="
         },
         "control": {
-          "range": "bytes=699-1087",
-          "checksum": "sha1-Wv3DnUmN7Sih/fnSGZ/csxMv0ko="
+          "range": "bytes=695-1083",
+          "checksum": "sha1-QH9uDOkDKONSrS44Z1MVHedTtQI="
         },
         "data": {
-          "range": "bytes=1088-188643",
-          "checksum": "sha256-OI7vsNJ7pgM8c3xJnyzrmOEDp9C6ccnTMgjv+OJ4rMM="
+          "range": "bytes=1084-182489",
+          "checksum": "sha256-4ZCtGVpAzDpbwQEvScQ+peTdskBXWeHDKn1Fr9ZP/Nk="
         },
-        "checksum": "Q1Wv3DnUmN7Sih/fnSGZ/csxMv0ko="
+        "checksum": "Q1QH9uDOkDKONSrS44Z1MVHedTtQI="
       },
       {
         "name": "libexpat1",
