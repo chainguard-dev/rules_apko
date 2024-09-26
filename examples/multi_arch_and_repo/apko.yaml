@@ -14,7 +14,8 @@ contents:
     - unzip
     - curl
     - openssl
-    - chainctl
+    - chainctl # something from extras
+    - busybox
 
 archs:
   - arm64
