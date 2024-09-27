@@ -116,6 +116,9 @@ def _impl(ctx):
         )
         inputs.append(content_entry)
 
+    sbom = ctx.actions.declare_directory(ctx.label.name + "_sbom")
+    args.add("--sbom-path={}".format("../" + sbom.basename))
+
     apko_binary = ctx.actions.declare_file(paths.join(workdir, apko_info.binary.short_path))
     ctx.actions.symlink(
         target_file = apko_info.binary,
@@ -128,12 +131,13 @@ def _impl(ctx):
         arguments = [args],
         inputs = inputs,
         tools = [apko_info.binary],
-        outputs = [output],
+        outputs = [output, sbom],
     )
 
-    return DefaultInfo(
-        files = depset([output]),
-    )
+    return [
+        DefaultInfo(files = depset([output])),
+        OutputGroupInfo(sbom = depset([sbom])),
+    ]
 
 apko_image_lib = struct(
     attrs = _ATTRS,
