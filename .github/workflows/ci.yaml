@@ -99,7 +99,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
-      - uses: bazel-contrib/setup-bazel@e403ad507104847c3539436f64a9e9eecc73eeec # v0.8.5
+      - uses: bazel-contrib/setup-bazel@90b352333885f9fb6bf262d8e659f01b6219cc25 # v0.9.0
         with:
           repository-cache: true
           bazelrc: |
