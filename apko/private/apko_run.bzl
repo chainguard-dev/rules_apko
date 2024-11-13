@@ -1,4 +1,4 @@
-"A rule for running apko - convenience layer to stay within consistent versions."
+"A rule for running apko - convenience layer to stay within consisten versions and use bazel cache."
 
 _WORKDIR_DOC = """
   The dir where apko will get executed:
