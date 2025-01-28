@@ -29,3 +29,4 @@ repos:
     rev: "v2.4.0"
     hooks:
       - id: prettier
+        exclude: (expected_expanded_config.yaml$)
