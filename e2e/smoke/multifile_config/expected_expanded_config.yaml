@@ -1,0 +1,12 @@
+contents:
+    repositories:
+        - https://dl-cdn.alpinelinux.org/alpine/v3.18/main
+    packages:
+        - busybox
+cmd: /bin/sh -l
+archs:
+    - amd64
+environment:
+    MY_VAR: /usr/sbin:/sbin:/usr/bin:/bin
+    PATH: /usr/sbin:/sbin:/usr/bin:/bin
+include: multifile_config/intermediate_config

@@ -58,6 +58,7 @@ bzl_library(
         "//apko/private:apko_config",
         "//apko/private:apko_image",
         "//apko/private:apko_lock",
+        "//apko/private:apko_show_config",
         "//apko/private/range:bazelrc",
         "@aspect_bazel_lib//lib:write_source_files",
     ],

@@ -1,7 +1,7 @@
 "A rule for running apko with prepopulated cache"
 
 load("//apko/private:apko_run.bzl", "apko_run")
-load("//apko/private:apko_config.bzl", "ApkoConfigInfo")
+load("//apko/private:apko_config.bzl", "prepare_apko_config_in_workdir")
 load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@bazel_skylib//lib:versions.bzl", "versions")
 
@@ -65,25 +65,7 @@ def _impl(ctx):
     indexes = ctx.attr.contents[OutputGroupInfo].indexes
     keyrings = ctx.attr.contents[OutputGroupInfo].keyrings
 
-    inputs = []
-    if ApkoConfigInfo in ctx.attr.config:
-        for f in ctx.attr.config[ApkoConfigInfo].files.to_list():
-            if f.is_directory:
-                input_entry = ctx.actions.declare_directory(paths.join(workdir, f.short_path))
-            else:
-                input_entry = ctx.actions.declare_file(paths.join(workdir, f.short_path))
-            ctx.actions.symlink(
-                target_file = f,
-                output = input_entry,
-            )
-            inputs.append(input_entry)
-    else:
-        config_symlink = ctx.actions.declare_file(paths.join(workdir, ctx.file.config.short_path))
-        ctx.actions.symlink(
-            target_file = ctx.file.config,
-            output = config_symlink,
-        )
-        inputs.append(config_symlink)
+    inputs = prepare_apko_config_in_workdir(workdir, ctx)
 
     deps = [apks, keyrings]
 
