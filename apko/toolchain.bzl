@@ -5,6 +5,7 @@ ApkoInfo = provider(
     fields = {
         "binary": "Path to an apko binary",
         "version": "Version of the apko binary, e.g (0.12.3-foo)",
+        "repo": "Repository name of the apko binary",
     },
 )
 
@@ -21,6 +22,7 @@ def _apko_toolchain_impl(ctx):
     apko_info = ApkoInfo(
         binary = binary,
         version = version,
+        repo = ctx.attr.apko.label.repo_name,
     )
     toolchain_info = platform_common.ToolchainInfo(
         apko_info = apko_info,
