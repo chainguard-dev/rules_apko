@@ -1,7 +1,7 @@
 {
   "version": "v1",
   "config": {
-    "name": "./examples/lock/apko.yaml",
+    "name": "examples/lock/apko.yaml",
     "checksum": "sha256-L9ZQk0UrCQraNSeIENpO3B5dYASrSKBdSnRWG3Hr5qM="
   },
   "contents": {
@@ -17,22 +17,22 @@
     "packages": [
       {
         "name": "musl",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/musl-1.2.4-r2.apk",
-        "version": "1.2.4-r2",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/musl-1.2.4-r3.apk",
+        "version": "1.2.4-r3",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-666",
-          "checksum": "sha1-MiA7YiamUyscxmdGiRBGiJjcW8U="
+          "range": "bytes=0-667",
+          "checksum": "sha1-DB3LzVzcbEbEjz1GfU1e9fbHU2o="
         },
         "control": {
-          "range": "bytes=667-1224",
-          "checksum": "sha1-odtIYtKyOCg6suF/cDaYpygL7hw="
+          "range": "bytes=668-1226",
+          "checksum": "sha1-RJtwOB+6Ed3GgB/nIEG3Hro5LoE="
         },
         "data": {
-          "range": "bytes=1225-390426",
-          "checksum": "sha256-KPwSgRdeAcnVvczowX1F54Aszov9ZI1cRXgtFZzepfg="
+          "range": "bytes=1227-390549",
+          "checksum": "sha256-+cKAii0sNKx+8IjUaAMI1xeoaXYyUxHkVPZp44PCIJ0="
         },
-        "checksum": "Q1odtIYtKyOCg6suF/cDaYpygL7hw="
+        "checksum": "Q1RJtwOB+6Ed3GgB/nIEG3Hro5LoE="
       },
       {
         "name": "busybox",
