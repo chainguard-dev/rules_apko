@@ -67,7 +67,7 @@ def _impl(ctx):
 
     inputs = prepare_apko_config_in_workdir(workdir, ctx)
 
-    deps = [apks, keyrings]
+    deps = [apks, keyrings, indexes]
 
     supports_lockfile = versions.is_at_least("0.13.0", apko_info.version)
     if supports_lockfile:
@@ -78,8 +78,6 @@ def _impl(ctx):
         )
         inputs.append(lockfile_symlink)
         args.add("--lockfile={}".format(lockfile.short_path))
-    else:
-        deps.append(indexes)
 
     args.add("--cache-dir={}".format(cache_name))
     args.add("--offline")
