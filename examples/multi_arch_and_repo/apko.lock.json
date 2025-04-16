@@ -250,22 +250,22 @@
       },
       {
         "name": "chainctl",
-        "url": "https://packages.cgr.dev/extras/aarch64/chainctl-0.2.68-r0.apk",
-        "version": "0.2.68-r0",
+        "url": "https://packages.cgr.dev/extras/aarch64/chainctl-0.2.70-r0.apk",
+        "version": "0.2.70-r0",
         "architecture": "aarch64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-1692",
-          "checksum": "sha1-/vljdDJVdzVjHcjbKkzcawfeoCI="
+          "range": "bytes=0-1691",
+          "checksum": "sha1-fRH1e6r7orpxqu8Vc6aoWM9Nip8="
         },
         "data": {
-          "range": "bytes=1693-21857258",
-          "checksum": "sha256-DAFdwX3i7NvcsTIT24lahKKkp4KKWOyUclLb23N7Mlw="
+          "range": "bytes=1692-21844240",
+          "checksum": "sha256-fwEjBw2QVSN1zc+vvsrkSLQA1KKyw+rB0WgJYJYhbwQ="
         },
-        "checksum": "Q1/vljdDJVdzVjHcjbKkzcawfeoCI="
+        "checksum": "Q1fRH1e6r7orpxqu8Vc6aoWM9Nip8="
       },
       {
         "name": "zlib",
@@ -1257,8 +1257,8 @@
       },
       {
         "name": "chainctl",
-        "url": "https://packages.cgr.dev/extras/x86_64/chainctl-0.2.68-r0.apk",
-        "version": "0.2.68-r0",
+        "url": "https://packages.cgr.dev/extras/x86_64/chainctl-0.2.70-r0.apk",
+        "version": "0.2.70-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
@@ -1266,13 +1266,13 @@
         },
         "control": {
           "range": "bytes=0-1663",
-          "checksum": "sha1-ZTzMdX5DZOGkeMZ9dSmrWRzlWmI="
+          "checksum": "sha1-+ul02+Fr9cZz5+WS1QwCsiozYKU="
         },
         "data": {
-          "range": "bytes=1664-23997801",
-          "checksum": "sha256-UfU4w7Wasu3SOZn4G8urrwWK6xXBEhm4WKtl5cPeRXM="
+          "range": "bytes=1664-23973213",
+          "checksum": "sha256-+En+gPyvar7PDUfimWadVW8BbKzU5khUJJ14a2zLdJ8="
         },
-        "checksum": "Q1ZTzMdX5DZOGkeMZ9dSmrWRzlWmI="
+        "checksum": "Q1+ul02+Fr9cZz5+WS1QwCsiozYKU="
       },
       {
         "name": "zlib",
