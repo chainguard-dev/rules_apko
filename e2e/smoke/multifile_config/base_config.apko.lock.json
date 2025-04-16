@@ -1,8 +1,8 @@
 {
   "version": "v1",
   "config": {
-    "name": "multifile_config/final_config",
-    "checksum": "sha256-vgNUWqDbYC0UoGQDHnd8qo3CVZAhNwSuH8xv9mZkrvQ="
+    "name": "e2e/smoke/multifile_config/base_config.apko.yaml",
+    "checksum": "sha256-W5wS8HLGz9qI5ILWqVoV7YS+m3qz2hppgI0FxC1dtMU="
   },
   "contents": {
     "keyring": [],
