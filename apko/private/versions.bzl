@@ -8,7 +8,7 @@ APKO_VERSIONS = {
         "darwin_arm64": "sha256-UJdW7II4SqXufBOlpxRhShxViVkh6Ghs7E9Q/vWmDf8=",
         "linux_386": "sha256-O2/9BHE90VFBX3v/pro5Bnx8JJloQOILmxjdZ39NXUw=",
         "linux_amd64": "sha256-CPUO4vQZj1q8lrA/DZ4b6j67gAENb/JtDui/q/aK5YQ=",
-        "linux_arm64": "sha256-uuEHaCB1ANmc8n4e/vwaM1+L+dcwtVwp4BtxUWEvqPI="
+        "linux_arm64": "sha256-uuEHaCB1ANmc8n4e/vwaM1+L+dcwtVwp4BtxUWEvqPI=",
     },
     "v0.19.2": {
         "darwin_amd64": "sha256-2CNAV7DkXZYp0GzedQNXcIPxeJVQRy30xbOBvDdlhsg=",
