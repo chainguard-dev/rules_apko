@@ -20,7 +20,7 @@ set -e
 config={{config}}
 output={{output}}
 
-{{apko_binary}} lock $config --output=${BUILD_WORKSPACE_DIRECTORY}/${output} ${args} "${@}"
+{{apko_binary}} lock $config --output=${BUILD_WORKSPACE_DIRECTORY}/${output} "${@}"
 """
 
 def _impl(ctx):
