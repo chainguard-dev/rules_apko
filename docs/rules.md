@@ -179,4 +179,5 @@ That is, if you define `apko_lock` in `foo/bar/BUILD.bazel` with `lockfile_name=
 | <a id="apko_lock-config"></a>config |  label of the apko config. It can be either a source file or generated target. Additionally, if the target provides ApkoConfigInfo provider, the transitive dependencies listed in ApkoConfigInfo.files will be added to runfiles as well.   |  none |
 | <a id="apko_lock-lockfile_name"></a>lockfile_name |  name of the lockfile   |  none |
 | <a id="apko_lock-kwargs"></a>kwargs |  the rule inherits standard attributes, like: tags, visibility, and args.   |  none |
-q
+
+
