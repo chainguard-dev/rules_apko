@@ -160,7 +160,7 @@ For more examples checkout the [examples](/examples) directory.
 <pre>
 load("@rules_apko//apko:defs.bzl", "apko_lock")
 
-apko_lock(<a href="#apko_lock-name">name</a>, <a href="#apko_lock-config">config</a>, <a href="#apko_lock-lockfile_name">lockfile_name</a>)
+apko_lock(<a href="#apko_lock-name">name</a>, <a href="#apko_lock-config">config</a>, <a href="#apko_lock-lockfile_name">lockfile_name</a>,  <a href="#apko_lock-kwargs">kwargs</a>)
 </pre>
 
 Generates executable rule for producing apko lock files.
@@ -178,5 +178,4 @@ That is, if you define `apko_lock` in `foo/bar/BUILD.bazel` with `lockfile_name=
 | <a id="apko_lock-name"></a>name |  name of the rule,   |  none |
 | <a id="apko_lock-config"></a>config |  label of the apko config. It can be either a source file or generated target. Additionally, if the target provides ApkoConfigInfo provider, the transitive dependencies listed in ApkoConfigInfo.files will be added to runfiles as well.   |  none |
 | <a id="apko_lock-lockfile_name"></a>lockfile_name |  name of the lockfile   |  none |
-
-
+| <a id="apko_lock-kwargs"></a>kwargs |  the rule inherits standard attributes, like: tags, visibility, and args.   |  none |
