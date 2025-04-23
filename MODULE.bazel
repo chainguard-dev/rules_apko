@@ -25,7 +25,7 @@ bazel_dep(name = "buildifier_prebuilt", version = "6.1.2", dev_dependency = True
 bazel_dep(name = "stardoc", version = "0.7.1", dev_dependency = True, repo_name = "io_bazel_stardoc")
 
 toolchain = use_extension("//apko:extensions.bzl", "apko")
-toolchain.toolchain(apko_version = "v0.26.0")
+toolchain.toolchain(apko_version = "v0.27.0")
 use_repo(toolchain, "apko_toolchains")
 
 register_toolchains("@apko_toolchains//:all")
