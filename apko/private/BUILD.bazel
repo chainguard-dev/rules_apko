@@ -17,8 +17,8 @@ bzl_library(
     srcs = ["apko_image.bzl"],
     visibility = ["//apko:__subpackages__"],
     deps = [
-        "apko_run",
         ":apko_config",
+        ":apko_run",
         "@bazel_skylib//lib:paths",
         "@bazel_skylib//lib:versions",
     ],
@@ -39,19 +39,17 @@ bzl_library(
 )
 
 bzl_library(
-    name = "apko_config",
-    srcs = [
-        "apko_config.bzl",
-        "@bazel_skylib//lib:paths",
-    ],
-    visibility = ["//apko:__subpackages__"],
-)
-
-bzl_library(
     name = "apko_show_config",
     srcs = ["apko_show_config.bzl"],
     visibility = ["//apko:__subpackages__"],
     deps = [":apko_config"],
+)
+
+bzl_library(
+    name = "apko_config",
+    srcs = ["apko_config.bzl"],
+    visibility = ["//apko:__subpackages__"],
+    deps = ["@bazel_skylib//lib:paths"],
 )
 
 bzl_library(

@@ -1,4 +1,4 @@
-"A rule for running apko with prepopulated cache"
+"""A rule for running apko with prepopulated cache"""
 
 load("//apko/private:apko_run.bzl", "apko_run")
 load("//apko/private:apko_config.bzl", "prepare_apko_config_in_workdir")

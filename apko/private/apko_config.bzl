@@ -3,8 +3,8 @@
 load("@bazel_skylib//lib:paths.bzl", "paths")
 
 _PATH_CONVENTION_DOC = """
- When referencing other files in the config yaml file use paths relative to your Bazel workspace root. 
-    For example, if you want to reference source file foo/bar/baz use foo/bar/baz. If you want to reference output file of foo/bar:rule and rule's 
+ When referencing other files in the config yaml file use paths relative to your Bazel workspace root.
+    For example, if you want to reference source file foo/bar/baz use foo/bar/baz. If you want to reference output file of foo/bar:rule and rule's
     output file is rule.out, reference it as foo/bar/rule.out.
 """
 
@@ -50,7 +50,7 @@ apko_config = rule(
             default = [],
             allow_files = True,
             doc = """
-            List of all dependencies of the config. Transitive dependencies are included based on 
+            List of all dependencies of the config. Transitive dependencies are included based on
             ApkoConfigInfo provider.
             """,
         ),

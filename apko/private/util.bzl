@@ -1,4 +1,4 @@
-"utility functions"
+"""utility functions"""
 
 # Define the list of reserved characters and their percent-encoded values
 _reserved_chars = [

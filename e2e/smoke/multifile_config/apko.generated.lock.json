@@ -1,7 +1,7 @@
 {
   "version": "v1",
   "config": {
-    "name": "multifile_config/final_config",
+    "name": "e2e/smoke/multifile_config/final_config",
     "checksum": "sha256-vgNUWqDbYC0UoGQDHnd8qo3CVZAhNwSuH8xv9mZkrvQ="
   },
   "contents": {

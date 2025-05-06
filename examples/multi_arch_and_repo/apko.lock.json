@@ -250,22 +250,22 @@
       },
       {
         "name": "chainctl",
-        "url": "https://packages.cgr.dev/extras/aarch64/chainctl-0.2.73-r0.apk",
-        "version": "0.2.73-r0",
+        "url": "https://packages.cgr.dev/extras/aarch64/chainctl-0.2.75-r0.apk",
+        "version": "0.2.75-r0",
         "architecture": "aarch64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-1688",
-          "checksum": "sha1-Y8iEr3SlZWgfR83tf8a3tnJ4GBU="
+          "range": "bytes=0-1695",
+          "checksum": "sha1-IUggqWZCzNfVDkHSniSQe76/Lbg="
         },
         "data": {
-          "range": "bytes=1689-21831109",
-          "checksum": "sha256-FM2KzmOxOwq5i61KCWYDHcbU5oIhEFPQg7jk5nNc9jk="
+          "range": "bytes=1696-22186558",
+          "checksum": "sha256-QmHds8+jmte8SRMr3KGCsV65v5LUsaAEaQvxe9RUkJk="
         },
-        "checksum": "Q1Y8iEr3SlZWgfR83tf8a3tnJ4GBU="
+        "checksum": "Q1IUggqWZCzNfVDkHSniSQe76/Lbg="
       },
       {
         "name": "zlib",
@@ -668,22 +668,22 @@
       },
       {
         "name": "libcurl-openssl4",
-        "url": "https://packages.wolfi.dev/os/aarch64/libcurl-openssl4-8.12.1-r2.apk",
-        "version": "8.12.1-r2",
+        "url": "https://packages.wolfi.dev/os/aarch64/libcurl-openssl4-8.12.1-r3.apk",
+        "version": "8.12.1-r3",
         "architecture": "aarch64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-4914",
-          "checksum": "sha1-gJhiIvM/YBMwdjPaJpQrPUzPIi4="
+          "range": "bytes=0-4962",
+          "checksum": "sha1-JhV7YLqyPmQRRZhFMseKVff448s="
         },
         "data": {
-          "range": "bytes=4915-441877",
-          "checksum": "sha256-wHA0RY/a1WHIHYvA8Hd+Yd09Y2cPnBadPK1bBW2nZVk="
+          "range": "bytes=4963-441930",
+          "checksum": "sha256-wCPf3oB6B+EmdmmvRhIu4za+Vk2541yWFNFG3/dwIdk="
         },
-        "checksum": "Q1gJhiIvM/YBMwdjPaJpQrPUzPIi4="
+        "checksum": "Q1JhV7YLqyPmQRRZhFMseKVff448s="
       },
       {
         "name": "curl",
@@ -801,22 +801,22 @@
       },
       {
         "name": "less",
-        "url": "https://packages.wolfi.dev/os/aarch64/less-676-r0.apk",
-        "version": "676-r0",
+        "url": "https://packages.wolfi.dev/os/aarch64/less-678-r0.apk",
+        "version": "678-r0",
         "architecture": "aarch64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-5108",
-          "checksum": "sha1-c6622cYHZVbdoUFtIvC2AVz3UyQ="
+          "range": "bytes=0-5103",
+          "checksum": "sha1-PSpRjDeEZmdfNQ8vI7ntkwrLFq8="
         },
         "data": {
-          "range": "bytes=5109-164491",
-          "checksum": "sha256-iJCZog0plmUN6WRmqVeZFrd8wQe9fORBhgK8Wgm+Hyc="
+          "range": "bytes=5104-164652",
+          "checksum": "sha256-uchmujTCFXKCAWjx5u4b6/wlymVdreoLbZCF2YzWHzg="
         },
-        "checksum": "Q1c6622cYHZVbdoUFtIvC2AVz3UyQ="
+        "checksum": "Q1PSpRjDeEZmdfNQ8vI7ntkwrLFq8="
       },
       {
         "name": "libedit",
@@ -1257,22 +1257,22 @@
       },
       {
         "name": "chainctl",
-        "url": "https://packages.cgr.dev/extras/x86_64/chainctl-0.2.73-r0.apk",
-        "version": "0.2.73-r0",
+        "url": "https://packages.cgr.dev/extras/x86_64/chainctl-0.2.75-r0.apk",
+        "version": "0.2.75-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-1655",
-          "checksum": "sha1-8tZMEh+lfpEFZo8TOyg9+ECu1vc="
+          "range": "bytes=0-1663",
+          "checksum": "sha1-S3VWpxlWktHLzRmP6cH3M+Z0XbU="
         },
         "data": {
-          "range": "bytes=1656-23986641",
-          "checksum": "sha256-KjLExroo0W/8KxPaLNp5Go6gT+cc11A2a6qnqWSu+n4="
+          "range": "bytes=1664-24421509",
+          "checksum": "sha256-Qc36fhfpay5O4agvjxTCGgJTAR6iMP0L+hZc6o9X7cE="
         },
-        "checksum": "Q18tZMEh+lfpEFZo8TOyg9+ECu1vc="
+        "checksum": "Q1S3VWpxlWktHLzRmP6cH3M+Z0XbU="
       },
       {
         "name": "zlib",
@@ -1675,22 +1675,22 @@
       },
       {
         "name": "libcurl-openssl4",
-        "url": "https://packages.wolfi.dev/os/x86_64/libcurl-openssl4-8.12.1-r2.apk",
-        "version": "8.12.1-r2",
+        "url": "https://packages.wolfi.dev/os/x86_64/libcurl-openssl4-8.12.1-r3.apk",
+        "version": "8.12.1-r3",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-4867",
-          "checksum": "sha1-DCPndBoYMSCaXTboapc7KjwgH4w="
+          "range": "bytes=0-4927",
+          "checksum": "sha1-A6IpQRIjBLnAWh1W9OZFcaYcXa8="
         },
         "data": {
-          "range": "bytes=4868-445440",
-          "checksum": "sha256-5L2S4Anvz+eB9xpYlGfJch0XVmr2h7aUiSyJZoC4SRo="
+          "range": "bytes=4928-445503",
+          "checksum": "sha256-Izf4WMYSvFhKCUSzl7Uxm3zQvs3lW8gr0JQ0R+oMY7g="
         },
-        "checksum": "Q1DCPndBoYMSCaXTboapc7KjwgH4w="
+        "checksum": "Q1A6IpQRIjBLnAWh1W9OZFcaYcXa8="
       },
       {
         "name": "curl",
@@ -1808,22 +1808,22 @@
       },
       {
         "name": "less",
-        "url": "https://packages.wolfi.dev/os/x86_64/less-676-r0.apk",
-        "version": "676-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/less-678-r0.apk",
+        "version": "678-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "",
           "checksum": ""
         },
         "control": {
-          "range": "bytes=0-5076",
-          "checksum": "sha1-cyPnd9WZq+LHqPt1K/agBrrR7DY="
+          "range": "bytes=0-5074",
+          "checksum": "sha1-gOcB5VIML2B/vA5vjwwPcEVzP/A="
         },
         "data": {
-          "range": "bytes=5077-157524",
-          "checksum": "sha256-/Kke4StY7hHg4GPtI3mQtFYsYIJR5wnK3nZ56LPl45k="
+          "range": "bytes=5075-157507",
+          "checksum": "sha256-ZdZzcrjf5QOXDMx66N9vLRhDcM7J2SUBLItj5vU6B5s="
         },
-        "checksum": "Q1cyPnd9WZq+LHqPt1K/agBrrR7DY="
+        "checksum": "Q1gOcB5VIML2B/vA5vjwwPcEVzP/A="
       },
       {
         "name": "libedit",

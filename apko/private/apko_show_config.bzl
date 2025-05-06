@@ -53,7 +53,7 @@ apko_show_config = rule(
     implementation = _impl,
     attrs = {
         "config": attr.label(
-            doc = """Label to the `apko.yaml` file.  
+            doc = """Label to the `apko.yaml` file.
 For more advanced use-cases (multi-file configuration), use target providing `ApkoConfigInfo`
 (e.g. output of `apko_config` rule).""",
             allow_single_file = True,

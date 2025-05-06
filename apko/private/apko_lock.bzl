@@ -13,7 +13,7 @@ apko_lock generates the lock file based on the provided config.
 """
 
 LAUNCHER_TEMPLATE = """
-#!#!/usr/bin/env sh
+#!/usr/bin/env sh
 
 set -e
 

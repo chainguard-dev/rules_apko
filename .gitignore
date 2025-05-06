@@ -3,3 +3,4 @@ bazel-*
 .idea/
 .ijwb/
 .DS_Store
+**/.claude/settings.local.json

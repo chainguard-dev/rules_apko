@@ -1,21 +1,46 @@
 load("@rules_apko//apko:defs.bzl", "apko_image")
-load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
 
 # An example demonstrating how to use multi architecture alpine packages with a lock file.
 # See MODULE.bazel for how apko.lock.json is translated to @examples_multi_arch_and_repo//:contents
+
+# First image using arm64 architecture
+apko_image(
+    name = "image_arm64",
+    architecture = "arm64",
+    config = "apko.yaml",
+    contents = "@examples_multi_arch_and_repo//:contents",
+    tag = "multi_arch_and_repo_arm64:latest",
+)
+
+# Second image using amd64 architecture
+apko_image(
+    name = "image_amd64",
+    architecture = "amd64",
+    config = "apko.yaml",
+    contents = "@examples_multi_arch_and_repo//:contents",
+    tag = "multi_arch_and_repo_amd64:latest",
+)
+
+# Default image with architecture selection
 apko_image(
     name = "image",
     architecture = select({
         "@platforms//cpu:arm64": "arm64",
         "@platforms//cpu:x86_64": "amd64",
+        "//conditions:default": "amd64",
     }),
     config = "apko.yaml",
     contents = "@examples_multi_arch_and_repo//:contents",
     tag = "multi_arch_and_repo:latest",
 )
 
-container_structure_test(
+# Test that ensures all images build successfully
+build_test(
     name = "test",
-    configs = ["test.yaml"],
-    image = ":image",
+    targets = [
+        ":image",
+        ":image_amd64",
+        ":image_arm64",
+    ],
 )

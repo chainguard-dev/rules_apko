@@ -1,4 +1,4 @@
-"Public API re-exports"
+"""Public API re-exports"""
 
 load("//apko/private:apko_image.bzl", _apko_image = "apko_image")
 load("//apko/private:apko_lock.bzl", _apko_lock = "apko_lock")
