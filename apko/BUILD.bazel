@@ -1,6 +1,6 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-load("//apko/private:resolved_toolchain.bzl", "resolved_toolchain")
 load("@rules_apko//apko/private:apko_run.bzl", "apko_run")
+load("//apko/private:resolved_toolchain.bzl", "resolved_toolchain")
 
 # For stardoc to reference the files
 exports_files([

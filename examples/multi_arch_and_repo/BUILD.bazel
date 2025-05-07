@@ -1,5 +1,5 @@
-load("@rules_apko//apko:defs.bzl", "apko_image")
 load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@rules_apko//apko:defs.bzl", "apko_image")
 
 # An example demonstrating how to use multi architecture alpine packages with a lock file.
 # See MODULE.bazel for how apko.lock.json is translated to @examples_multi_arch_and_repo//:contents
