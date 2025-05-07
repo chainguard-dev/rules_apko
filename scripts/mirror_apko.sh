@@ -11,7 +11,7 @@ TOOL=${2:-"apko"}
 (
   curl --silent \
     --header "Accept: application/vnd.github.v3+json" \
-    https://api.github.com/repos/${REPOSITORY}/releases?per_page=1 \
+    https://api.github.com/repos/${REPOSITORY}/releases?per_page=2 \
     | jq -f "$SCRIPT_DIR/filter_${TOOL}.jq"
 ) > $RAW
 
