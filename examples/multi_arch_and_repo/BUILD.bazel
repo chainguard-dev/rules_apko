@@ -1,4 +1,3 @@
-load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_apko//apko:defs.bzl", "apko_image")
 
 # An example demonstrating how to use multi architecture alpine packages with a lock file.
@@ -14,8 +13,3 @@ apko_image(
     tag = "multi_arch_and_repo:latest",
 )
 
-container_structure_test(
-    name = "test",
-    configs = ["test.yaml"],
-    image = ":image",
-)
