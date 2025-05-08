@@ -1,7 +1,7 @@
 """Rule for generating apko locks."""
 
-load("//apko/private:apko_config.bzl", "ApkoConfigInfo")
 load("@bazel_skylib//lib:paths.bzl", "paths")
+load("//apko/private:apko_config.bzl", "ApkoConfigInfo")
 
 _ATTRS = {
     "config": attr.label(allow_single_file = True),
