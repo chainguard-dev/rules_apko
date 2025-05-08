@@ -1,6 +1,6 @@
-load("@rules_apko//apko:defs.bzl", "apko_config", "apko_image", "apko_lock", "apko_show_config")
-load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("@aspect_bazel_lib//lib:diff_test.bzl", "diff_test")
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+load("@rules_apko//apko:defs.bzl", "apko_config", "apko_image", "apko_lock", "apko_show_config")
 
 apko_config(
     name = "intermediate_config",

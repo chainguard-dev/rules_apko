@@ -12,4 +12,3 @@ apko_image(
     contents = "@examples_multi_arch_and_repo//:contents",
     tag = "multi_arch_and_repo:latest",
 )
-
