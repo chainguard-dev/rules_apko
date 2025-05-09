@@ -85,6 +85,8 @@ def _impl(ctx):
     if ctx.attr.architecture:
         args.add("--arch")
         args.add(ctx.attr.architecture)
+    else:
+        args.add("--arch=host")
 
     for content in depset(transitive = deps).to_list():
         content_owner = content.owner.workspace_name
