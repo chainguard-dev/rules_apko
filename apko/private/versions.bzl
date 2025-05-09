@@ -3,6 +3,13 @@
 # Add new versions by running
 # ./scripts/mirror_apko.sh
 APKO_VERSIONS = {
+    "v0.27.4": {
+        "darwin_amd64": "sha256-rUdwvfZZYK2dw73zSruNC5p5lktzdefUH1c8b+0bhL4=",
+        "darwin_arm64": "sha256-u/U/AcAvxerhowtIHNPZ+bTNcfl5b1SvPIEgsiS5k4Q=",
+        "linux_386": "sha256-ZKwoaBMfOtZek+EAVJIon/lYUH2e1fvWoxkPO2Ux+PI=",
+        "linux_amd64": "sha256-G6apjcAMKBpHr6a5i7Xkkou1BiZN65NkIQW5RCMqHSI=",
+        "linux_arm64": "sha256-g9T7Z0qA+dUV4IvuVmISzRqU65rwA16J+Xsyc8YxjO0=",
+    },
     "v0.27.1": {
         "darwin_amd64": "sha256-OC6+2I5FIDuG5Uq3EaiNGjlnqLvEbbQmwOCc1HUgaTM=",
         "darwin_arm64": "sha256-aWEL7e6IH668V41TXySE3ee2Tf4J8USNb6TVtWhDZm8=",

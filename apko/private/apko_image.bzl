@@ -81,10 +81,7 @@ def _impl(ctx):
 
     args.add("--cache-dir={}".format(cache_name))
     args.add("--offline")
-
-    if ctx.attr.architecture:
-        args.add("--arch")
-        args.add(ctx.attr.architecture)
+    args.add("--arch=host")
 
     for content in depset(transitive = deps).to_list():
         content_owner = content.owner.workspace_name
