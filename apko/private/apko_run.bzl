@@ -12,7 +12,7 @@ _DATA_DOC = """
 _ATTRS = {
     "workdir": attr.string(default = "working", doc = _WORKDIR_DOC, mandatory = False, values = ["working", "workspace"]),
     "data": attr.label_list(allow_files = True, doc = _DATA_DOC),
-    "_runfiles_script": attr.label(default = Label("@bazel_tools//tools/bash/runfiles"), allow_single_file = True)
+    "_runfiles_script": attr.label(default = Label("@bazel_tools//tools/bash/runfiles"), allow_single_file = True),
 }
 
 _DOC = """
@@ -57,9 +57,9 @@ def _impl(ctx):
         output = output,
         content = LAUNCHER_TEMPLATE
             .format(
-                apko_binary = apko_info.repo + "/apko", 
-                workdir_env = "BUILD_" + ctx.attr.workdir.upper() + "_DIRECTORY"
-            ),
+            apko_binary = apko_info.repo + "/apko",
+            workdir_env = "BUILD_" + ctx.attr.workdir.upper() + "_DIRECTORY",
+        ),
         is_executable = True,
     )
 
