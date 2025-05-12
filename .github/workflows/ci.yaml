@@ -99,9 +99,8 @@ jobs:
         with:
           repository-cache: true
           bazelrc: |
-            common --announce_rc --color=yes --enable_bzlmod=${{ matrix.bzlmodEnabled }} --enable_workspace=true
+            common --announce_rc --color=yes --enable_bzlmod=${{ matrix.bzlmodEnabled }}
             test --test_output=errors
-            ${{  (matrix.bazelversion == '6.4.0' && 'try-import %workspace%/.apko/.bazelrc') || '' }}
 
       - name: Configure Bazel version
         working-directory: ${{ matrix.folder }}
@@ -116,6 +115,11 @@ jobs:
       - name: Add bazel 6 workaround
         if: ${{ matrix.bazelversion == '6.5.0' }}
         run: echo 'try-import %workspace%/.apko/.bazelrc' >> .bazelrc
+
+      # Tests currently assume workspace is true
+      - name: Add bazel 8 workaround
+        if: ${{ matrix.bazelversion == '8.2.1' }}
+        run: sed '/^common/s|$| --enable_workspace=true|' -i .bazelrc
 
       - name: Test
         working-directory: ${{ matrix.folder }}
