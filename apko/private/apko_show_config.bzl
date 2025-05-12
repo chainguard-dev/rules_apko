@@ -1,7 +1,7 @@
 "A rule for expanding apko config"
 
-load("//apko/private:apko_config.bzl", "prepare_apko_config_in_workdir")
 load("@bazel_skylib//lib:paths.bzl", "paths")
+load("//apko/private:apko_config.bzl", "prepare_apko_config_in_workdir")
 
 def _impl(ctx):
     output = ctx.actions.declare_file(ctx.attr.name)
