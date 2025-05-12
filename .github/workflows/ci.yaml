@@ -58,6 +58,12 @@ jobs:
       # NB: we assume this is Bazel 7
       - id: bazel_from_bazelversion
         run: echo "bazelversion=$(head -n 1 .bazelversion)" >> $GITHUB_OUTPUT
+      - id: bazel_82
+        run: echo "bazelversion=8.2.1" >> $GITHUB_OUTPUT
+      - id: bazel_76
+        run: echo "bazelversion=7.6.1" >> $GITHUB_OUTPUT
+      - id: bazel_71
+        run: echo "bazelversion=7.1.0" >> $GITHUB_OUTPUT
       - id: bazel_6
         run: echo "bazelversion=6.3.0" >> $GITHUB_OUTPUT
     outputs:
