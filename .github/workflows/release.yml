@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   release:
-    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@29e53247c6366e30acbedfc767f58f79fc05836c
+    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@9ed8d86404ac3214f80cfb02e49f44a1b28b17b0 # v7.2.2
     with:
       prerelease: false
       release_files: rules_apko-*.tar.gz
