@@ -51,7 +51,7 @@ jobs:
       - id: bazel_from_bazelversion
         run: echo "bazelversion=$(head -n 1 .bazelversion)" >> $GITHUB_OUTPUT
       - id: bazel_6
-        run: echo "bazelversion=6.3.0" >> $GITHUB_OUTPUT
+        run: echo "bazelversion=6.5.0" >> $GITHUB_OUTPUT
     outputs:
       # Will look like ["<version from .bazelversion>", "x.y.z"]
       bazelversions: ${{ toJSON(steps.*.outputs.bazelversion) }}
@@ -79,7 +79,7 @@ jobs:
           - bzlmodEnabled: false
             folder: .
           # Root module uses newer stardoc that requires Bazel 7 or greater
-          - bazelversion: 6.3.0
+          - bazelversion: 6.5.0
             folder: .
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -110,7 +110,7 @@ jobs:
 
       # Required for rules_apko to make range requests
       - name: Add bazel 6 workaround
-        if: ${{ matrix.bazelversion == '6.3.0' }}
+        if: ${{ matrix.bazelversion == '6.5.0' }}
         run: echo 'try-import %workspace%/.apko/.bazelrc' >> .bazelrc
 
       - name: Test
