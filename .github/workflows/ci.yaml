@@ -49,9 +49,8 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - id: bazel_82
         run: echo "bazelversion=8.2.1" >> $GITHUB_OUTPUT
-      # NB: we assume this is Bazel 7
-      - id: bazel_from_bazelversion
-        run: echo "bazelversion=$(head -n 1 .bazelversion)" >> $GITHUB_OUTPUT
+      - id: bazel_76
+        run: echo "bazelversion=7.6.1" >> $GITHUB_OUTPUT
       - id: bazel_71
         run: echo "bazelversion=7.1.0" >> $GITHUB_OUTPUT
       - id: bazel_6
