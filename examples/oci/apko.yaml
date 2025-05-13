@@ -10,4 +10,5 @@ entrypoint:
   command: /bin/sh
 
 archs:
+  - aarch64
   - x86_64
