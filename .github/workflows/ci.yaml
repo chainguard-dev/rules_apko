@@ -120,6 +120,13 @@ jobs:
         if: ${{ matrix.bazelversion == '8.2.1' }}
         run: sed '/^common/s|$| --enable_workspace=true|' -i .bazelrc
 
+      # Stardoc has output change between 7 and 8
+      - name: Test without doc
+        working-directory: ${{ matrix.folder }}
+        if: ${{ matrix.bazelversion != '8.2.1' }}
+        run: bazel query 'tests(//...) except //docs:update_1_test' | xargs bazel test
+
       - name: Test
         working-directory: ${{ matrix.folder }}
+        if: ${{ matrix.bazelversion == '8.2.1' }}
         run: bazel test //...
