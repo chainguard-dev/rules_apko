@@ -22,8 +22,7 @@ Thanks to this, `bazel run @rules_apko//apko {flags}` can be called, without nee
 The workdir of the running command is the directory from which bazel has been called.
 """
 
-LAUNCHER_TEMPLATE = """
-#!/usr/bin/env bash
+LAUNCHER_TEMPLATE = """#!/usr/bin/env bash
 # --- begin runfiles.bash initialization v3 ---
 # Copy-pasted from the Bazel Bash runfiles library v3.
 set -uo pipefail; set +e; f=bazel_tools/tools/bash/runfiles/runfiles.bash
