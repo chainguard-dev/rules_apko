@@ -12,8 +12,7 @@ _DOC = """
 apko_lock generates the lock file based on the provided config.
 """
 
-LAUNCHER_TEMPLATE = """
-#!/usr/bin/env sh
+LAUNCHER_TEMPLATE = """#!/usr/bin/env sh
 
 set -e
 
