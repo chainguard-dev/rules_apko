@@ -9,7 +9,9 @@ on:
       - "v*.*.*"
 
 permissions:
+  id-token: write
   contents: write
+  attestations: write
 
 jobs:
   release:
