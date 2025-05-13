@@ -49,9 +49,8 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - id: bazel_82
         run: echo "bazelversion=8.2.1" >> $GITHUB_OUTPUT
-      # NB: we assume this is Bazel 7
-      - id: bazel_from_bazelversion
-        run: echo "bazelversion=$(head -n 1 .bazelversion)" >> $GITHUB_OUTPUT
+      - id: bazel_76
+        run: echo "bazelversion=7.6.1" >> $GITHUB_OUTPUT
       - id: bazel_71
         run: echo "bazelversion=7.1.0" >> $GITHUB_OUTPUT
       - id: bazel_6
@@ -101,7 +100,6 @@ jobs:
           bazelrc: |
             common --announce_rc --color=yes --enable_bzlmod=${{ matrix.bzlmodEnabled }}
             test --test_output=errors
-            ${{  (matrix.bazelversion == '6.4.0' && 'try-import %workspace%/.apko/.bazelrc') || '' }}
 
       - name: Configure Bazel version
         working-directory: ${{ matrix.folder }}
@@ -117,6 +115,18 @@ jobs:
         if: ${{ matrix.bazelversion == '6.5.0' }}
         run: echo 'try-import %workspace%/.apko/.bazelrc' >> .bazelrc
 
+      # Tests currently assume workspace is true
+      - name: Add bazel 8 workaround
+        if: ${{ matrix.bazelversion == '8.2.1' }}
+        run: sed '/^common/s|$| --enable_workspace=true|' -i .bazelrc
+
+      # Stardoc has output change between 7 and 8
+      - name: Test without doc
+        working-directory: ${{ matrix.folder }}
+        if: ${{ matrix.bazelversion != '8.2.1' && matrix.folder == '.' }}
+        run: bazel query 'tests(//...) except docs/...' | xargs bazel test
+
       - name: Test
         working-directory: ${{ matrix.folder }}
+        if: ${{ matrix.bazelversion == '8.2.1' || matrix.folder != '.' }}
         run: bazel test //...
