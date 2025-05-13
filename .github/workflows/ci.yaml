@@ -124,7 +124,7 @@ jobs:
       - name: Test without doc
         working-directory: ${{ matrix.folder }}
         if: ${{ matrix.bazelversion != '8.2.1' && matrix.folder == '.' }}
-        run: bazel query 'tests(//...) except //docs:update_1_test' | xargs bazel test
+        run: bazel query 'tests(//...) except docs/...' | xargs bazel test
 
       - name: Test
         working-directory: ${{ matrix.folder }}
