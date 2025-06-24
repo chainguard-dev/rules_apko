@@ -12,7 +12,7 @@ _DATA_DOC = """
 _ATTRS = {
     "workdir": attr.string(default = "working", doc = _WORKDIR_DOC, mandatory = False, values = ["working", "workspace"]),
     "data": attr.label_list(allow_files = True, doc = _DATA_DOC),
-    "_runfiles_script": attr.label(default = Label("@bazel_tools//tools/bash/runfiles"), allow_single_file = True),
+    "_runfiles_script": attr.label(default = Label("@bazel_tools//tools/bash/runfiles")),
 }
 
 _DOC = """
@@ -62,12 +62,13 @@ def _impl(ctx):
         is_executable = True,
     )
 
+    runfiles = ctx.runfiles(files = [apko_info.binary])
+    runfiles = runfiles.merge(ctx.attr._runfiles_script[DefaultInfo].default_runfiles)
+
     return DefaultInfo(
         executable = output,
         files = depset(ctx.files.data),
-        runfiles = ctx.runfiles(
-            files = [apko_info.binary, ctx.file._runfiles_script],
-        ),
+        runfiles = runfiles,
     )
 
 apko_run_lib = struct(
