@@ -76,11 +76,7 @@ jobs:
         folder:
           - .
           - e2e/smoke
-        bzlmodEnabled: [true, false]
         exclude:
-          # Root module is BZLMOD only, do not test it without bzlmod enabled.
-          - bzlmodEnabled: false
-            folder: .
           # Root module uses newer stardoc that requires Bazel 7 or greater
           - bazelversion: 6.5.0
             folder: .
@@ -98,7 +94,7 @@ jobs:
         with:
           repository-cache: true
           bazelrc: |
-            common --announce_rc --color=yes --enable_bzlmod=${{ matrix.bzlmodEnabled }}
+            common --announce_rc --color=yes --enable_bzlmod
             test --test_output=errors
 
       - name: Configure Bazel version
@@ -107,7 +103,7 @@ jobs:
 
       # See https://github.com/bazel-contrib/publish-to-bcr#including-patches
       - name: verify bcr patches
-        if: matrix.bzlmodEnabled && hashFiles('.bcr/patches/*.patch') != ''
+        if: hashFiles('.bcr/patches/*.patch') != ''
         run: patch --dry-run -p1 < .bcr/patches/*.patch
 
       # Required for rules_apko to make range requests
