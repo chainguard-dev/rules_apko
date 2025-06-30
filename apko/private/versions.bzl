@@ -1,3 +1,7 @@
+"""Mirror of release info"""
+
+# Add new versions by running
+# ./scripts/mirror_apko.sh
 APKO_VERSIONS = {
     "v0.28.0": {
         "darwin_amd64": "sha256-LtqFg1+rfZQS4VLEnPRRyQko7ZnXemqk4aXueAveEwQ=",

@@ -26,7 +26,14 @@ for tag in $(jq -r 'keys | .[]' < $RAW); do
   done <<< "$checksums"
 done
 
-echo -n "$(echo "$TOOL" | tr '[:lower:]' '[:upper:]')_VERSIONS = " >apko/private/versions.bzl
+cat >apko/private/versions.bzl <<EOF
+"""Mirror of release info"""
+
+# Add new versions by running
+# ./scripts/mirror_apko.sh
+EOF
+
+echo -n "$(echo "$TOOL" | tr '[:lower:]' '[:upper:]')_VERSIONS = " >>apko/private/versions.bzl
 cat $RAW | sed 's|"$|",|;s| }$| },|' >>apko/private/versions.bzl
 
 sed "s|\"v0\.[0-9.]*\"|\"$tag\"|" -i MODULE.bazel apko/tests/versions_test.bzl
