@@ -21,10 +21,19 @@ for tag in $(jq -r 'keys | .[]' < $RAW); do
   checksums="$(curl --silent --location https://github.com/${REPOSITORY}/releases/download/$tag/checksums.txt)"
   while read -r sha256 filename; do
     integrity="sha256-$(echo $sha256 | xxd -r -p | base64)"
-    jq ".[\"$tag\"] |= with_entries(.value = (if .value == \"$filename\" then \"$integrity\" else .value end))" < $RAW > $FIXED
+    jq --indent 4 ".[\"$tag\"] |= with_entries(.value = (if .value == \"$filename\" then \"$integrity\" else .value end))" < $RAW > $FIXED
     mv $FIXED $RAW
   done <<< "$checksums"
 done
 
-echo -n "$(echo "$TOOL" | tr '[:lower:]' '[:upper:]')_VERSIONS = "
-cat $RAW
+cat >apko/private/versions.bzl <<EOF
+"""Mirror of release info"""
+
+# Add new versions by running
+# ./scripts/mirror_apko.sh
+EOF
+
+echo -n "$(echo "$TOOL" | tr '[:lower:]' '[:upper:]')_VERSIONS = " >>apko/private/versions.bzl
+cat $RAW | sed 's|"$|",|;s| }$| },|' >>apko/private/versions.bzl
+
+sed "s|\"v0\.[0-9.]*\"|\"$tag\"|" -i MODULE.bazel apko/tests/versions_test.bzl
