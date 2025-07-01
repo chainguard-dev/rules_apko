@@ -1,5 +1,5 @@
 load("@rules_apko//apko:defs.bzl", "apko_image")
-load("@rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load")
 load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 
 # An example demonstrating how to use apko_image with rules_oci
@@ -29,7 +29,7 @@ oci_image(
     ],
 )
 
-oci_tarball(
+oci_load(
     name = "tarball",
     image = ":image",
     repo_tags = ["apko_oci:latest"],

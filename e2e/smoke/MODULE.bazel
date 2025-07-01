@@ -17,6 +17,7 @@ apko.translate_lock(
     lock = "//:apko.lock.json",
 )
 use_repo(apko, "example_lock")
+
 apko.translate_lock(
     name = "example_multifile_lock",
     lock = "//multifile_config:apko.generated.lock.json",
