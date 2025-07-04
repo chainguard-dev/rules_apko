@@ -27,7 +27,7 @@ apko_image(
 #### Usage with `bzlmod`
 
 ```starlark
-apk = use_extension("//apko:extensions.bzl", "apko")
+apk = use_extension("@rules_apko//apko:extensions.bzl", "apko")
 
 apk.translate_lock(
     name = "examples_lock",
