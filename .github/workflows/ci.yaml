@@ -109,11 +109,6 @@ jobs:
         if: ${{ matrix.bazelversion == '6.5.0' }}
         run: echo 'try-import %workspace%/.apko/.bazelrc' >> .bazelrc
 
-      # Tests currently assume workspace is true
-      - name: Add bazel 8 workaround
-        if: ${{ startsWith(matrix.bazelversion, '8.') }}
-        run: sed '/^common/s|$| --enable_workspace=true|' -i .bazelrc
-
       - name: Test
         working-directory: ${{ matrix.folder }}
         if: ${{ startsWith(matrix.bazelversion, '8.') || matrix.folder != '.' }}
