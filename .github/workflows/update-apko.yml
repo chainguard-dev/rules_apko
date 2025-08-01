@@ -1,0 +1,211 @@
+name: Update apko dependency
+
+on:
+  schedule:
+    # Run daily at 10:00 UTC
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+    inputs:
+      force_update:
+        description: 'Force update even if no new version available'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-apko:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: audit
+
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Install dependencies
+        run: |
+          # Ensure jq and xxd are available
+          sudo apt-get update
+          sudo apt-get install -y jq xxd
+
+      - name: Check for apko updates
+        id: check_update
+        run: |
+          # Get current version
+          CURRENT_VERSION=$(grep 'toolchain.toolchain(apko_version = ' MODULE.bazel | sed -n 's/.*apko_version = "\([^"]*\)".*/\1/p')
+          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          
+          # Get latest version from GitHub API
+          LATEST_VERSION=$(curl --silent --header "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/chainguard-dev/apko/releases?per_page=1 | \
+            jq -r '.[0].tag_name')
+          echo "latest_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
+          
+          # Compare versions
+          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ] || [ "${{ inputs.force_update }}" = "true" ]; then
+            echo "update_needed=true" >> $GITHUB_OUTPUT
+            echo "Update needed: $CURRENT_VERSION -> $LATEST_VERSION"
+          else
+            echo "update_needed=false" >> $GITHUB_OUTPUT
+            echo "Already up to date: $CURRENT_VERSION"
+          fi
+
+      - name: Check for existing PR
+        if: steps.check_update.outputs.update_needed == 'true'
+        id: check_pr
+        run: |
+          LATEST_VERSION="${{ steps.check_update.outputs.latest_version }}"
+          
+          # Check if there's already an open PR for this exact version
+          EXACT_MATCH_PR=$(gh pr list --state open --search "update apko to $LATEST_VERSION" --json number --jq '.[0].number // empty')
+          
+          if [ -n "$EXACT_MATCH_PR" ]; then
+            echo "existing_pr=$EXACT_MATCH_PR" >> $GITHUB_OUTPUT
+            echo "Found existing PR #$EXACT_MATCH_PR for exact version $LATEST_VERSION"
+            echo "action=skip" >> $GITHUB_OUTPUT
+          else
+            # Check for any open apko update PRs
+            APKO_PRS=$(gh pr list --state open --search "update apko to" --json number,title --jq '.[] | select(.title | test("update apko to v[0-9.]+")) | {number: .number, title: .title}')
+            
+            if [ -n "$APKO_PRS" ]; then
+              # Extract version from existing PR title and compare
+              EXISTING_VERSION=$(echo "$APKO_PRS" | jq -r '.title' | sed -n 's/.*update apko to \(v[0-9.]*\).*/\1/p' | head -1)
+              EXISTING_PR_NUMBER=$(echo "$APKO_PRS" | jq -r '.number' | head -1)
+              
+              if [ -n "$EXISTING_VERSION" ]; then
+                echo "Found existing PR #$EXISTING_PR_NUMBER for version $EXISTING_VERSION"
+                
+                # Compare versions (remove 'v' prefix for comparison)
+                LATEST_NUM="${LATEST_VERSION#v}"
+                EXISTING_NUM="${EXISTING_VERSION#v}"
+                
+                # Use sort -V to compare versions
+                if [ "$(echo -e "$EXISTING_NUM\n$LATEST_NUM" | sort -V | tail -n1)" = "$LATEST_NUM" ] && [ "$EXISTING_NUM" != "$LATEST_NUM" ]; then
+                  echo "Latest version $LATEST_VERSION is newer than existing PR version $EXISTING_VERSION"
+                  echo "existing_pr=" >> $GITHUB_OUTPUT
+                  echo "outdated_pr=$EXISTING_PR_NUMBER" >> $GITHUB_OUTPUT
+                  echo "outdated_version=$EXISTING_VERSION" >> $GITHUB_OUTPUT
+                  echo "action=close_and_create" >> $GITHUB_OUTPUT
+                else
+                  echo "Existing PR version $EXISTING_VERSION is not older than $LATEST_VERSION"
+                  echo "existing_pr=$EXISTING_PR_NUMBER" >> $GITHUB_OUTPUT
+                  echo "action=skip" >> $GITHUB_OUTPUT
+                fi
+              else
+                echo "Could not extract version from existing PR, proceeding with new PR"
+                echo "existing_pr=" >> $GITHUB_OUTPUT
+                echo "action=create" >> $GITHUB_OUTPUT
+              fi
+            else
+              echo "No existing apko update PRs found"
+              echo "existing_pr=" >> $GITHUB_OUTPUT
+              echo "action=create" >> $GITHUB_OUTPUT
+            fi
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Close outdated PR
+        if: steps.check_pr.outputs.action == 'close_and_create'
+        run: |
+          echo "Closing outdated PR #${{ steps.check_pr.outputs.outdated_pr }} for version ${{ steps.check_pr.outputs.outdated_version }}"
+          gh pr close ${{ steps.check_pr.outputs.outdated_pr }} --comment \
+            "🤖 Closing this PR in favor of a newer apko version update: ${{ steps.check_update.outputs.latest_version }}
+
+The new version ${{ steps.check_update.outputs.latest_version }} supersedes the version ${{ steps.check_pr.outputs.outdated_version }} in this PR.
+A new PR will be created automatically for the latest version."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run apko mirror script
+        if: steps.check_update.outputs.update_needed == 'true' && (steps.check_pr.outputs.action == 'create' || steps.check_pr.outputs.action == 'close_and_create')
+        run: |
+          echo "Running mirror script with PR creation..."
+          ./scripts/mirror_apko.sh chainguard-dev/apko apko true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run tests on updated code
+        if: steps.check_update.outputs.update_needed == 'true' && (steps.check_pr.outputs.action == 'create' || steps.check_pr.outputs.action == 'close_and_create')
+        run: |
+          # Switch to the created branch
+          LATEST_VERSION="${{ steps.check_update.outputs.latest_version }}"
+          BRANCH_NAME="update-apko-${LATEST_VERSION}"
+          
+          if git show-ref --verify --quiet refs/heads/$BRANCH_NAME; then
+            git checkout $BRANCH_NAME
+            
+            # Run basic tests to ensure the update works
+            echo "Running basic validation tests..."
+            
+            # Verify the files were updated correctly
+            if ! grep -q "$LATEST_VERSION" MODULE.bazel; then
+              echo "ERROR: MODULE.bazel was not updated correctly"
+              exit 1
+            fi
+            
+            if ! grep -q "$LATEST_VERSION" apko/private/versions.bzl; then
+              echo "ERROR: versions.bzl was not updated correctly"
+              exit 1
+            fi
+            
+            if ! grep -q "$LATEST_VERSION" apko/tests/versions_test.bzl; then
+              echo "ERROR: versions_test.bzl was not updated correctly"
+              exit 1
+            fi
+            
+            echo "All files updated correctly"
+          else
+            echo "Branch $BRANCH_NAME not found, skipping tests"
+          fi
+
+      - name: Comment on existing PR
+        if: steps.check_pr.outputs.action == 'skip' && steps.check_pr.outputs.existing_pr != ''
+        run: |
+          gh pr comment ${{ steps.check_pr.outputs.existing_pr }} --body \
+            "🤖 Automated check found that this PR is still current for apko ${{ steps.check_update.outputs.latest_version }}. No action needed."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "## Update Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Current Version**: ${{ steps.check_update.outputs.current_version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Latest Version**: ${{ steps.check_update.outputs.latest_version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Update Needed**: ${{ steps.check_update.outputs.update_needed }}" >> $GITHUB_STEP_SUMMARY
+          
+          case "${{ steps.check_pr.outputs.action }}" in
+            "skip")
+              if [ "${{ steps.check_pr.outputs.existing_pr }}" != "" ]; then
+                echo "- **Existing PR**: #${{ steps.check_pr.outputs.existing_pr }}" >> $GITHUB_STEP_SUMMARY
+                echo "- **Action**: No update needed - PR already exists for latest version" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "- **Action**: No update required" >> $GITHUB_STEP_SUMMARY
+              fi
+              ;;
+            "create")
+              echo "- **Action**: Created new PR for update" >> $GITHUB_STEP_SUMMARY
+              ;;
+            "close_and_create")
+              echo "- **Outdated PR**: #${{ steps.check_pr.outputs.outdated_pr }} (version ${{ steps.check_pr.outputs.outdated_version }})" >> $GITHUB_STEP_SUMMARY
+              echo "- **Action**: Closed outdated PR and created new PR for ${{ steps.check_update.outputs.latest_version }}" >> $GITHUB_STEP_SUMMARY
+              ;;
+            *)
+              if [ "${{ steps.check_update.outputs.update_needed }}" = "false" ]; then
+                echo "- **Action**: No update required" >> $GITHUB_STEP_SUMMARY
+              fi
+              ;;
+          esac
