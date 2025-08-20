@@ -28,7 +28,7 @@ jobs:
       id: octo-sts
       with:
         scope: ${{ github.repository }}
-        identity: regen-gha
+        identity: update-apko
 
     - name: Update apko version
       run: ./scripts/mirror_apko.sh
