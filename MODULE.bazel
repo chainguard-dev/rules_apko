@@ -2,7 +2,6 @@
 
 module(
     name = "rules_apko",
-    version = "0.0.0",
     compatibility_level = 1,
 )
 
