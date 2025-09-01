@@ -12,7 +12,17 @@ git archive --format=tar --prefix=${PREFIX}/ ${TAG} | gzip > $ARCHIVE
 SHA=$(shasum -a 256 $ARCHIVE | awk '{print $1}')
 
 cat << EOF
-## Using Bzlmod with Bazel 6
+
+## Initial setup (when using with Bazel < 7.1)
+
+rules_apko requires a one-time setup to configure bazel to be able to make partial fetches.
+
+Follow https://github.com/chainguard-dev/rules_apko/blob/main/docs/initial-setup.md for the setup.
+
+EOF
+
+cat << EOF
+## Using Bzlmod
 
 1. Enable with \`common --enable_bzlmod\` in \`.bazelrc\`.
 2. Add to your \`MODULE.bazel\` file:
@@ -37,14 +47,3 @@ EOF
 
 awk 'f;/--SNIP--/{f=1}' e2e/smoke/WORKSPACE.bazel
 echo "\`\`\`" 
-
-
-cat << EOF
-
-## Initial setup
-
-rules_apko requires a one-time setup to configure bazel to be able to make partial fetches.
-
-Follow https://github.com/chainguard-dev/rules_apko/blob/main/docs/initial-setup.md for the setup.
-
-EOF

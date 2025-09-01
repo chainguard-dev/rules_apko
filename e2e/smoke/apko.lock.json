@@ -1,0 +1,58 @@
+{
+  "version": "v1",
+  "config": {
+    "name": "./e2e/smoke/apko.yaml",
+    "checksum": "sha256-W5wS8HLGz9qI5ILWqVoV7YS+m3qz2hppgI0FxC1dtMU="
+  },
+  "contents": {
+    "keyring": [],
+    "build_repositories": [],
+    "repositories": [
+      {
+        "name": "dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz",
+        "architecture": "x86_64"
+      }
+    ],
+    "packages": [
+      {
+        "name": "musl",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/musl-1.2.5-r9.apk",
+        "version": "1.2.5-r9",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "bytes=0-666",
+          "checksum": "sha1-sM/dPliGLSt7MPSP5juy3qQ9M1M="
+        },
+        "control": {
+          "range": "bytes=667-1188",
+          "checksum": "sha1-/L7yOJHsBPgaKLmNu7Uh5YIY0tg="
+        },
+        "data": {
+          "range": "bytes=1189-411322",
+          "checksum": "sha256-P47qWTGBhwdIAMt2VqsTEr5Tv/JC4rJVfjbDVuCkroo="
+        },
+        "checksum": "Q1/L7yOJHsBPgaKLmNu7Uh5YIY0tg="
+      },
+      {
+        "name": "busybox",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/busybox-1.37.0-r13.apk",
+        "version": "1.37.0-r13",
+        "architecture": "x86_64",
+        "signature": {
+          "range": "bytes=0-663",
+          "checksum": "sha1-MOQ6w2biPOYOcZPvv/aymkYlKAM="
+        },
+        "control": {
+          "range": "bytes=664-2376",
+          "checksum": "sha1-hUDISHIUJoVnYf5xnUr4chLAgJ4="
+        },
+        "data": {
+          "range": "bytes=2377-505886",
+          "checksum": "sha256-Dyow/DltfwMNfKUwwxkQXKchOTJGKqJQX/oU/SWBWXM="
+        },
+        "checksum": "Q1hUDISHIUJoVnYf5xnUr4chLAgJ4="
+      }
+    ]
+  }
+}

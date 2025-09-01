@@ -32,7 +32,7 @@ PLATFORMS = {
             "@platforms//cpu:aarch64",
         ],
     ),
-    "linux_i386": struct(
+    "linux_386": struct(
         compatible_with = [
             "@platforms//os:linux",
             "@platforms//cpu:x86_32",
@@ -87,5 +87,6 @@ toolchains_repo = repository_rule(
      which can be registered or selected.""",
     attrs = {
         "user_repository_name": attr.string(doc = "what the user chose for the base name"),
+        "platforms": attr.string_list(default = PLATFORMS.keys()),
     },
 )

@@ -7,6 +7,16 @@ apko="$output_base/$external_apko"
 
 
 for yaml in "./examples/"*"/apko.yaml" "./e2e/"*"/apko.yaml"; do
-  $apko resolve $yaml
+  $apko lock $yaml
+done
+
+repo_root=$(pwd)
+
+for workspace in "." "./e2e/smoke"; do
+  cd $workspace
+  for target in $(bazel query "kind(apko_lock, //...)"); do 
+    bazel run $target
+  done
+  cd $repo_root
 done
 

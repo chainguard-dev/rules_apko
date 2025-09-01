@@ -1,4 +1,4 @@
-name: CI
+name: test
 
 # Controls when the action will run.
 on:
@@ -15,18 +15,107 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
+  # matrix-prep-* steps generate JSON used to create a dynamic actions matrix.
+  # Inspired from
+  # https://stackoverflow.com/questions/65384420/how-to-make-a-github-action-matrix-element-conditional
+
+  matrix-prep-os:
+    # Prepares the 'os' axis of the test matrix, to reduce costs since GitHub hosted runners cost more on some platforms.
+    # https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#included-storage-and-minutes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: audit
+      - id: linux
+        run: echo "os=ubuntu-latest" >> $GITHUB_OUTPUT
+    outputs:
+      # Will look like ["ubuntu-latest"]
+      os: ${{ toJSON(steps.*.outputs.os) }}
+
+  matrix-prep-bazelversion:
+    # Prepares the 'bazelversion' axis of the test matrix
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - id: bazel_83
+        run: echo "bazelversion=8.3.0" >> $GITHUB_OUTPUT
+      - id: bazel_76
+        run: echo "bazelversion=7.6.1" >> $GITHUB_OUTPUT
+      - id: bazel_6
+        run: echo "bazelversion=6.5.0" >> $GITHUB_OUTPUT
+    outputs:
+      # Will look like ["<version from .bazelversion>", "x.y.z"]
+      bazelversions: ${{ toJSON(steps.*.outputs.bazelversion) }}
+
   test:
-    uses: bazel-contrib/.github/.github/workflows/bazel.yaml@29e53247c6366e30acbedfc767f58f79fc05836c
-    with:
-      folders: |
-        [
-          ".",
-          "e2e/smoke"
-        ]
-      exclude: |
-        [
-          {"bazelversion": "5.4.0"},
-          {"os": "windows-latest"},
-          {"os": "macos-latest"}
-        ]
+    # The type of runner that the job will run on
+    runs-on: ${{ matrix.os }}
+
+    needs:
+      - matrix-prep-bazelversion
+      - matrix-prep-os
+
+    # Run bazel test in each workspace with each version of Bazel supported
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJSON(needs.matrix-prep-os.outputs.os) }}
+        bazelversion: ${{ fromJSON(needs.matrix-prep-bazelversion.outputs.bazelversions) }}
+        folder:
+          - .
+          - e2e/smoke
+        exclude:
+          # Root module uses newer stardoc that requires Bazel 7 or greater
+          - bazelversion: 6.5.0
+            folder: .
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: audit
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - uses: bazel-contrib/setup-bazel@4fd964a13a440a8aeb0be47350db2fc640f19ca8 # v0.15.0
+        with:
+          repository-cache: true
+          bazelrc: |
+            common --announce_rc --color=yes --enable_bzlmod
+            test --test_output=errors
+
+      - name: Configure Bazel version
+        working-directory: ${{ matrix.folder }}
+        run: echo "${{ matrix.bazelversion }}" > .bazelversion
+
+      # See https://github.com/bazel-contrib/publish-to-bcr#including-patches
+      - name: verify bcr patches
+        if: hashFiles('.bcr/patches/*.patch') != ''
+        run: patch --dry-run -p1 < .bcr/patches/*.patch
+
+      # Required for rules_apko to make range requests
+      - name: Add bazel 6 workaround
+        if: ${{ matrix.bazelversion == '6.5.0' }}
+        run: echo 'try-import %workspace%/.apko/.bazelrc' >> .bazelrc
+
+      - name: Test
+        working-directory: ${{ matrix.folder }}
+        if: ${{ startsWith(matrix.bazelversion, '8.') || matrix.folder != '.' }}
+        run: bazel test //...
+
+      # Stardoc has output changes between versions
+      - name: Test no doc 7
+        working-directory: ${{ matrix.folder }}
+        if: ${{ startsWith(matrix.bazelversion, '7.') && matrix.folder == '.' }}
+        run: bazel query 'tests(//...) except docs/...' | xargs bazel test

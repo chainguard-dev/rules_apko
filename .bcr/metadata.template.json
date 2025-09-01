@@ -4,17 +4,32 @@
     {
       "email": "alex@aspect.dev",
       "github": "alexeagle",
-      "name": "Alex Eagle"
+      "name": "Alex Eagle",
+      "github_user_id": 47395
     },
     {
       "email": "sahin@aspect.dev",
       "github": "thesayyn",
-      "name": "Şahin Yort"
+      "name": "Şahin Yort",
+      "github_user_id": 20563340
     },
     {
       "email": "jason@chainguard.dev",
       "github": "imjasonh",
-      "name": "Jason Hall"
+      "name": "Jason Hall",
+      "github_user_id": 210737
+    },
+    {
+      "email": "dimitri.ledkov@chainguard.dev",
+      "github": "xnox",
+      "name": "Dimitri John Ledkov",
+      "github_user_id": 19779
+    },
+    {
+      "email": "zach.marano@chainguard.dev",
+      "github": "zmarano",
+      "name": "Zach Marano",
+      "github_user_id": 4564273
     }
   ],
   "repository": ["github:chainguard-dev/rules_apko"],
