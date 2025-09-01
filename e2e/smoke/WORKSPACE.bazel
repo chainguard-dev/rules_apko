@@ -1,4 +1,6 @@
 # Override http_archive for local testing
+load("@bazel//tools/build_defs/repo:local.bzl", "local_repository")
+
 local_repository(
     name = "rules_apko",
     path = "../..",

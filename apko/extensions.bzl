@@ -10,10 +10,10 @@ names (the latest version will be picked for each name) and can register them as
 effectively overriding the default named toolchain due to toolchain resolution precedence.
 """
 
-load(":repositories.bzl", "apko_register_toolchains")
-load(":translate_lock.bzl", "translate_apko_lock")
 load("//apko/private:apk.bzl", "apk_import", "apk_keyring", "apk_repository")
 load("//apko/private:util.bzl", "util")
+load(":repositories.bzl", "apko_register_toolchains")
+load(":translate_lock.bzl", "translate_apko_lock")
 
 _DEFAULT_NAME = "apko"
 

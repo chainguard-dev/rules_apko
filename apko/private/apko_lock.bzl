@@ -1,7 +1,7 @@
 """Rule for generating apko locks."""
 
-load("//apko/private:apko_config.bzl", "ApkoConfigInfo")
 load("@bazel_skylib//lib:paths.bzl", "paths")
+load("//apko/private:apko_config.bzl", "ApkoConfigInfo")
 
 _ATTRS = {
     "config": attr.label(allow_single_file = True),
@@ -12,15 +12,14 @@ _DOC = """
 apko_lock generates the lock file based on the provided config.
 """
 
-LAUNCHER_TEMPLATE = """
-#!#!/usr/bin/env sh
+LAUNCHER_TEMPLATE = """#!/usr/bin/env sh
 
 set -e
 
 config={{config}}
 output={{output}}
 
-{{apko_binary}} lock $config --output=${BUILD_WORKSPACE_DIRECTORY}/${output}
+{{apko_binary}} lock $config --output=${BUILD_WORKSPACE_DIRECTORY}/${output} "${@}"
 """
 
 def _impl(ctx):
@@ -55,7 +54,7 @@ _apko_lock = rule(
     toolchains = ["@rules_apko//apko:toolchain_type"],
 )
 
-def apko_lock(name, config, lockfile_name):
+def apko_lock(name, config, lockfile_name, **kwargs):
     """Generates executable rule for producing apko lock files.
 
     When run, the rule will output the lockfile to the lockfile_name in the directory of the package where the rule is defined.
@@ -67,10 +66,12 @@ def apko_lock(name, config, lockfile_name):
         config: label of the apko config. It can be either a source file or generated target. Additionally, if the target provides ApkoConfigInfo provider,
             the transitive dependencies listed in ApkoConfigInfo.files will be added to runfiles as well.
         lockfile_name: name of the lockfile
+        **kwargs: the rule inherits standard attributes, like: tags, visibility, and args.
     """
     config_label = native.package_relative_label(config)
     _apko_lock(
         name = name,
         config = config,
         lockfile_name = paths.join(config_label.package, lockfile_name),
+        **kwargs
     )

@@ -9,11 +9,13 @@ on:
       - "v*.*.*"
 
 permissions:
+  id-token: write
   contents: write
+  attestations: write
 
 jobs:
   release:
-    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@29e53247c6366e30acbedfc767f58f79fc05836c
+    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@a841d62420f41a87a601fb331f3c2c2cc088506e # v7.2.3
     with:
       prerelease: false
       release_files: rules_apko-*.tar.gz

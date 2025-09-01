@@ -1,5 +1,5 @@
-load("@rules_apko//apko:defs.bzl", "apko_image")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
+load("@rules_apko//apko:defs.bzl", "apko_image")
 
 # An example demonstrating how to use wolfi packages with a lock file.
 # See MODULE.bazel for how apko.lock.json is translated to @examples_wolfi_base//:contents

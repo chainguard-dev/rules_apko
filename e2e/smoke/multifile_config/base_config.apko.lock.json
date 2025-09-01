@@ -1,7 +1,7 @@
 {
   "version": "v1",
   "config": {
-    "name": "./e2e/smoke/apko.yaml",
+    "name": "e2e/smoke/multifile_config/base_config.apko.yaml",
     "checksum": "sha256-W5wS8HLGz9qI5ILWqVoV7YS+m3qz2hppgI0FxC1dtMU="
   },
   "contents": {
@@ -36,22 +36,22 @@
       },
       {
         "name": "busybox",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/busybox-1.37.0-r13.apk",
-        "version": "1.37.0-r13",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/busybox-1.37.0-r12.apk",
+        "version": "1.37.0-r12",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-663",
-          "checksum": "sha1-MOQ6w2biPOYOcZPvv/aymkYlKAM="
+          "range": "bytes=0-664",
+          "checksum": "sha1-r/7JUCUj8w6vDCN8URQBSadT49I="
         },
         "control": {
-          "range": "bytes=664-2376",
-          "checksum": "sha1-hUDISHIUJoVnYf5xnUr4chLAgJ4="
+          "range": "bytes=665-2379",
+          "checksum": "sha1-sSNCl4MTQ0d1V/0NTXAhIjY7Nqo="
         },
         "data": {
-          "range": "bytes=2377-505886",
-          "checksum": "sha256-Dyow/DltfwMNfKUwwxkQXKchOTJGKqJQX/oU/SWBWXM="
+          "range": "bytes=2380-505880",
+          "checksum": "sha256-AxToQ9W4f6KDe7yrWkpOU9vEJhWvdo0nGTWDsxqXGwY="
         },
-        "checksum": "Q1hUDISHIUJoVnYf5xnUr4chLAgJ4="
+        "checksum": "Q1sSNCl4MTQ0d1V/0NTXAhIjY7Nqo="
       }
     ]
   }

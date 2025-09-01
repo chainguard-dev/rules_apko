@@ -1,6 +1,6 @@
 bazel_dep(name = "rules_apko", version = "0.0.0", dev_dependency = True)
-bazel_dep(name = "bazel_skylib", version = "1.3.0", dev_dependency = True)
-bazel_dep(name = "aspect_bazel_lib", version = "2.11.0", dev_dependency = True)
+bazel_dep(name = "bazel_skylib", version = "1.7.1", dev_dependency = True)
+bazel_dep(name = "aspect_bazel_lib", version = "2.16.0", dev_dependency = True)
 
 local_path_override(
     module_name = "rules_apko",
@@ -17,6 +17,7 @@ apko.translate_lock(
     lock = "//:apko.lock.json",
 )
 use_repo(apko, "example_lock")
+
 apko.translate_lock(
     name = "example_multifile_lock",
     lock = "//multifile_config:apko.generated.lock.json",
