@@ -4,12 +4,13 @@ commandTests:
     command: "curl"
     args: ["--version"]
     expectedOutput:
-      - curl 8.5.0
+      - curl 8.9.0
   - name: "os-release"
     command: "cat"
     args: ["/etc/os-release"]
     expectedOutput:
-      - ID=custom_alpine
-      - NAME="Custom Alpine"
-      - VERSION_ID=0.0.0
-      - HOME_URL="https://github.com/chainguard-dev/apko"
+      - NAME="Wolfi"
+      - PRETTY_NAME="Wolfi"
+      - VERSION_ID="20230201"
+      - HOME_URL="https://wolfi.dev"
+      - BUG_REPORT_URL="https://github.com/wolfi-dev/os/issues"

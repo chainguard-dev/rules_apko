@@ -1,5 +1,7 @@
 """Provider that serves as an API for adding any files needed for apko build"""
 
+load("@bazel_skylib//lib:paths.bzl", "paths")
+
 _PATH_CONVENTION_DOC = """
  When referencing other files in the config yaml file use paths relative to your Bazel workspace root. 
     For example, if you want to reference source file foo/bar/baz use foo/bar/baz. If you want to reference output file of foo/bar:rule and rule's 
@@ -61,3 +63,34 @@ apko_config = rule(
         ),
     },
 )
+
+def prepare_apko_config_in_workdir(workdir, ctx):
+    """Helper function to prepare inputs of apko config files for build rules.
+
+    Args:
+        workdir: workdir which the build rule will use for running apko
+        ctx: build rule ctx
+
+    Returns:
+        Array of files to put as inputs to the build action.
+    """
+    inputs = []
+    if ApkoConfigInfo in ctx.attr.config:
+        for f in ctx.attr.config[ApkoConfigInfo].files.to_list():
+            if f.is_directory:
+                input_entry = ctx.actions.declare_directory(paths.join(workdir, f.short_path))
+            else:
+                input_entry = ctx.actions.declare_file(paths.join(workdir, f.short_path))
+            ctx.actions.symlink(
+                target_file = f,
+                output = input_entry,
+            )
+            inputs.append(input_entry)
+    else:
+        config_symlink = ctx.actions.declare_file(paths.join(workdir, ctx.file.config.short_path))
+        ctx.actions.symlink(
+            target_file = ctx.file.config,
+            output = config_symlink,
+        )
+        inputs.append(config_symlink)
+    return inputs

@@ -1,52 +1,57 @@
 {
   "version": "v1",
+  "config": {
+    "name": "multifile_config/final_config",
+    "checksum": "sha256-vgNUWqDbYC0UoGQDHnd8qo3CVZAhNwSuH8xv9mZkrvQ="
+  },
   "contents": {
     "keyring": [],
+    "build_repositories": [],
     "repositories": [
       {
-        "name": "dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/APKINDEX.tar.gz",
+        "name": "dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz",
         "architecture": "x86_64"
       }
     ],
     "packages": [
       {
         "name": "musl",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/musl-1.2.4-r2.apk",
-        "version": "1.2.4-r2",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/musl-1.2.5-r9.apk",
+        "version": "1.2.5-r9",
         "architecture": "x86_64",
         "signature": {
           "range": "bytes=0-666",
-          "checksum": "sha1-MiA7YiamUyscxmdGiRBGiJjcW8U="
+          "checksum": "sha1-sM/dPliGLSt7MPSP5juy3qQ9M1M="
         },
         "control": {
-          "range": "bytes=667-1224",
-          "checksum": "sha1-odtIYtKyOCg6suF/cDaYpygL7hw="
+          "range": "bytes=667-1188",
+          "checksum": "sha1-/L7yOJHsBPgaKLmNu7Uh5YIY0tg="
         },
         "data": {
-          "range": "bytes=1225-634880",
-          "checksum": "sha256-KPwSgRdeAcnVvczowX1F54Aszov9ZI1cRXgtFZzepfg="
+          "range": "bytes=1189-411322",
+          "checksum": "sha256-P47qWTGBhwdIAMt2VqsTEr5Tv/JC4rJVfjbDVuCkroo="
         },
-        "checksum": "Q1odtIYtKyOCg6suF/cDaYpygL7hw="
+        "checksum": "Q1/L7yOJHsBPgaKLmNu7Uh5YIY0tg="
       },
       {
         "name": "busybox",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.18/main/x86_64/busybox-1.36.1-r5.apk",
-        "version": "1.36.1-r5",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/busybox-1.37.0-r13.apk",
+        "version": "1.37.0-r13",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-665",
-          "checksum": "sha1-oXF25kDE6Jja1iQ2psyt9nV+ddE="
+          "range": "bytes=0-663",
+          "checksum": "sha1-MOQ6w2biPOYOcZPvv/aymkYlKAM="
         },
         "control": {
-          "range": "bytes=666-2301",
-          "checksum": "sha1-aBWv1Kn2ASOLShUeDPoSLaozuMs="
+          "range": "bytes=664-2376",
+          "checksum": "sha1-hUDISHIUJoVnYf5xnUr4chLAgJ4="
         },
         "data": {
-          "range": "bytes=2302-946176",
-          "checksum": "sha256-pDdzepugl8LYISmpJ2wGr885gfpwo2hi9ZMf4dQTi5s="
+          "range": "bytes=2377-505886",
+          "checksum": "sha256-Dyow/DltfwMNfKUwwxkQXKchOTJGKqJQX/oU/SWBWXM="
         },
-        "checksum": "Q1aBWv1Kn2ASOLShUeDPoSLaozuMs="
+        "checksum": "Q1hUDISHIUJoVnYf5xnUr4chLAgJ4="
       }
     ]
   }

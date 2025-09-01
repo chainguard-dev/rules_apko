@@ -10,10 +10,10 @@ names (the latest version will be picked for each name) and can register them as
 effectively overriding the default named toolchain due to toolchain resolution precedence.
 """
 
-load(":repositories.bzl", "apko_register_toolchains")
-load(":translate_lock.bzl", "translate_apko_lock")
 load("//apko/private:apk.bzl", "apk_import", "apk_keyring", "apk_repository")
 load("//apko/private:util.bzl", "util")
+load(":repositories.bzl", "apko_register_toolchains")
+load(":translate_lock.bzl", "translate_apko_lock")
 
 _DEFAULT_NAME = "apko"
 
@@ -31,6 +31,8 @@ apko_translate_lock = tag_class(attrs = {
 })
 
 def _apko_extension_impl(module_ctx):
+    root_direct_deps = []
+    root_direct_dev_deps = []
     registrations = {}
     for mod in module_ctx.modules:
         for lock in mod.tags.translate_lock:
@@ -70,6 +72,10 @@ def _apko_extension_impl(module_ctx):
 
             translate_apko_lock(name = lock.name, target_name = lock.name, lock = lock.lock)
 
+            if mod.is_root:
+                deps = root_direct_dev_deps if module_ctx.is_dev_dependency(lock) else root_direct_deps
+                deps.append(lock.name)
+
         for toolchain in mod.tags.toolchain:
             if toolchain.name != _DEFAULT_NAME and not mod.is_root:
                 fail("""\
@@ -78,6 +84,11 @@ def _apko_extension_impl(module_ctx):
                 """)
             if toolchain.name not in registrations.keys():
                 registrations[toolchain.name] = []
+
+                if mod.is_root:
+                    deps = root_direct_dev_deps if module_ctx.is_dev_dependency(toolchain) else root_direct_deps
+                    deps.append(toolchain.name + "_toolchains")
+
             registrations[toolchain.name].append(toolchain.apko_version)
 
     for name, versions in registrations.items():
@@ -95,6 +106,12 @@ def _apko_extension_impl(module_ctx):
             apko_version = selected,
             register = False,
         )
+
+    # Allow use_repo calls to be automatically managed by `bazel mod tidy`
+    return module_ctx.extension_metadata(
+        root_module_direct_deps = root_direct_deps,
+        root_module_direct_dev_deps = root_direct_dev_deps,
+    )
 
 apko = module_extension(
     implementation = _apko_extension_impl,

@@ -1,6 +1,6 @@
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-load("//apko/private:resolved_toolchain.bzl", "resolved_toolchain")
 load("@rules_apko//apko/private:apko_run.bzl", "apko_run")
+load("//apko/private:resolved_toolchain.bzl", "resolved_toolchain")
 
 # For stardoc to reference the files
 exports_files([
@@ -58,6 +58,7 @@ bzl_library(
         "//apko/private:apko_config",
         "//apko/private:apko_image",
         "//apko/private:apko_lock",
+        "//apko/private:apko_show_config",
         "//apko/private/range:bazelrc",
         "@aspect_bazel_lib//lib:write_source_files",
     ],
