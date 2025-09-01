@@ -47,7 +47,7 @@ jobs:
         echo "create_pr_update=true" >> $GITHUB_OUTPUT
 
     # Configure signed commits
-    - uses: chainguard-dev/actions/setup-gitsign@de82dfd62f186b1b55bd0cdf084f484496d88ee3 # v1.4.11
+    - uses: chainguard-dev/actions/setup-gitsign@3caedd3784c809ba873cbb8c6a12e2bc6bf6ab09 # v1.4.13
       if: ${{ steps.check-diff.outputs.create_pr_update == 'true' }}
 
     # Based on usage in https://github.com/chainguard-dev/digestabot/blob/main/action.yml
