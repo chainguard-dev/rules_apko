@@ -109,6 +109,7 @@ def _impl(ctx):
         inputs = inputs,
         tools = [apko_info.binary],
         outputs = [output],
+        use_default_shell_env = True,
     )
 
     return DefaultInfo(
