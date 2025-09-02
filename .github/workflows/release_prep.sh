@@ -11,6 +11,14 @@ ARCHIVE="rules_apko-$TAG.tar.gz"
 git archive --format=tar --prefix=${PREFIX}/ ${TAG} | gzip > $ARCHIVE
 SHA=$(shasum -a 256 $ARCHIVE | awk '{print $1}')
 
+# Add generated API docs to the release, see https://github.com/bazelbuild/bazel-central-registry/issues/5593
+docs="$(mktemp -d)"; targets="$(mktemp)"
+bazel --output_base="$docs" query --output=label --output_file="$targets" 'kind("starlark_doc_extract rule", //...)'
+bazel --output_base="$docs" build --target_pattern_file="$targets" --remote_download_regex='.*doc_extract\.binaryproto'
+tar --create --auto-compress \
+    --directory "$(bazel --output_base="$docs" info bazel-bin)" \
+    --file "$GITHUB_WORKSPACE/${ARCHIVE%.tar.gz}.docs.tar.gz" .
+
 cat << EOF
 
 ## Initial setup (when using with Bazel < 7.1)
@@ -22,9 +30,9 @@ Follow https://github.com/chainguard-dev/rules_apko/blob/main/docs/initial-setup
 EOF
 
 cat << EOF
-## Using Bzlmod
+## Using Bzlmod with Bazel 6 or above
 
-1. Enable with \`common --enable_bzlmod\` in \`.bazelrc\`.
+1. (Bazel 6 only) Enable with \`common --enable_bzlmod\` in \`.bazelrc\`.
 2. Add to your \`MODULE.bazel\` file:
 
 \`\`\`starlark
