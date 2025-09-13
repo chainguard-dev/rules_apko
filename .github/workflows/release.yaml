@@ -1,0 +1,76 @@
+# Cut a release whenever a new tag is pushed to the repo.
+# You should use an annotated tag, like `git tag -a v1.2.3`
+# and put the release notes into the commit message for the tag.
+name: Release
+
+on:
+  schedule:
+    - cron: '30 10 * * 1' # every Monday at 00:00 UTC
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  id-token: write
+  contents: write
+  attestations: write
+
+jobs:
+  release:
+
+    steps:
+      - uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
+        with:
+          egress-policy: audit
+
+      - uses: octo-sts/action@e480437973a6f6ac2e9caa40ecabedc870d76395 # v1.0.1
+        id: octo-sts
+        with:
+          scope: ${{ github.repository }}
+          identity: release
+
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0 # fetch all history for all branches and tags
+          token: ${{ steps.octo-sts.outputs.token }}
+
+      - name: Check if any changes since last release
+        id: check
+        env:
+          GH_TOKEN: ${{ steps.octo-sts.outputs.token }}
+        run: |
+          TAG=$(git tag --points-at HEAD)
+          if [ -z "$TAG" ]; then
+            echo "No tag points at HEAD, so we need a new tag and then a new release."
+            echo "need_release=yes" >> $GITHUB_OUTPUT
+          else
+            RELEASE=$(gh release view "$TAG" --json tagName --jq '.tagName' || echo "none")
+            if [ "$RELEASE" == "$TAG" ]; then
+              echo "A release exists for tag $TAG, which has the latest changes, so no need for a new tag or release."
+              echo "need_release=no" >> $GITHUB_OUTPUT
+            else
+              echo "Tag $TAG exists, but no release is associated. Need a new release."
+              echo "need_release=yes" >> $GITHUB_OUTPUT
+              echo "existing_tag=$TAG" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Bump version and push tag
+        id: create_tag
+        uses: chainguard-dev/actions/git-tag@f632aec66edeebe245ad686a33a0c0a2160cac31 # v1.4.14
+        if: steps.check.outputs.need_release == 'yes' && steps.check.outputs.existing_tag == ''
+        with:
+          token: ${{ steps.octo-sts.outputs.token }}
+          author: "octo-sts[bot] <157150467+octo-sts[bot]@users.noreply.github.com>"
+          committer: "octo-sts[bot] <157150467+octo-sts[bot]@users.noreply.github.com>"
+          bump_level: 'patch'
+
+      - name: Build, attest and attach bazel ruleset
+        env:
+          GH_TOKEN: ${{ steps.octo-sts.outputs.token }}
+        uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@a841d62420f41a87a601fb331f3c2c2cc088506e # v7.2.3
+        with:
+          prerelease: false
+          release_files: rules_apko-*.tar.gz
+          tag_name: ${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.new_tag }}
