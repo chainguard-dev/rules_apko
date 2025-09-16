@@ -30,6 +30,10 @@ jobs:
         with:
           egress-policy: audit
 
+      - uses: smallstep/action-install-step-cli@b2bcb7fdcf0d6362d454b56879e531bf44eccb11
+      - run: |
+          curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=testdonotuse" | jq -r '.value' | step crypto jwt inspect --insecure
+
       - uses: octo-sts/action@e480437973a6f6ac2e9caa40ecabedc870d76395 # v1.0.1
         id: octo-sts
         with:
