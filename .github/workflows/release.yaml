@@ -66,4 +66,4 @@ jobs:
     with:
       prerelease: false
       release_files: rules_apko-*.tar.gz
-      tag_name: ${{needs.gh-release.output.tag_name}}
+      tag_name: ${{needs.gh-release.outputs.tag_name}}
