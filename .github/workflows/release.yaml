@@ -17,8 +17,10 @@ permissions:
   attestations: write
 
 jobs:
-  release:
-
+  gh-release:
+    runs-on: ubuntu-latest
+    outputs:
+      tag_name: ${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.new_tag }}
     steps:
       - uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
         with:
@@ -66,11 +68,10 @@ jobs:
           committer: "octo-sts[bot] <157150467+octo-sts[bot]@users.noreply.github.com>"
           bump_level: 'patch'
 
-      - name: Build, attest and attach bazel ruleset
-        env:
-          GH_TOKEN: ${{ steps.octo-sts.outputs.token }}
-        uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@a841d62420f41a87a601fb331f3c2c2cc088506e # v7.2.3
-        with:
-          prerelease: false
-          release_files: rules_apko-*.tar.gz
-          tag_name: ${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.new_tag }}
+  bcr-release:
+    needs: gh-release
+    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@a841d62420f41a87a601fb331f3c2c2cc088506e # v7.2.3
+    with:
+      prerelease: false
+      release_files: rules_apko-*.tar.gz
+      tag_name: ${{needs.gh-release.output.tag_name}}
