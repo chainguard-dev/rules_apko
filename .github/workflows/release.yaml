@@ -11,13 +11,14 @@ on:
     tags:
       - "v*.*.*"
 
-permissions:
-  id-token: write
-  contents: write
-  attestations: write
+permissions: {}
 
 jobs:
   gh-release:
+    permissions:
+      id-token: write
+      contents: write
+      attestations: write
     runs-on: ubuntu-latest
     outputs:
       tag_name: ${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.new_tag }}
