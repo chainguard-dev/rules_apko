@@ -23,8 +23,6 @@ jobs:
       contents: write
       attestations: write
     runs-on: ubuntu-latest
-    outputs:
-      tag_name: ${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.git_tag }}
     steps:
       - uses: step-security/harden-runner@f4a75cfd619ee5ce8d5b864b0d183aff3c69b55a # v2.13.1
         with:
@@ -60,10 +58,8 @@ jobs:
         with:
           bump_level: 'patch'
 
-  bcr-release:
-    needs: gh-release
-    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@a841d62420f41a87a601fb331f3c2c2cc088506e # v7.2.3
-    with:
-      prerelease: false
-      release_files: rules_apko-*.tar.gz
-      tag_name: ${{needs.gh-release.outputs.tag_name}}
+      - name: Release
+        uses: softprops/action-gh-release@6cbd405e2c4e67a21c47fa9e383d020e4e28b836 # v2.3.3
+        with:
+          generate_release_notes: true
+          tag_name: ${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.git_tag }}
