@@ -3,11 +3,11 @@
 # Add new versions by running
 # ./scripts/mirror_apko.sh
 APKO_VERSIONS = {
-    "v0.30.10": {
-        "darwin_amd64": "sha256-irWPTUTfoFb1Pvc+F53oJIur/pI6Vl2fFl1jF4ri6Bo=",
-        "darwin_arm64": "sha256-qjwu+sTicd6ib0s3MWu9OicitlXzLS5NJCpJp3y1F48=",
-        "linux_386": "sha256-RUBsHVFaDNkQ51zdnNZ29JTTE3zNBhboHvr8AY/OauU=",
-        "linux_amd64": "sha256-CmZmsic5KtE6rY2p/kKLO/yOHiFKFR5nTCZ7w7Y5CJ4=",
-        "linux_arm64": "sha256-iR7Ji/vWj0CzKQrJ3kos01XANBC3iQEdvJFpeWJWOfI=",
+    "v0.30.11": {
+        "darwin_amd64": "sha256-U9D4Jpgo5R315RDm9BvKMOxWWCuc3l9I2sE67Am3PZA=",
+        "darwin_arm64": "sha256-smxCOGmFwKOhLaOWYyUsLQZtXidBe5QmmbQin5o2Elc=",
+        "linux_386": "sha256-VN/rIShABP2s7cbSeFsnKW0YMHWbVVVJCtH3gcr2tCY=",
+        "linux_amd64": "sha256-uUUuxcvHay1V0QCvPOadSCLy8PJAz5jJp7jO3O/wzuk=",
+        "linux_arm64": "sha256-N1nDhs0OeLmshcZZaw/OgZ/7/FV/vJLolrMglxrDsf4=",
     },
 }
