@@ -58,8 +58,12 @@ jobs:
         with:
           bump_level: 'patch'
 
-      - name: Release
-        uses: softprops/action-gh-release@6cbd405e2c4e67a21c47fa9e383d020e4e28b836 # v2.3.3
-        with:
-          generate_release_notes: true
-          tag_name: ${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.git_tag }}
+      - name: Create immutable source code release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG=${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.git_tag }}
+          PREFIX="rules_apko-$TAG"
+          ARCHIVE="rules_apko-$TAG.tar.gz"
+          git archive --format=tar.gz --prefix=${PREFIX}/ ${TAG} > $ARCHIVE
+          gh release create ${TAG} --generate-notes $ARCHIVE
