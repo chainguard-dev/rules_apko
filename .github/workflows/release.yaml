@@ -23,6 +23,8 @@ jobs:
       contents: write
       attestations: write
     runs-on: ubuntu-latest
+    outputs:
+      tag_name: ${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.git_tag }}
     steps:
       - uses: step-security/harden-runner@f4a75cfd619ee5ce8d5b864b0d183aff3c69b55a # v2.13.1
         with:
@@ -58,8 +60,41 @@ jobs:
         with:
           bump_level: 'patch'
 
-      - name: Release
-        uses: softprops/action-gh-release@6cbd405e2c4e67a21c47fa9e383d020e4e28b836 # v2.3.3
+      - name: Create immutable source code release
+        env:
+          GH_TOKEN: ${{ github.token }}        
+        run: |
+          TAG=${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.git_tag }}
+          PREFIX="rules_apko-$TAG"
+          ARCHIVE="rules_apko-$TAG.tar.gz"
+          git archive --format=tar.gz --prefix=${PREFIX}/ ${TAG} > $ARCHIVE
+          gh release create ${TAG} --generate-notes $ARCHIVE
+
+  token:
+    runs-on: ubuntu-latest
+    needs: gh-release
+    permissions:
+      id-token: write
+    outputs:
+      token: "${{ steps.octo-sts.outputs.token }}"
+    steps:
+      - uses: octo-sts/action@e480437973a6f6ac2e9caa40ecabedc870d76395 # v1.0.1
+        id: octo-sts
         with:
-          generate_release_notes: true
-          tag_name: ${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.git_tag }}
+          scope: chainguard-dev/bazel-central-registry
+          identity: release-rules-apko
+
+  bcr-publish:
+    uses: bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@748dc7186bc60d0e24a81ee30aba8aa543794767 # v1.0.0
+    needs: token
+    with:
+      tag_name: ${{ needs.gh-release.outputs.tag_name }}
+      registry_fork: chainguard-dev/bazel-central-registry
+      attest: false
+      draft: true
+    permissions:
+      attestations: write
+      contents: write
+      id-token: write
+    secrets:
+      publish_token: ${{ needs.token.outputs.token }}
