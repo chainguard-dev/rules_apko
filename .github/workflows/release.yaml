@@ -5,16 +5,10 @@ name: Release
 
 on:
   schedule:
-    - cron: '30 10 * * 1' # every Monday at 00:00 UTC
+    - cron: '30 10 * * 1' # every Monday at 10:30 UTC
   workflow_dispatch:
-  push:
-    tags:
-      - "v*.*.*"
 
-permissions:
-  id-token: write
-  contents: write
-  attestations: write
+permissions: {}
 
 jobs:
   gh-release:
@@ -32,34 +26,20 @@ jobs:
         with:
           fetch-depth: 0 # fetch all history for all branches and tags
 
-      - name: Check if any changes since last release
-        id: check
-        run: |
-          TAG=$(git tag --points-at HEAD)
-          if [ -z "$TAG" ]; then
-            echo "No tag points at HEAD, so we need a new tag and then a new release."
-            echo "need_release=yes" >> $GITHUB_OUTPUT
-          else
-            RELEASE=$(gh release view "$TAG" --json tagName --jq '.tagName' || echo "none")
-            if [ "$RELEASE" == "$TAG" ]; then
-              echo "A release exists for tag $TAG, which has the latest changes, so no need for a new tag or release."
-              echo "need_release=no" >> $GITHUB_OUTPUT
-            else
-              echo "Tag $TAG exists, but no release is associated. Need a new release."
-              echo "need_release=yes" >> $GITHUB_OUTPUT
-              echo "existing_tag=$TAG" >> $GITHUB_OUTPUT
-            fi
-          fi
-
-      - name: Bump version and push tag
+      - name: Calculate version bump
         id: create_tag
         uses: chainguard-dev/actions/git-tag@1b32103f5aa389c31ab0be75a8edc38d7e4750d8 # v1.5.7
-        if: steps.check.outputs.need_release == 'yes' && steps.check.outputs.existing_tag == ''
         with:
-          bump_level: 'patch'
+          bump_level: patch
+          dry_run: true
+          use-gitsign: false
 
-      - name: Release
-        uses: step-security/action-gh-release@09690439e3dd315bab5923ce1c679f84ea219390 # v2.3.4
-        with:
-          generate_release_notes: true
-          tag_name: ${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.git_tag }}
+      - name: Create immutable source code release with tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG=${{ steps.create_tag.outputs.git_tag }}
+          PREFIX="rules_apko-${{ steps.create_tag.outputs.bumped_version }}"
+          ARCHIVE="rules_apko-$TAG.tar.gz"
+          git archive --format=tar.gz --prefix=${PREFIX}/ ${{ github.sha }} > $ARCHIVE
+          gh release create ${TAG} --fail-on-no-commits --target ${{ github.sha }} --generate-notes $ARCHIVE
