@@ -1,6 +1,7 @@
 "Repository rules for importing remote apk packages"
 
 load("@bazel_skylib//lib:versions.bzl", "versions")
+load("@bazel_tools//tools/build_defs/repo:utils.bzl", "read_netrc", "read_user_netrc", "use_netrc")
 load(":util.bzl", "util")
 
 APK_IMPORT_TMPL = """\
@@ -15,28 +16,44 @@ filegroup(
 )
 """
 
-def _auth(rctx, url):
-    if "HTTP_AUTH" not in rctx.os.environ:
-        return {}
-    http_auth = rctx.os.environ["HTTP_AUTH"]
+def _get_auth(ctx, urls):
+    """Given the list of URLs obtain the correct auth dict."""
+    if ctx.attr.netrc:
+        netrc = read_netrc(ctx, ctx.attr.netrc)
+    else:
+        netrc = read_user_netrc(ctx)
+    return use_netrc(netrc, urls, ctx.attr.auth_patterns)
 
-    parts = http_auth.split(":", 3)
-    if len(parts) != 4:
-        fail("malformed HTTP_AUTH environment variable wanted basic:REALM:USER:PASSWORD, but got {} parts", len(parts))
+def _auth(rctx, url_or_urls):
+    urls = url_or_urls if type(url_or_urls) == "list" else [url_or_urls]
 
-    if parts[0].lower() != "basic":
-        fail("malformed HTTP_AUTH environment variable wanted basic:REALM:USER:PASSWORD, but got {} for first part", parts[0])
+    # Prefer HTTP_AUTH if present: basic:REALM:USER:PASSWORD
+    if "HTTP_AUTH" in rctx.os.environ:
+        http_auth = rctx.os.environ["HTTP_AUTH"]
+        parts = http_auth.split(":", 3)
 
-    if not url.startswith("https://{}".format(parts[1])):
-        return {}
+        if len(parts) != 4:
+            fail("malformed HTTP_AUTH environment variable wanted basic:REALM:USER:PASSWORD, but got {} parts", len(parts))
 
-    return {
-        url: {
-            "type": "basic",
-            "login": parts[2],
-            "password": parts[3],
-        },
-    }
+        if parts[0].lower() != "basic":
+            fail("malformed HTTP_AUTH environment variable wanted basic:REALM:USER:PASSWORD, but got {} for first part", parts[0])
+
+        realm = parts[1]
+        login = parts[2]
+        password = parts[3]
+
+        auth = {}
+        for u in urls:
+            if u.startswith("https://{}".format(realm)):
+                auth[u] = {
+                    "type": "basic",
+                    "login": login,
+                    "password": password,
+                }
+        return auth
+
+    # Fallback to ~/.netrc (and optional auth_patterns)
+    return _get_auth(rctx, urls)
 
 def _range(url, range):
     return "{}#_apk_range_{}".format(url, range.replace("=", "_"))
@@ -142,6 +159,9 @@ apk_import = repository_rule(
         "control_checksum": attr.string(mandatory = True),
         "data_range": attr.string(mandatory = True),
         "data_checksum": attr.string(mandatory = True),
+        # Optional auth sources
+        "netrc": attr.label(allow_single_file = True, default = None),
+        "auth_patterns": attr.string_dict(default = {}),
     },
 )
 
@@ -170,6 +190,9 @@ apk_repository = repository_rule(
     attrs = {
         "url": attr.string(mandatory = True),
         "architecture": attr.string(mandatory = True),
+        # Optional auth sources
+        "netrc": attr.label(allow_single_file = True, default = None),
+        "auth_patterns": attr.string_dict(default = {}),
     },
 )
 
@@ -210,6 +233,9 @@ apk_keyring = repository_rule(
     implementation = _apk_keyring_impl,
     attrs = {
         "url": attr.string(mandatory = True),
+        # Optional auth sources
+        "netrc": attr.label(allow_single_file = True, default = None),
+        "auth_patterns": attr.string_dict(default = {}),
     },
 )
 
