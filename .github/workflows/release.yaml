@@ -53,7 +53,7 @@ jobs:
 
       - name: Bump version and push tag
         id: create_tag
-        uses: chainguard-dev/actions/git-tag@de56c2728beb0a0f371bff2ce2ee4b8afee4b5e8 # v1.5.1
+        uses: chainguard-dev/actions/git-tag@8e97c1fc72515d627456cb0b92e9c9f299356375 # v1.5.2
         if: steps.check.outputs.need_release == 'yes' && steps.check.outputs.existing_tag == ''
         with:
           bump_level: 'patch'
