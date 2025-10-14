@@ -59,7 +59,7 @@ jobs:
           bump_level: 'patch'
 
       - name: Release
-        uses: step-security/action-gh-release@76378d4dd5f9fc6c666da0e1d2e84452695e0992 # v2.3.3
+        uses: step-security/action-gh-release@09690439e3dd315bab5923ce1c679f84ea219390 # v2.3.4
         with:
           generate_release_notes: true
           tag_name: ${{ steps.check.outputs.existing_tag || steps.create_tag.outputs.git_tag }}
