@@ -7,7 +7,7 @@ load("//apko/private:versions.bzl", "APKO_VERSIONS")
 
 def _smoke_test_impl(ctx):
     env = unittest.begin(ctx)
-    asserts.equals(env, "v0.30.18", APKO_VERSIONS.keys()[0])
+    asserts.equals(env, "v0.30.20", APKO_VERSIONS.keys()[0])
     return unittest.end(env)
 
 # The unittest library requires that we export the test cases as named test rules,
