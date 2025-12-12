@@ -7,6 +7,7 @@
   "contents": {
     "keyring": [],
     "build_repositories": [],
+    "runtime_repositories": [],
     "repositories": [
       {
         "name": "dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64",
@@ -36,22 +37,22 @@
       },
       {
         "name": "busybox",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/busybox-1.37.0-r13.apk",
-        "version": "1.37.0-r13",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/busybox-1.37.0-r14.apk",
+        "version": "1.37.0-r14",
         "architecture": "x86_64",
         "signature": {
           "range": "bytes=0-663",
-          "checksum": "sha1-MOQ6w2biPOYOcZPvv/aymkYlKAM="
+          "checksum": "sha1-hr1NBLYqIUNQt+YkpoIbf2JI738="
         },
         "control": {
-          "range": "bytes=664-2376",
-          "checksum": "sha1-hUDISHIUJoVnYf5xnUr4chLAgJ4="
+          "range": "bytes=664-2381",
+          "checksum": "sha1-p/ydDCbqw8aB8uA/M5rzEgEeRD4="
         },
         "data": {
-          "range": "bytes=2377-505886",
-          "checksum": "sha256-Dyow/DltfwMNfKUwwxkQXKchOTJGKqJQX/oU/SWBWXM="
+          "range": "bytes=2382-506054",
+          "checksum": "sha256-26Ni79r1YV5xk5cvJOVsc6w5WDChdWr+NSRvQujx3lY="
         },
-        "checksum": "Q1hUDISHIUJoVnYf5xnUr4chLAgJ4="
+        "checksum": "Q1p/ydDCbqw8aB8uA/M5rzEgEeRD4="
       }
     ]
   }
