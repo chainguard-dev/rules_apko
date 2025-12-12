@@ -12,7 +12,7 @@ contents:
     - openssh
     - jq
     - unzip
-    - curl~8.9.0
+    - curl~8.17.0
     - openssl
     - chainctl # something from extras
     - busybox
