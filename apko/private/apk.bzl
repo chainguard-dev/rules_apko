@@ -189,8 +189,10 @@ def _cachePathFromURL(url):
     Mimicks https://github.com/chainguard-dev/go-apk/blob/7b08e8f3b0fcaa0f0a44757aedf23f6778cd8e4f/pkg/apk/cache.go#L326C6-L326C22
     Is interprets URL as following path: {repo}/{arch}/{file} [but also used for keyring files that don't obey {arch} part].
 
+    For RSA public key files (*.rsa.pub), the file is stored in a directory named after the full filename.
+
     Examples:
-      https://packages.wolfi.dev/os/wolfi-signing.rsa.pub              -> https%3A%2F%2Fpackages.wolfi.dev%2F/os/wolfi-signing.rsa.pub
+      https://packages.wolfi.dev/os/wolfi-signing.rsa.pub              -> https%3A%2F%2Fpackages.wolfi.dev%2F/os/wolfi-signing.rsa.pub/wolfi-signing.rsa.pub
       https://packages.wolfi.dev/os/aarch64/sqlite-libs-3.44.0-r0.apk  -> https%3A%2F%2Fpackages.wolfi.dev%2Fos/arch64/sqlite-libs-3.44.0-r0.apk
     """
     url_split = url.rsplit("/", 2)
@@ -199,7 +201,13 @@ def _cachePathFromURL(url):
         # Seems the Apko adds additional "/" if the URL is short.
         repo += "/"
     repo_escaped = util.url_escape(repo)
-    return "{}/{}/{}".format(repo_escaped, url_split[1], url_split[2])
+    filename = url_split[2]
+
+    # For RSA public key files, store them in a directory named after the full filename
+    if filename.endswith(".rsa.pub"):
+        return "{}/{}/{}/{}".format(repo_escaped, url_split[1], filename, filename)
+
+    return "{}/{}/{}".format(repo_escaped, url_split[1], filename)
 
 def _apk_keyring_impl(rctx):
     public_key = _cachePathFromURL(rctx.attr.url)
