@@ -28,7 +28,7 @@ jobs:
 
       - name: Calculate version bump
         id: create_tag
-        uses: chainguard-dev/actions/git-tag@f77a7c3431f961556be5a41e2602c450a590f3e5 # v1.5.12
+        uses: chainguard-dev/actions/git-tag@18e5e3427cf9d6bcfbefe60dca48e40292f000c5 # v1.5.13
         with:
           bump_level: patch
           dry_run: true
