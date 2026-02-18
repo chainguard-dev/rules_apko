@@ -36,4 +36,4 @@ EOF
 echo -n "$(echo "$TOOL" | tr '[:lower:]' '[:upper:]')_VERSIONS = " >>apko/private/versions.bzl
 cat $RAW | sed 's|"$|",|;s| }$| },|' >>apko/private/versions.bzl
 
-sed "s|\"v0\.[0-9.]*\"|\"$tag\"|" -i MODULE.bazel apko/tests/versions_test.bzl
+sed "s|\"v[0-9.]*\.[0-9.]*\"|\"$tag\"|" -i MODULE.bazel apko/tests/versions_test.bzl
