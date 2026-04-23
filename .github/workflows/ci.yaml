@@ -47,6 +47,10 @@ jobs:
         with:
           egress-policy: audit
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: bazel_91
+        run: echo "bazelversion=9.1.0" >> $GITHUB_OUTPUT
+      - id: bazel_86
+        run: echo "bazelversion=8.6.0" >> $GITHUB_OUTPUT
       - id: bazel_83
         run: echo "bazelversion=8.3.0" >> $GITHUB_OUTPUT
       - id: bazel_76
@@ -111,7 +115,7 @@ jobs:
 
       - name: Test
         working-directory: ${{ matrix.folder }}
-        if: ${{ startsWith(matrix.bazelversion, '8.') || matrix.folder != '.' }}
+        if: ${{ matrix.bazelversion >= '8.' || matrix.folder != '.' }}
         run: bazel test //...
 
       # Stardoc has output changes between versions
