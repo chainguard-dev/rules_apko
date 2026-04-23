@@ -64,6 +64,32 @@ apko_config = rule(
     },
 )
 
+def copy_to_workdir(ctx, src, dst):
+    """Copy a file or directory to a declared output, sandbox-safe.
+
+    Uses cp instead of ctx.actions.symlink because Bazel 9 sandbox changes
+    cause symlink outputs to dangle when used as inputs to subsequent
+    sandboxed actions.
+
+    See:
+      https://github.com/bazelbuild/bazel/issues/28953
+      https://github.com/bazelbuild/bazel/issues/27068
+
+    Args:
+        ctx: rule context
+        src: source File
+        dst: declared output File or directory
+    """
+    cmd = 'cp -rfL "$1/." "$2/"' if src.is_directory else 'cp -f "$1" "$2"'
+    ctx.actions.run_shell(
+        inputs = [src],
+        outputs = [dst],
+        command = cmd,
+        arguments = [src.path, dst.path],
+        mnemonic = "CopyFile",
+        progress_message = "Copying %s" % src.short_path,
+    )
+
 def prepare_apko_config_in_workdir(workdir, ctx):
     """Helper function to prepare inputs of apko config files for build rules.
 
@@ -81,16 +107,10 @@ def prepare_apko_config_in_workdir(workdir, ctx):
                 input_entry = ctx.actions.declare_directory(paths.join(workdir, f.short_path))
             else:
                 input_entry = ctx.actions.declare_file(paths.join(workdir, f.short_path))
-            ctx.actions.symlink(
-                target_file = f,
-                output = input_entry,
-            )
+            copy_to_workdir(ctx, f, input_entry)
             inputs.append(input_entry)
     else:
-        config_symlink = ctx.actions.declare_file(paths.join(workdir, ctx.file.config.short_path))
-        ctx.actions.symlink(
-            target_file = ctx.file.config,
-            output = config_symlink,
-        )
-        inputs.append(config_symlink)
+        config_copy = ctx.actions.declare_file(paths.join(workdir, ctx.file.config.short_path))
+        copy_to_workdir(ctx, ctx.file.config, config_copy)
+        inputs.append(config_copy)
     return inputs

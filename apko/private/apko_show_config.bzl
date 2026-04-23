@@ -1,7 +1,7 @@
 "A rule for expanding apko config"
 
 load("@bazel_skylib//lib:paths.bzl", "paths")
-load("//apko/private:apko_config.bzl", "prepare_apko_config_in_workdir")
+load("//apko/private:apko_config.bzl", "copy_to_workdir", "prepare_apko_config_in_workdir")
 
 def _impl(ctx):
     output = ctx.actions.declare_file(ctx.attr.name)
@@ -12,11 +12,16 @@ def _impl(ctx):
     # - bin_dir/target.short_path for generated targets (example bazel-out/.../path/to/my_config)
     # - target.short_path for source files. (example path/to/source_config)
     #
-    # For each input file we create a symlink as workdir/input.short_path
-    # Since the symlink is a generated target, its path is:
+    # For each input file we create a copy as workdir/input.short_path
+    # Since the copy is a generated target, its path is:
     # bin_dir/workspace_root/package/workdir/input.short_path
     #
     # Then when we move to bin_dir/workspace_root/package the relative path become target.short_path for all kinds of input files.
+    #
+    # NOTE: We use file copies instead of ctx.actions.symlink because Bazel 9
+    # sandbox changes cause symlink outputs to become dangling when used as
+    # inputs to subsequent sandboxed actions.
+    # See https://github.com/bazelbuild/bazel/issues/28953
     workdir = "workdir_{}".format(ctx.label.name)
 
     args = ctx.actions.args()
@@ -31,10 +36,7 @@ def _impl(ctx):
     args.add("--offline")
 
     apko_binary = ctx.actions.declare_file(paths.join(workdir, apko_info.binary.short_path))
-    ctx.actions.symlink(
-        target_file = apko_info.binary,
-        output = apko_binary,
-    )
+    copy_to_workdir(ctx, apko_info.binary, apko_binary)
     inputs.append(apko_binary)
 
     ctx.actions.run_shell(
