@@ -65,11 +65,16 @@ apko_config = rule(
 )
 
 def copy_to_workdir(ctx, src, dst):
-    """Copy a file or directory to a declared output, sandbox-safe.
+    """Copy a file, directory, or list of files to a declared output.
 
     Uses cp instead of ctx.actions.symlink because Bazel 9 sandbox changes
     cause symlink outputs to dangle when used as inputs to subsequent
     sandboxed actions.
+
+    When src is a list, dst must be a declared directory (tree artifact);
+    each source is staged at its workspace-relative path inside dst. This
+    is useful when individual destination paths cannot be declared as
+    per-file outputs (see callers).
 
     See:
       https://github.com/bazelbuild/bazel/issues/28953
@@ -77,17 +82,37 @@ def copy_to_workdir(ctx, src, dst):
 
     Args:
         ctx: rule context
-        src: source File
+        src: source File or list of Files
         dst: declared output File or directory
     """
-    cmd = 'cp -rfL "$1/." "$2/"' if src.is_directory else 'cp -f "$1" "$2"'
+
+    # When f is a directory, append "/." so its contents land directly in
+    # target instead of nesting at target/<basename> (Bazel pre-creates
+    # declared output directories, so plain cp -r src tgt would nest).
+    copy_file_cmd = lambda f, target: 'mkdir -p "{dir}" && cp -rfL "{src}" "{tgt}"'.format(
+        dir = paths.dirname(target),
+        src = (f.path + "/.") if f.is_directory else f.path,
+        tgt = target,
+    )
+
+    # f.short_path for an external file is "../<repo>/<rel>"; strip the
+    # first two segments to recover <rel> for placement in the tree artifact.
+    resolve_target_path = lambda f: paths.join(dst.path, f.short_path.split("/", 2)[-1])
+
+    cmds = ["set -e"]
+    if type(src) == "list":
+        inputs = src
+        cmds += [copy_file_cmd(f, resolve_target_path(f)) for f in src]
+    else:
+        inputs = [src]
+        cmds.append(copy_file_cmd(src, dst.path))
+
     ctx.actions.run_shell(
-        inputs = [src],
+        inputs = inputs,
         outputs = [dst],
-        command = cmd,
-        arguments = [src.path, dst.path],
-        mnemonic = "CopyFile",
-        progress_message = "Copying %s" % src.short_path,
+        command = "\n".join(cmds),
+        mnemonic = "CopyToWorkdir",
+        progress_message = "Staging %s" % dst.short_path,
     )
 
 def prepare_apko_config_in_workdir(workdir, ctx):

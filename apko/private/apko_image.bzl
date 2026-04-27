@@ -88,12 +88,15 @@ def _impl(ctx):
         args.add("--arch")
         args.add(ctx.attr.architecture)
 
-    for content in depset(transitive = deps).to_list():
-        content_owner = content.owner.workspace_name
-        content_cache_entry_key = content.path[content.path.find(content_owner) + len(content_owner) + 1:]
-        content_entry = ctx.actions.declare_file(paths.join(workdir, cache_name, content_cache_entry_key))
-        copy_to_workdir(ctx, content, content_entry)
-        inputs.append(content_entry)
+    # Some apko cache entries (notably keyrings) end up at paths whose
+    # filename matches the enclosing directory name, e.g.
+    # ".../wolfi-signing.rsa.pub/wolfi-signing.rsa.pub". Some Bazel
+    # executors reject such paths when declared as individual action
+    # outputs, so we represent the cache as a single tree artifact and
+    # populate it in one action instead.
+    cache_dir = ctx.actions.declare_directory(paths.join(workdir, cache_name))
+    copy_to_workdir(ctx, depset(transitive = deps).to_list(), cache_dir)
+    inputs.append(cache_dir)
 
     apko_binary = ctx.actions.declare_file(paths.join(workdir, apko_info.binary.short_path))
     copy_to_workdir(ctx, apko_info.binary, apko_binary)
