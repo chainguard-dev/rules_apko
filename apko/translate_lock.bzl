@@ -43,6 +43,7 @@ APK_IMPORT_TMPL = """\
         control_checksum = "{control_checksum}",
         data_range = "{data_range}",
         data_checksum = "{data_checksum}",
+        vendors = {vendors},
     )
 """
 
@@ -100,6 +101,7 @@ def _translate_apko_lock_impl(rctx):
             control_checksum = package["control"]["checksum"],
             data_range = package["data"]["range"],
             data_checksum = package["data"]["checksum"],
+            vendors = repr(rctx.attr.vendors),
         ))
 
     for repository in lock_file["contents"]["repositories"]:
@@ -126,6 +128,10 @@ translate_apko_lock = repository_rule(
     attrs = {
         "lock": attr.label(doc = "label to the `apko.lock.json` file.", mandatory = True),
         "target_name": attr.string(doc = "internal. do not use!"),
+        "vendors": attr.string_dict(
+            default = {},
+            doc = "host -> PURL vendor namespace overrides forwarded to each generated apk_import.",
+        ),
     },
     doc = _DOC,
 )

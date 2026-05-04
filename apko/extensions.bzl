@@ -28,6 +28,12 @@ Overriding the default is only permitted in the root module.
 apko_translate_lock = tag_class(attrs = {
     "name": attr.string(mandatory = True),
     "lock": attr.label(mandatory = True),
+    "vendors": attr.string_dict(
+        default = {},
+        doc = """Extra ``host -> PURL vendor`` entries for the PURL namespace
+(e.g. ``{"mirror.corp.example": "corp"}``). Layered on top of the built-in
+defaults. Unknown hosts fall back to ``alpine``.""",
+    ),
 })
 
 def _apko_extension_impl(module_ctx):
@@ -68,9 +74,10 @@ def _apko_extension_impl(module_ctx):
                     control_checksum = package["control"]["checksum"],
                     data_range = package["data"]["range"],
                     data_checksum = package["data"]["checksum"],
+                    vendors = lock.vendors,
                 )
 
-            translate_apko_lock(name = lock.name, target_name = lock.name, lock = lock.lock)
+            translate_apko_lock(name = lock.name, target_name = lock.name, lock = lock.lock, vendors = lock.vendors)
 
             if mod.is_root:
                 deps = root_direct_dev_deps if module_ctx.is_dev_dependency(lock) else root_direct_deps

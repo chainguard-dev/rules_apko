@@ -1,3 +1,6 @@
+load(":util_test.bzl", "util_test_suite")
 load(":versions_test.bzl", "versions_test_suite")
 
 versions_test_suite(name = "versions_test")
+
+util_test_suite(name = "util_test")

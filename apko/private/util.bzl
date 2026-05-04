@@ -120,6 +120,32 @@ def _concatenate_gzip_segments(rctx, output, signature, control, data):
     if r.return_code != 0:
         fail("""concatenate_gzip_segments failed.\nstderr: {}\nstdout: {}""".format(r.stdout, r.stderr))
 
+# Host -> PURL apk namespace. The PURL apk type spec requires a vendor
+# namespace (https://github.com/package-url/purl-spec/blob/main/types-doc/apk-definition.md).
+# Unknown hosts fall back to "alpine" since apk is Alpine's package format.
+# Users can extend this map via the `vendors` attr on `apk.translate_lock(...)`.
+DEFAULT_APK_VENDORS = {
+    "packages.wolfi.dev": "wolfi",
+    "packages.cgr.dev": "chainguard",
+    "dl-cdn.alpinelinux.org": "alpine",
+}
+
+def _apk_namespace(url, overrides = None):
+    """Derive the PURL apk namespace (vendor) from a package download URL.
+
+    Args:
+        url: the package download URL (e.g. ``https://packages.wolfi.dev/os/...``).
+        overrides: optional ``dict[str, str]`` of host → vendor pairs that is
+            layered on top of ``DEFAULT_APK_VENDORS``. User entries win on
+            collision.
+    """
+    after_scheme = url.split("://", 1)[-1]
+    host = after_scheme.split("/", 1)[0]
+    vendors = dict(DEFAULT_APK_VENDORS)
+    if overrides:
+        vendors.update(overrides)
+    return vendors.get(host, "alpine")
+
 util = struct(
     concatenate_gzip_segments = _concatenate_gzip_segments,
     normalize_sri = _normalize_sri,
@@ -127,4 +153,5 @@ util = struct(
     sanitize_string = _sanitize_string,
     repo_url = _repo_url,
     url_escape = _url_escape,
+    apk_namespace = _apk_namespace,
 )
