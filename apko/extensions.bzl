@@ -108,9 +108,14 @@ def _apko_extension_impl(module_ctx):
         )
 
     # Allow use_repo calls to be automatically managed by `bazel mod tidy`
+    # reproducible= was added in Bazel 7.1; module_ctx.bazel_version in 7.0
+    metadata_kwargs = {}
+    if hasattr(module_ctx, "bazel_version"):
+        metadata_kwargs["reproducible"] = True
     return module_ctx.extension_metadata(
         root_module_direct_deps = root_direct_deps,
         root_module_direct_dev_deps = root_direct_dev_deps,
+        **metadata_kwargs
     )
 
 apko = module_extension(
