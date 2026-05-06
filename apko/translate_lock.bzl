@@ -44,7 +44,7 @@ APK_IMPORT_TMPL = """\
         control_checksum = "{control_checksum}",
         data_range = "{data_range}",
         data_checksum = "{data_checksum}",
-        rules_apko_cache_key = "{cache_key}",
+        rules_apko_cache_key = "{rules_apko_cache_key}",
     )
 """
 
@@ -102,7 +102,7 @@ def _translate_apko_lock_impl(rctx):
             control_checksum = package["control"]["checksum"],
             data_range = package["data"]["range"],
             data_checksum = package["data"]["checksum"],
-            cache_key = RULES_APKO_CACHE_KEY,
+            rules_apko_cache_key = RULES_APKO_CACHE_KEY,
         ))
 
     for repository in lock_file["contents"]["repositories"]:
