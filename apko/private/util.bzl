@@ -102,21 +102,26 @@ def _normalize_sri(rctx, checksum):
     return r.stdout
 
 # TODO: this shouldn't be necessary in the first place. change apko so that it except to find the original apk in the cache
-def _concatenate_gzip_segments(rctx, output, signature, control, data):
+def _concatenate_gzip_segments(rctx, output, control, data, signature = None):
     """concatenates gzip segments into one gzip file in signature, control, data order
 
     Args:
         rctx: repository_ctx
         output: final output path
-        signature: path to the signature segment
         control: path to the control segment
         data: path to the data segment
+        signature: path to the signature segment, or None for unsigned apks
     Returns:
         None
     """
     p = rctx.path("gzip_seg.sh")
-    rctx.file(p, """cat $2 $3 $4 > $1""", executable = True)
-    r = rctx.execute([p, output, signature, control, data])
+    rctx.file(p, """out=$1; shift; cat "$@" > "$out" """, executable = True)
+    args = [p, output]
+    if signature:
+        args.append(signature)
+    args.append(control)
+    args.append(data)
+    r = rctx.execute(args)
     if r.return_code != 0:
         fail("""concatenate_gzip_segments failed.\nstderr: {}\nstdout: {}""".format(r.stdout, r.stderr))
 
