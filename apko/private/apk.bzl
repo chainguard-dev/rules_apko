@@ -92,19 +92,26 @@ def _apk_import_impl(rctx):
     control_sha256 = util.normalize_sri(rctx, rctx.attr.control_checksum)
     data_sha256 = util.normalize_sri(rctx, rctx.attr.data_checksum)
 
-    sig_output = "{}/{}.sig.tar.gz".format(output, control_sha256)
     control_output = "{}/{}.ctl.tar.gz".format(output, control_sha256)
     data_output = "{}/{}.dat.tar.gz".format(output, data_sha256)
     apk_output = "{}/{}/{}-{}.apk".format(repo_escaped, rctx.attr.architecture, rctx.attr.package_name, rctx.attr.version)
 
-    _download(
-        rctx,
-        url = rctx.attr.url,
-        rng = rctx.attr.signature_range,
-        output = sig_output,
-        # TODO: signatures does not have stable checksums. find a way to fail gracefully.
-        # integrity = rctx.attr.signature_checksum,
-    )
+    # Some apks (notably most wolfi packages) ship without an in-apk
+    # signature segment; the lockfile encodes that as an empty range. Issuing
+    # a Range request with an empty value would cause the origin to ignore
+    # the header and return the full file as the "signature", which then
+    # gets concatenated with control+data to produce a doubled apk.
+    sig_output = None
+    if rctx.attr.signature_range:
+        sig_output = "{}/{}.sig.tar.gz".format(output, control_sha256)
+        _download(
+            rctx,
+            url = rctx.attr.url,
+            rng = rctx.attr.signature_range,
+            output = sig_output,
+            # TODO: signatures does not have stable checksums. find a way to fail gracefully.
+            # integrity = rctx.attr.signature_checksum,
+        )
     _download(
         rctx,
         url = rctx.attr.url,
