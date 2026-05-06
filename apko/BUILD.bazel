@@ -40,14 +40,22 @@ bzl_library(
     name = "extensions",
     srcs = ["extensions.bzl"],
     visibility = ["//visibility:public"],
-    deps = [":repositories"],
+    deps = [
+        ":repositories",
+        ":translate_lock",
+        "//apko/private:apk",
+        "//apko/private:util",
+    ],
 )
 
 bzl_library(
     name = "translate_lock",
     srcs = ["translate_lock.bzl"],
     visibility = ["//visibility:public"],
-    deps = ["//apko/private:util"],
+    deps = [
+        "//apko/private:apk",
+        "//apko/private:util",
+    ],
 )
 
 bzl_library(
