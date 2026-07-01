@@ -109,6 +109,7 @@ def _impl(ctx):
         tools = [apko_info.binary],
         outputs = [output],
         use_default_shell_env = True,
+        execution_requirements = {"no-remote-exec": "1"},
     )
 
     return DefaultInfo(
