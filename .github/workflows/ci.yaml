@@ -55,8 +55,6 @@ jobs:
         run: echo "bazelversion=8.3.0" >> $GITHUB_OUTPUT
       - id: bazel_76
         run: echo "bazelversion=7.6.1" >> $GITHUB_OUTPUT
-      - id: bazel_6
-        run: echo "bazelversion=6.5.0" >> $GITHUB_OUTPUT
     outputs:
       # Will look like ["<version from .bazelversion>", "x.y.z"]
       bazelversions: ${{ toJSON(steps.*.outputs.bazelversion) }}
@@ -78,10 +76,6 @@ jobs:
         folder:
           - .
           - e2e/smoke
-        exclude:
-          # Root module uses newer stardoc that requires Bazel 7 or greater
-          - bazelversion: 6.5.0
-            folder: .
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -107,11 +101,6 @@ jobs:
       - name: verify bcr patches
         if: hashFiles('.bcr/patches/*.patch') != ''
         run: patch --dry-run -p1 < .bcr/patches/*.patch
-
-      # Required for rules_apko to make range requests
-      - name: Add bazel 6 workaround
-        if: ${{ matrix.bazelversion == '6.5.0' }}
-        run: echo 'try-import %workspace%/.apko/.bazelrc' >> .bazelrc
 
       - name: Test
         working-directory: ${{ matrix.folder }}

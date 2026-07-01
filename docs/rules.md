@@ -68,31 +68,6 @@ When referencing other files in the config yaml file use paths relative to your 
 | <a id="ApkoConfigInfo-files"></a>files |  depset of files that will be needed for building. All of them will be added to the execution of apko commands when built with Bazel.    |
 
 
-<a id="apko_bazelrc"></a>
-
-## apko_bazelrc
-
-<pre>
-load("@rules_apko//apko:defs.bzl", "apko_bazelrc")
-
-apko_bazelrc(<a href="#apko_bazelrc-name">name</a>, <a href="#apko_bazelrc-repositories">repositories</a>, <a href="#apko_bazelrc-kwargs">**kwargs</a>)
-</pre>
-
-Helper macro for generating `.bazelrc` and `range.sh` files to allow for partial package fetches.
-
-See [initial setup](./initial-setup.md) documentation for more information.
-
-
-**PARAMETERS**
-
-
-| Name  | Description | Default Value |
-| :------------- | :------------- | :------------- |
-| <a id="apko_bazelrc-name"></a>name |  name of the target   |  `"apko_bazelrc"` |
-| <a id="apko_bazelrc-repositories"></a>repositories |  list of repositories to generate .bazelrc for   |  `["dl-cdn.alpinelinux.org", "packages.wolfi.dev"]` |
-| <a id="apko_bazelrc-kwargs"></a>kwargs |  passed to expanding targets. only well known attributes such as `tags` `testonly` ought to be present.   |  none |
-
-
 <a id="apko_image"></a>
 
 ## apko_image

@@ -1,6 +1,5 @@
 "Repository rules for importing remote apk packages"
 
-load("@bazel_skylib//lib:versions.bzl", "versions")
 load(":util.bzl", "util")
 
 # Bump this constant whenever a behavioral change requires existing cached
@@ -42,50 +41,13 @@ def _auth(rctx, url):
         },
     }
 
-def _range(url, range):
-    return "{}#_apk_range_{}".format(url, range.replace("=", "_"))
-
-def _check_initial_setup(rctx):
-    output = rctx.path(".rangecheck/output")
-    _download(
-        rctx,
-        url = rctx.attr.url,
-        rng = "bytes=0-0",
-        output = output,
-    )
-    r = rctx.execute(["wc", "-c", output])
-
-    if r.return_code != 0:
-        fail("initial setup check failed ({}) stderr: {}\n stdout: {}".format(r.statuscode, r.stderr, r.stdout))
-
-    bytes = r.stdout.lstrip(" ").split(" ")
-
-    if bytes[0] != "1":
-        fail("""
-
-‼️ We encountered an issue with your current configuration that prevents partial package fetching during downloads.
-
-This may indicate either a misconfiguration or that the initial setup hasn't been performed correctly.
-To resolve this issue and enable partial package fetching, please follow the step-by-step instructions in our documentation.
-
-📚 Documentation: https://github.com/chainguard-dev/rules_apko/blob/main/docs/initial-setup.md
-
-""".format(bytes[0]))
-
 def _download(rctx, url, rng, **kwargs):
-    if versions.is_at_least("7.1.0", native.bazel_version):
-        return rctx.download(
-            url = [url],
-            headers = {"Range": [rng]},
-            auth = _auth(rctx, url),
-            **kwargs
-        )
-    else:
-        return rctx.download(
-            url = [_range(url, rng)],
-            auth = _auth(rctx, url),
-            **kwargs
-        )
+    return rctx.download(
+        url = [url],
+        headers = {"Range": [rng]},
+        auth = _auth(rctx, url),
+        **kwargs
+    )
 
 def _apk_import_impl(rctx):
     repo = util.repo_url(rctx.attr.url, rctx.attr.architecture)
@@ -169,7 +131,6 @@ filegroup(
 def _apk_repository_impl(rctx):
     repo = util.repo_url(rctx.attr.url, rctx.attr.architecture)
     repo_escaped = util.url_escape(repo)
-    _check_initial_setup(rctx)
     rctx.download(
         url = [rctx.attr.url],
         auth = _auth(rctx, rctx.attr.url),
