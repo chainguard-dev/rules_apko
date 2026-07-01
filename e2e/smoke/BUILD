@@ -1,9 +1,7 @@
 """Provides a simple way to test your rules as an external workspace."""
 
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
-load("@rules_apko//apko:defs.bzl", "apko_bazelrc", "apko_image")
-
-apko_bazelrc()
+load("@rules_apko//apko:defs.bzl", "apko_image")
 
 apko_image(
     name = "lock",

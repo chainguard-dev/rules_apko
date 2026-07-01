@@ -7,7 +7,6 @@ Need help? This ruleset has support provided by <https://aspect.dev>.
 ## Installation
 
 Follow instructions in the release notes from the release you wish to use.
-Be sure to follow the "Initial Setup" instructions as well.
 <https://github.com/chainguard-dev/rules_apko/releases>
 
 To use a commit rather than a release, you can point at any SHA of the repo,
@@ -27,7 +26,7 @@ Assuming `rules_apko` is already loaded in your `MODULE.bazel` or `WORKSPACE` fi
 
 Then you import these base layers into Bazel:
 
-- With Bazel 6 and [bzlmod], call `apk.translate_lock` in `MODULE.bazel`
+- With [bzlmod], call `apk.translate_lock` in `MODULE.bazel`
 - Otherwise, call `translate_apko_lock` in `WORKSPACE`
 
 Now you can use the `apko_image` rule to build the image, producing an OCI format output.
