@@ -110,6 +110,7 @@ def _impl(ctx):
         outputs = [output],
         use_default_shell_env = True,
         execution_requirements = {"no-remote-exec": "1"},
+        toolchain = None,
     )
 
     return DefaultInfo(
