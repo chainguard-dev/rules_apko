@@ -112,3 +112,25 @@ jobs:
         working-directory: ${{ matrix.folder }}
         if: ${{ matrix.bazelversion <= '8.' && matrix.folder == '.' }}
         run: bazel query 'tests(//...) except docs/...' | xargs bazel test
+
+  # Single summary gate that aggregates the dynamic test matrix. Branch
+  # protection only needs to require this one context, so the Bazel version
+  # matrix above can change without an infra change to the required checks.
+  test-roundup:
+    runs-on: ubuntu-latest
+    needs:
+      - matrix-prep-bazelversion
+      - matrix-prep-os
+      - test
+    if: always()
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+      - name: Verify needs succeeded
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: |
+          echo "$NEEDS_JSON"
+          jq -e 'all(.[]; .result | IN("success","skipped"))' <<< "$NEEDS_JSON"
