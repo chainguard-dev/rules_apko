@@ -1,0 +1,23 @@
+{
+  "version": "v1",
+  "config": {
+    "name": "./keyring_content/apko.yaml",
+    "checksum": "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  },
+  "contents": {
+    "keyring": [
+      {
+        "name": "keyring-content-test.invalid/keys/test.rsa.pub",
+        "url": "https://keyring-content-test.invalid/keys/test.rsa.pub",
+        "content": "-----BEGIN PUBLIC KEY-----\nEmbedded keyring bytes for rules_apko e2e test. If this file exists in\nthe keyring repo without a network fetch, the content-consumption path\nworks; the URL host above is intentionally unreachable so a fallback\nfetch would fail the test.\n-----END PUBLIC KEY-----\n"
+      }
+    ],
+    "build_repositories": [],
+    "runtime_repositories": [],
+    "repositories": [],
+    "packages": [],
+    "archs": [
+      "x86_64"
+    ]
+  }
+}

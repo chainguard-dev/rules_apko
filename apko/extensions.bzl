@@ -46,6 +46,7 @@ def _apko_extension_impl(module_ctx):
                     apk_keyring(
                         name = util.sanitize_string("{}_{}".format(lock.name, keyring["name"])),
                         url = keyring["url"],
+                        content = keyring.get("content", ""),
                     )
 
             for repository in lock_file["contents"]["repositories"]:
