@@ -1,0 +1,25 @@
+# Override http_archive for local testing
+load("@bazel//tools/build_defs/repo:local.bzl", "local_repository")
+
+local_repository(
+    name = "rules_apko",
+    path = "../..",
+)
+
+load("@rules_apko//apko:repositories.bzl", "apko_register_toolchains", "rules_apko_dependencies")
+
+rules_apko_dependencies()
+
+apko_register_toolchains(name = "apko")
+
+load("@rules_apko//apko:translate_lock.bzl", "translate_apko_lock")
+
+translate_apko_lock(
+    name = "local_keyring_lock",
+    local_keys = "@//keys:BUILD.bazel",
+    lock = "@//:apko.lock.json",
+)
+
+load("@local_keyring_lock//:repositories.bzl", "apko_repositories")
+
+apko_repositories()

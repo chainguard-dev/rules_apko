@@ -76,6 +76,7 @@ jobs:
         folder:
           - .
           - e2e/smoke
+          - e2e/local_keyring
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:

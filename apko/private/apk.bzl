@@ -182,15 +182,46 @@ def _cachePathFromURL(url):
 
     return "{}/{}/{}".format(repo_escaped, url_split[1], filename)
 
+def _keyring_filename(url):
+    """Returns the filename used to look up a locally cached key.
+
+    This is the final path segment of the URL, e.g.
+    "https://packages.wolfi.dev/os/wolfi-signing.rsa.pub" -> "wolfi-signing.rsa.pub"
+    """
+    return url.rsplit("/", 1)[-1]
+
 def _apk_keyring_impl(rctx):
     public_key = _cachePathFromURL(rctx.attr.url)
-    rctx.download(url = [rctx.attr.url], output = public_key, auth = _auth(rctx, rctx.attr.url))
+
+    # Read contents of a locally cached key file if one is present in the
+    # configured local_keys directory (default //apko/keys), matched by filename.
+    filename = _keyring_filename(rctx.attr.url)
+    keys_dir = rctx.path(rctx.attr.local_keys).dirname
+    local_key = keys_dir.get_child(filename)
+
+    # Re-run this rule whenever the local key file is added, changed, or removed
+    # so the local/remote decision below stays correct across incremental builds.
+    rctx.watch(local_key)
+
+    if local_key.exists:
+        # Read the local key file contents.
+        rctx.file(public_key, rctx.read(local_key))
+    else:
+        rctx.download(url = [rctx.attr.url], output = public_key, auth = _auth(rctx, rctx.attr.url))
+
     rctx.file("BUILD.bazel", APK_KEYRING_TMPL.format(public_key = public_key))
 
 apk_keyring = repository_rule(
     implementation = _apk_keyring_impl,
     attrs = {
         "url": attr.string(mandatory = True),
+        "local_keys": attr.label(
+            default = Label("//apko/keys:BUILD.bazel"),
+            doc = "Label of a file (e.g. the BUILD.bazel) in the directory holding " +
+                  "local key files. If a file in that directory matches the keyring " +
+                  "URL's final path segment, its contents are used instead of " +
+                  "downloading the key. Defaults to //apko/keys.",
+        ),
     },
 )
 
@@ -217,4 +248,10 @@ apk_filegroup = rule(
         "apks": attr.label_list(doc = "Labels of the package (apk) files.", allow_files = True, mandatory = True),
         "indexes": attr.label_list(doc = "Labels of the APKINDEX files.", allow_files = True, mandatory = True),
     },
+)
+
+# Exposed for unit tests only.
+apk_private_for_testing = struct(
+    keyring_filename = _keyring_filename,
+    cache_path_from_url = _cachePathFromURL,
 )

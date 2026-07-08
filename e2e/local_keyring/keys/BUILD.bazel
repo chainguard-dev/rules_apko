@@ -1,0 +1,6 @@
+# Local key files for the local_keyring e2e, referenced via
+# apko.translate_lock(local_keys = "//keys:BUILD.bazel").
+exports_files(glob(
+    ["**/*.rsa.pub"],
+    allow_empty = True,
+))

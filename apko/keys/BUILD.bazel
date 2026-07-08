@@ -1,0 +1,9 @@
+# Local apk signing public keys (the default local_keys directory).
+#
+# Drop a public key file here to have apk_keyring use the local key file contents
+# instead of fetching the key from the network. Consumers can point elsewhere via
+# apko.translate_lock(local_keys = ...).
+exports_files(glob(
+    ["**/*.rsa.pub"],
+    allow_empty = True,
+))

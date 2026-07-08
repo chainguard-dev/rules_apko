@@ -1,3 +1,6 @@
+load(":keyring_test.bzl", "keyring_test_suite")
 load(":versions_test.bzl", "versions_test_suite")
 
 versions_test_suite(name = "versions_test")
+
+keyring_test_suite(name = "keyring_test")

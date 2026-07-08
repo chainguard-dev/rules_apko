@@ -1,0 +1,25 @@
+bazel_dep(name = "rules_apko", version = "0.0.0", dev_dependency = True)
+bazel_dep(name = "bazel_skylib", version = "1.7.1", dev_dependency = True)
+bazel_dep(name = "aspect_bazel_lib", version = "2.16.0", dev_dependency = True)
+
+local_path_override(
+    module_name = "rules_apko",
+    path = "../..",
+)
+
+apko = use_extension(
+    "@rules_apko//apko:extensions.bzl",
+    "apko",
+    dev_dependency = True,
+)
+
+# This lock's only keyring points at an unreachable ".invalid" host. The build
+# below succeeds only because a matching key file is checked in at
+# //keys/rules-apko-e2e-local.rsa.pub (via local_keys), proving apk_keyring
+# serves the local key file contents without touching the network.
+apko.translate_lock(
+    name = "local_keyring_lock",
+    local_keys = "//keys:BUILD.bazel",
+    lock = "//:apko.lock.json",
+)
+use_repo(apko, "local_keyring_lock")

@@ -28,6 +28,10 @@ Overriding the default is only permitted in the root module.
 apko_translate_lock = tag_class(attrs = {
     "name": attr.string(mandatory = True),
     "lock": attr.label(mandatory = True),
+    "local_keys": attr.label(
+        default = Label("//apko/keys:BUILD.bazel"),
+        doc = "Label of a file in the directory holding local key files. See apk_keyring.",
+    ),
 })
 
 def _apko_extension_impl(module_ctx):
@@ -46,6 +50,7 @@ def _apko_extension_impl(module_ctx):
                     apk_keyring(
                         name = util.sanitize_string("{}_{}".format(lock.name, keyring["name"])),
                         url = keyring["url"],
+                        local_keys = lock.local_keys,
                     )
 
             for repository in lock_file["contents"]["repositories"]:
@@ -71,7 +76,7 @@ def _apko_extension_impl(module_ctx):
                     rules_apko_cache_key = RULES_APKO_CACHE_KEY,
                 )
 
-            translate_apko_lock(name = lock.name, target_name = lock.name, lock = lock.lock)
+            translate_apko_lock(name = lock.name, target_name = lock.name, lock = lock.lock, local_keys = lock.local_keys)
 
             if mod.is_root:
                 deps = root_direct_dev_deps if module_ctx.is_dev_dependency(lock) else root_direct_deps

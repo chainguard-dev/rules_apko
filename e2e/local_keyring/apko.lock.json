@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "contents": {
+    "keyring": [
+      {
+        "name": "local-only.invalid/keys/rules-apko-e2e-local.rsa.pub",
+        "url": "https://local-only.invalid/keys/rules-apko-e2e-local.rsa.pub"
+      }
+    ],
+    "build_repositories": [],
+    "runtime_repositories": [],
+    "repositories": [],
+    "packages": []
+  }
+}

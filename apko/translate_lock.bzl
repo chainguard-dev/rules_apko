@@ -59,7 +59,8 @@ APK_REPOSITORY_TMPL = """\
 APK_KEYRING_TMPL = """\
     apk_keyring(
         name = "{name}",
-        url = "{url}"
+        url = "{url}",
+        local_keys = "{local_keys}",
     )
 """
 
@@ -84,6 +85,7 @@ def _translate_apko_lock_impl(rctx):
             defs.append(APK_KEYRING_TMPL.format(
                 name = name,
                 url = keyring["url"],
+                local_keys = str(rctx.attr.local_keys),
             ))
 
     for package in lock_file["contents"]["packages"]:
@@ -129,6 +131,10 @@ translate_apko_lock = repository_rule(
     attrs = {
         "lock": attr.label(doc = "label to the `apko.lock.json` file.", mandatory = True),
         "target_name": attr.string(doc = "internal. do not use!"),
+        "local_keys": attr.label(
+            default = Label("//apko/keys:BUILD.bazel"),
+            doc = "Label of a file in the directory holding local key files. See apk_keyring.",
+        ),
     },
     doc = _DOC,
 )
