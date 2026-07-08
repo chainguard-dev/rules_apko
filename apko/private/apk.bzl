@@ -184,13 +184,19 @@ def _cachePathFromURL(url):
 
 def _apk_keyring_impl(rctx):
     public_key = _cachePathFromURL(rctx.attr.url)
-    rctx.download(url = [rctx.attr.url], output = public_key, auth = _auth(rctx, rctx.attr.url))
+    if rctx.attr.content:
+        rctx.file(public_key, rctx.attr.content)
+    else:
+        rctx.download(url = [rctx.attr.url], output = public_key, auth = _auth(rctx, rctx.attr.url))
     rctx.file("BUILD.bazel", APK_KEYRING_TMPL.format(public_key = public_key))
 
 apk_keyring = repository_rule(
     implementation = _apk_keyring_impl,
     attrs = {
         "url": attr.string(mandatory = True),
+        "content": attr.string(
+            doc = "Raw keyring bytes (typically a PEM-encoded public key). When set, the URL is not fetched.",
+        ),
     },
 )
 

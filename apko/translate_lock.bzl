@@ -59,7 +59,8 @@ APK_REPOSITORY_TMPL = """\
 APK_KEYRING_TMPL = """\
     apk_keyring(
         name = "{name}",
-        url = "{url}"
+        url = "{url}",
+        content = {content},
     )
 """
 
@@ -84,6 +85,7 @@ def _translate_apko_lock_impl(rctx):
             defs.append(APK_KEYRING_TMPL.format(
                 name = name,
                 url = keyring["url"],
+                content = repr(keyring.get("content", "")),
             ))
 
     for package in lock_file["contents"]["packages"]:

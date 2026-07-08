@@ -41,3 +41,12 @@ translate_apko_lock(
 load("@example_multifile_lock//:repositories.bzl", multifile_lock_repositories = "apko_repositories")
 
 multifile_lock_repositories()
+
+translate_apko_lock(
+    name = "keyring_content_lock",
+    lock = "@//keyring_content:apko.lock.json",
+)
+
+load("@keyring_content_lock//:repositories.bzl", keyring_content_lock_repositories = "apko_repositories")
+
+keyring_content_lock_repositories()

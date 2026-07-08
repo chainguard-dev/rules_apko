@@ -23,3 +23,9 @@ apko.translate_lock(
     lock = "//multifile_config:apko.generated.lock.json",
 )
 use_repo(apko, "example_multifile_lock")
+
+apko.translate_lock(
+    name = "keyring_content_lock",
+    lock = "//keyring_content:apko.lock.json",
+)
+use_repo(apko, "keyring_content_lock")
