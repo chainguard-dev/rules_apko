@@ -10,7 +10,7 @@ names (the latest version will be picked for each name) and can register them as
 effectively overriding the default named toolchain due to toolchain resolution precedence.
 """
 
-load("//apko/private:apk.bzl", "RULES_APKO_CACHE_KEY", "apk_import", "apk_keyring", "apk_repository")
+load("//apko/private:apk.bzl", "RULES_APKO_CACHE_KEY", "apk_import", "apk_keyring")
 load("//apko/private:util.bzl", "util")
 load(":repositories.bzl", "apko_register_toolchains")
 load(":translate_lock.bzl", "translate_apko_lock")
@@ -48,13 +48,6 @@ def _apko_extension_impl(module_ctx):
                         url = keyring["url"],
                         content = keyring.get("content", ""),
                     )
-
-            for repository in lock_file["contents"]["repositories"]:
-                apk_repository(
-                    name = util.sanitize_string("{}_{}_{}".format(lock.name, repository["name"], repository["architecture"])),
-                    url = repository["url"],
-                    architecture = repository["architecture"],
-                )
 
             for package in lock_file["contents"]["packages"]:
                 apk_import(

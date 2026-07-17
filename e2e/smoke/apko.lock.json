@@ -16,7 +16,7 @@
     "repositories": [
       {
         "name": "dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz",
+        "url": "https://index.invalid/alpine/v3.21/main/x86_64/APKINDEX.tar.gz",
         "architecture": "x86_64"
       }
     ],

@@ -3,3 +3,6 @@
 This e2e exercises the repo from an end-users perspective.
 It catches mistakes in our install instructions, or usages that fail when called from an "external" repository to rules_apko.
 It is also used by the presubmit check for the Bazel Central Registry.
+
+The lock points its APK index at the reserved `.invalid` domain. Locked builds
+must use the package closure in the lock without fetching an index.

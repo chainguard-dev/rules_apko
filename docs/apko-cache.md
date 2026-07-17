@@ -3,6 +3,9 @@
 To ensure efficient operation, the `apko_image` rule must maintain a cache of remote contents that it fetches from repositories. While outside of Bazel, `apko` manages its own cache, under Bazel, the cache must be maintained by Bazel to ensure correctness and speed. Therefore, Bazel needs to know what needs to be fetched and from where to cache these HTTP requests and provide them to `apko` as required.
 
 The `apko.lock.json` file contains all the necessary information about how to perform the HTTP fetches required by `apko` to build the container image.
+Repository indexes are used to generate the lock but are not fetched again when
+building from it. The lock contains the complete package closure and checksums
+needed for offline image assembly.
 
 ## Generating the Lock File
 
