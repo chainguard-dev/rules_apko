@@ -102,6 +102,23 @@ def _apk_import_impl(rctx):
     )
     rctx.file("BUILD.bazel", APK_IMPORT_TMPL)
 
+    # The control and data segments - the whole apk payload - are integrity
+    # pinned from the lockfile, and every path written here is derived from the
+    # attrs, so the contents are a pure function of the recorded inputs.
+    #
+    # Two things are deliberately not treated as blockers:
+    #  - The signature segment is fetched unpinned (see the TODO above). It is a
+    #    fixed byte range of an immutable published apk, and apko verifies it
+    #    against the keyring at build time, so a cache hit cannot smuggle in a
+    #    signature that a fresh fetch would have rejected.
+    #  - `HTTP_AUTH` is read via `rctx.os.environ`, which is not a recorded
+    #    input. It only decides whether a request is authorised, never what the
+    #    verified bytes are, so it cannot fork the contents for a given key.
+    #
+    # A rules_apko release can invalidate stale cache entries by bumping
+    # `RULES_APKO_CACHE_KEY`, which flows into the `rules_apko_cache_key` attr.
+    return util.repo_metadata(rctx, reproducible = True)
+
 apk_import = repository_rule(
     implementation = _apk_import_impl,
     attrs = {
@@ -137,6 +154,15 @@ def _apk_repository_impl(rctx):
         output = "{}/{}/APKINDEX/latest.tar.gz".format(repo_escaped, rctx.attr.architecture),
     )
     rctx.file("BUILD.bazel", APK_REPOSITORY_TMPL)
+
+    # Deliberately not marked reproducible.
+    #
+    # `url` points at the repository's live `APKINDEX.tar.gz`, which is rewritten
+    # every time a package is published, and the download is not checksum pinned.
+    # The contents are therefore a function of fetch time, not of the attrs, and
+    # sharing them across machines could pair a lockfile with an index that
+    # predates it.
+    return util.repo_metadata(rctx, reproducible = False)
 
 apk_repository = repository_rule(
     implementation = _apk_repository_impl,
@@ -190,6 +216,16 @@ def _apk_keyring_impl(rctx):
         rctx.download(url = [rctx.attr.url], output = public_key, auth = _auth(rctx, rctx.attr.url))
     rctx.file("BUILD.bazel", APK_KEYRING_TMPL.format(public_key = public_key))
 
+    # With `content` set nothing is fetched at all, so the repo is templated
+    # purely from the attrs. Without it the key is fetched unpinned, but a
+    # signing key URL names one specific key: rotation publishes a new
+    # `*.rsa.pub` filename rather than rewriting an existing one, so the bytes at
+    # a given `url` do not change. `_cachePathFromURL` derives the layout from
+    # `url` alone, never from the host. Should that assumption ever be violated,
+    # a rules_apko release can invalidate cached keyrings by bumping
+    # `RULES_APKO_CACHE_KEY`.
+    return util.repo_metadata(rctx, reproducible = True)
+
 apk_keyring = repository_rule(
     implementation = _apk_keyring_impl,
     attrs = {
@@ -197,6 +233,7 @@ apk_keyring = repository_rule(
         "content": attr.string(
             doc = "Raw keyring bytes (typically a PEM-encoded public key). When set, the URL is not fetched.",
         ),
+        "rules_apko_cache_key": attr.string(default = RULES_APKO_CACHE_KEY),
     },
 )
 

@@ -84,6 +84,25 @@ def _sanitize_string(string):
 def _parse_lock(content):
     return json.decode(content)
 
+def _repo_metadata(rctx, reproducible):
+    """Reports this repo's reproducibility to the repo contents cache.
+
+    `repository_ctx.repo_metadata` (and the repo contents cache it feeds) is
+    only available since Bazel 8.3.0, which is above the minimum Bazel version
+    supported by rules_apko. On older Bazels there is no cache to inform, so
+    fall back to the implicit None return those versions have always accepted.
+
+    Args:
+        rctx: repository_ctx
+        reproducible: True if refetching this repo with the same recorded
+            inputs is guaranteed to produce the same contents
+    Returns:
+        a value to return from the repository rule's implementation function
+    """
+    if not hasattr(rctx, "repo_metadata"):
+        return None
+    return rctx.repo_metadata(reproducible = reproducible)
+
 def _normalize_sri(rctx, checksum):
     """Converts SRI string to a plain checksum hex.
 
@@ -129,6 +148,7 @@ util = struct(
     concatenate_gzip_segments = _concatenate_gzip_segments,
     normalize_sri = _normalize_sri,
     parse_lock = _parse_lock,
+    repo_metadata = _repo_metadata,
     sanitize_string = _sanitize_string,
     repo_url = _repo_url,
     url_escape = _url_escape,
