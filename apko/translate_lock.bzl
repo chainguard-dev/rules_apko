@@ -65,11 +65,21 @@ APK_KEYRING_TMPL = """\
 """
 
 def _translate_apko_lock_impl(rctx):
-    lock_file = util.parse_lock(rctx.read(rctx.attr.lock))
+    lock_content = rctx.read(rctx.attr.lock)
+    lock_file = util.parse_lock(lock_content)
 
     # We copy the lockfile (.lock.json) to avoid visibility problems when we reference it from another module.
     lock_file_local = "lockfile_copy"
-    rctx.symlink(rctx.attr.lock, lock_file_local)
+    if hasattr(rctx, "repo_metadata"):
+        # The copy has to be a real file rather than a symlink: an external repo
+        # holding a symlink that escapes its own root is never stored in the
+        # repo contents cache.
+        rctx.file(lock_file_local, lock_content, executable = False)
+    else:
+        # No repo contents cache on this Bazel (see util.repo_metadata), so keep
+        # the symlink: unlike `rctx.file` on these versions, it is guaranteed to
+        # preserve the lockfile bytes exactly.
+        rctx.symlink(rctx.attr.lock, lock_file_local)
 
     apks = []
     indexes = []
@@ -125,6 +135,11 @@ def _translate_apko_lock_impl(rctx):
         "BUILD.bazel",
         BUILD_TMPL.format(apks = apks, keyrings = keyrings, indexes = indexes, lockfile = lock_file_local),
     )
+
+    # Everything written here is derived from the `lock` file and the
+    # `target_name` attr, both recorded inputs, and nothing is downloaded or read
+    # from the host.
+    return util.repo_metadata(rctx, reproducible = True)
 
 translate_apko_lock = repository_rule(
     implementation = _translate_apko_lock_impl,

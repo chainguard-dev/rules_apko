@@ -7,6 +7,7 @@ See https://docs.bazel.build/versions/main/skylark/deploying.html#dependencies
 load("@bazel_tools//tools/build_defs/repo:http.bzl", _http_archive = "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 load("//apko/private:toolchains_repo.bzl", "PLATFORMS", "toolchains_repo")
+load("//apko/private:util.bzl", "util")
 load("//apko/private:versions.bzl", "APKO_VERSIONS")
 
 LATEST_APKO_VERSION = APKO_VERSIONS.keys()[0]
@@ -71,6 +72,12 @@ apko_toolchain(
 )
 """.format(version = repository_ctx.attr.apko_version),
     )
+
+    # The archive is integrity pinned via the mandatory `sha256` attr and the
+    # generated BUILD file is templated from the attrs. The target platform comes
+    # from the `url` / `platform` attrs, so it is part of the cache key rather
+    # than being read off the host.
+    return util.repo_metadata(repository_ctx, reproducible = True)
 
 apko_repositories = repository_rule(
     _apko_repo_impl,
