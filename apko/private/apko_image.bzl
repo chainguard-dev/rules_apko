@@ -12,6 +12,10 @@ _ATTRS = {
     "architecture": attr.string(doc = "the CPU architecture which this image should be built to run on. See https://github.com/chainguard-dev/apko/blob/main/docs/apko_file.md#archs-top-level-element"),
     "tag": attr.string(doc = "tag to apply to the resulting docker tarball. only applicable when `output` is `docker`", mandatory = True),
     "args": attr.string_list(doc = "additional arguments to provide when running the `apko build` command."),
+    "use_default_shell_env": attr.bool(
+        doc = "whether the apko build action inherits the default shell environment (the client environment as filtered by `--action_env` / `--incompatible_strict_action_env`). Set to `False` to run apko with a hermetic action environment.",
+        default = True,
+    ),
 }
 
 def _impl(ctx):
@@ -81,7 +85,6 @@ def _impl(ctx):
         inputs.append(lockfile_copy)
         args.add("--lockfile={}".format(lockfile.short_path))
 
-    args.add("--cache-dir={}".format(cache_name))
     args.add("--offline")
 
     if ctx.attr.architecture:
@@ -102,15 +105,39 @@ def _impl(ctx):
     copy_to_workdir(ctx, apko_info.binary, apko_binary)
     inputs.append(apko_binary)
 
+    # apko writes into its --cache-dir even with --offline (it expands
+    # packages and creates directories on cache lookup). Bazel provides the
+    # prepopulated cache tree artifact as a read-only input, which remote
+    # executors enforce strictly, so we copy the cache into a writable
+    # scratch directory before invoking apko. HOME falls back to a scratch
+    # directory on executors that don't provide a writable one.
+    command = "\n".join([
+        "set -e",
+        'SCRATCH="$(mktemp -d)"',
+        "trap 'rm -rf \"$SCRATCH\"' EXIT",
+        'mkdir "$SCRATCH/cache" "$SCRATCH/home"',
+        'cp -RL {cache_src}/. "$SCRATCH/cache/"',
+        'chmod -R u+w "$SCRATCH/cache"',
+        'export HOME="${{HOME:-$SCRATCH/home}}"',
+        "cd {workdir}",
+        '{apko} "$@" --cache-dir="$SCRATCH/cache"',
+    ]).format(
+        cache_src = cache_dir.path,
+        workdir = paths.join(ctx.bin_dir.path, ctx.label.workspace_root, ctx.label.package, workdir),
+        apko = apko_info.binary.short_path,
+    )
+
     ctx.actions.run_shell(
-        command = "cd {} && {} $@".format(paths.join(ctx.bin_dir.path, ctx.label.workspace_root, ctx.label.package, workdir), apko_info.binary.short_path),
+        command = command,
         arguments = [args],
         inputs = inputs,
         tools = [apko_info.binary],
         outputs = [output],
-        use_default_shell_env = True,
-        execution_requirements = {"no-remote-exec": "1"},
-        toolchain = None,
+        use_default_shell_env = ctx.attr.use_default_shell_env,
+        # Bind the action to the platform the apko toolchain was resolved
+        # for, so remote executors never receive a binary built for a
+        # different platform.
+        toolchain = "@rules_apko//apko:toolchain_type",
     )
 
     return DefaultInfo(
@@ -137,6 +164,7 @@ def apko_image(
         output = "oci",
         architecture = None,
         args = [],
+        use_default_shell_env = True,
         **kwargs):
     """Build OCI images from APK packages directly without Dockerfile
 
@@ -181,6 +209,9 @@ def apko_image(
      architecture: the CPU architecture which this image should be built to run on. See https://github.com/chainguard-dev/apko/blob/main/docs/apko_file.md#archs-top-level-element"),
      tag:          tag to apply to the resulting docker tarball. only applicable when `output` is `docker`
      args:         additional arguments to provide when running the `apko build` command.
+     use_default_shell_env: whether the apko build action inherits the default shell environment
+        (the client environment as filtered by `--action_env` / `--incompatible_strict_action_env`).
+        Set to `False` to run apko with a hermetic action environment.
      **kwargs:       other common arguments like: tags, visibility.
     """
     _apko_image(
@@ -191,6 +222,7 @@ def apko_image(
         architecture = architecture,
         tag = tag,
         args = args,
+        use_default_shell_env = use_default_shell_env,
         **kwargs
     )
     config_label = native.package_relative_label(config)

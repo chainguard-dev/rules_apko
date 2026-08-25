@@ -45,6 +45,10 @@ def _impl(ctx):
         inputs = inputs,
         tools = [apko_info.binary],
         outputs = [output],
+        # Bind the action to the platform the apko toolchain was resolved
+        # for, so remote executors never receive a binary built for a
+        # different platform.
+        toolchain = "@rules_apko//apko:toolchain_type",
     )
 
     return DefaultInfo(
