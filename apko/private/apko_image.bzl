@@ -108,16 +108,19 @@ def _impl(ctx):
     # apko writes into its --cache-dir even with --offline (it expands
     # packages and creates directories on cache lookup). Bazel provides the
     # prepopulated cache tree artifact as a read-only input, which remote
-    # executors enforce strictly, so we copy the cache into a writable
-    # scratch directory before invoking apko. HOME falls back to a scratch
-    # directory on executors that don't provide a writable one.
+    # executors enforce strictly, so we mirror it into a writable scratch
+    # directory as real directories containing per-file symlinks. apko only
+    # adds new cache entries and never rewrites existing files, so the
+    # symlinks stay read-only while new writes land in the scratch
+    # directories, avoiding a full copy of the cache. HOME falls back to a
+    # scratch directory on executors that don't provide a writable one.
     command = "\n".join([
         "set -e",
         'SCRATCH="$(mktemp -d)"',
         "trap 'rm -rf \"$SCRATCH\"' EXIT",
         'mkdir "$SCRATCH/cache" "$SCRATCH/home"',
-        'cp -RL {cache_src}/. "$SCRATCH/cache/"',
-        'chmod -R u+w "$SCRATCH/cache"',
+        'CACHE_SRC="$(cd {cache_src} && pwd)"',
+        '(cd "$CACHE_SRC" && find . -type d -exec mkdir -p "$SCRATCH/cache/{{}}" \';\' -o -exec ln -s "$CACHE_SRC/{{}}" "$SCRATCH/cache/{{}}" \';\')',
         'export HOME="${{HOME:-$SCRATCH/home}}"',
         "cd {workdir}",
         '{apko} "$@" --cache-dir="$SCRATCH/cache"',
