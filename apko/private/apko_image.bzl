@@ -134,9 +134,6 @@ def _impl(ctx):
         tools = [apko_info.binary],
         outputs = [output],
         use_default_shell_env = ctx.attr.use_default_shell_env,
-        # Bind the action to the platform the apko toolchain was resolved
-        # for, so remote executors never receive a binary built for a
-        # different platform.
         toolchain = "@rules_apko//apko:toolchain_type",
     )
 
