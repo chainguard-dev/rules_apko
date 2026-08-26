@@ -2,7 +2,7 @@
 
 load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@bazel_skylib//lib:versions.bzl", "versions")
-load("//apko/private:apko_config.bzl", "copy_to_workdir", "prepare_apko_config_in_workdir")
+load("//apko/private:apko_config.bzl", "COREUTILS_TOOLCHAIN_TYPE", "coreutils_bin", "copy_to_workdir", "prepare_apko_config_in_workdir")
 load("//apko/private:apko_run.bzl", "apko_run")
 
 _ATTRS = {
@@ -114,17 +114,25 @@ def _impl(ctx):
     # symlinks stay read-only while new writes land in the scratch
     # directories, avoiding a full copy of the cache. HOME falls back to a
     # scratch directory on executors that don't provide a writable one.
+    #
+    # Every command below is either a bash builtin or a coreutils subcommand,
+    # so the action depends on nothing from the executor image beyond a shell.
+    # COREUTILS is resolved to an absolute path up front because the EXIT trap
+    # fires after the cd into the workdir.
+    coreutils = coreutils_bin(ctx)
     command = "\n".join([
         "set -e",
-        'SCRATCH="$(mktemp -d)"',
-        "trap 'rm -rf \"$SCRATCH\"' EXIT",
-        'mkdir "$SCRATCH/cache" "$SCRATCH/home"',
+        'COREUTILS="$PWD/{coreutils}"',
+        'SCRATCH="$("$COREUTILS" mktemp -d)"',
+        "trap '\"$COREUTILS\" rm -rf \"$SCRATCH\"' EXIT",
+        '"$COREUTILS" mkdir "$SCRATCH/cache" "$SCRATCH/home"',
         'CACHE_SRC="$(cd {cache_src} && pwd)"',
-        '(cd "$CACHE_SRC" && find . -type d -exec mkdir -p "$SCRATCH/cache/{{}}" \';\' -o -exec ln -s "$CACHE_SRC/{{}}" "$SCRATCH/cache/{{}}" \';\')',
+        '"$COREUTILS" cp -Rs "$CACHE_SRC/." "$SCRATCH/cache/"',
         'export HOME="${{HOME:-$SCRATCH/home}}"',
         "cd {workdir}",
         '{apko} "$@" --cache-dir="$SCRATCH/cache"',
     ]).format(
+        coreutils = coreutils.path,
         cache_src = cache_dir.path,
         workdir = paths.join(ctx.bin_dir.path, ctx.label.workspace_root, ctx.label.package, workdir),
         apko = apko_info.binary.short_path,
@@ -134,7 +142,7 @@ def _impl(ctx):
         command = command,
         arguments = [args],
         inputs = inputs,
-        tools = [apko_info.binary],
+        tools = [apko_info.binary, coreutils],
         outputs = [output],
         use_default_shell_env = ctx.attr.use_default_shell_env,
         toolchain = "@rules_apko//apko:toolchain_type",
@@ -147,7 +155,10 @@ def _impl(ctx):
 apko_image_lib = struct(
     attrs = _ATTRS,
     implementation = _impl,
-    toolchains = ["@rules_apko//apko:toolchain_type"],
+    toolchains = [
+        "@rules_apko//apko:toolchain_type",
+        COREUTILS_TOOLCHAIN_TYPE,
+    ],
 )
 
 _apko_image = rule(

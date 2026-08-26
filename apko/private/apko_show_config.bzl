@@ -1,7 +1,7 @@
 "A rule for expanding apko config"
 
 load("@bazel_skylib//lib:paths.bzl", "paths")
-load("//apko/private:apko_config.bzl", "copy_to_workdir", "prepare_apko_config_in_workdir")
+load("//apko/private:apko_config.bzl", "COREUTILS_TOOLCHAIN_TYPE", "copy_to_workdir", "prepare_apko_config_in_workdir")
 
 def _impl(ctx):
     output = ctx.actions.declare_file(ctx.attr.name)
@@ -64,5 +64,8 @@ For more advanced use-cases (multi-file configuration), use target providing `Ap
         ),
     },
     doc = "Wrapper around `apko show-config` command to generate expanded config as bazel build action.",
-    toolchains = ["@rules_apko//apko:toolchain_type"],
+    toolchains = [
+        "@rules_apko//apko:toolchain_type",
+        COREUTILS_TOOLCHAIN_TYPE,
+    ],
 )

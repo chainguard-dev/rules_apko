@@ -2,6 +2,23 @@
 
 load("@bazel_skylib//lib:paths.bzl", "paths")
 
+# Prebuilt, statically linked (musl) uutils coreutils, registered by
+# aspect_bazel_lib. Declaring it as an action tool means mkdir/cp travel with
+# the action instead of being inherited from the executor image, which is what
+# lets these actions run on executors that ship no userspace of their own.
+COREUTILS_TOOLCHAIN_TYPE = "@aspect_bazel_lib//lib:coreutils_toolchain_type"
+
+def coreutils_bin(ctx):
+    """The coreutils binary from the resolved toolchain.
+
+    Args:
+        ctx: rule context
+
+    Returns:
+        The coreutils File.
+    """
+    return ctx.toolchains[COREUTILS_TOOLCHAIN_TYPE].coreutils_info.bin
+
 _PATH_CONVENTION_DOC = """
  When referencing other files in the config yaml file use paths relative to your Bazel workspace root. 
     For example, if you want to reference source file foo/bar/baz use foo/bar/baz. If you want to reference output file of foo/bar:rule and rule's 
@@ -69,7 +86,8 @@ def copy_to_workdir(ctx, src, dst):
 
     Uses cp instead of ctx.actions.symlink because Bazel 9 sandbox changes
     cause symlink outputs to dangle when used as inputs to subsequent
-    sandboxed actions.
+    sandboxed actions. mkdir and cp come from the coreutils toolchain rather
+    than the executor's PATH, so the action carries its own tools.
 
     When src is a list, dst must be a declared directory (tree artifact);
     each source is staged at its workspace-relative path inside dst. This
@@ -86,10 +104,13 @@ def copy_to_workdir(ctx, src, dst):
         dst: declared output File or directory
     """
 
+    coreutils = coreutils_bin(ctx)
+
     # When f is a directory, append "/." so its contents land directly in
     # target instead of nesting at target/<basename> (Bazel pre-creates
     # declared output directories, so plain cp -r src tgt would nest).
-    copy_file_cmd = lambda f, target: 'mkdir -p "{dir}" && cp -rfL "{src}" "{tgt}"'.format(
+    copy_file_cmd = lambda f, target: '"{cu}" mkdir -p "{dir}" && "{cu}" cp -rfL "{src}" "{tgt}"'.format(
+        cu = coreutils.path,
         dir = paths.dirname(target),
         src = (f.path + "/.") if f.is_directory else f.path,
         tgt = target,
@@ -110,9 +131,11 @@ def copy_to_workdir(ctx, src, dst):
     ctx.actions.run_shell(
         inputs = inputs,
         outputs = [dst],
+        tools = [coreutils],
         command = "\n".join(cmds),
         mnemonic = "CopyToWorkdir",
         progress_message = "Staging %s" % dst.short_path,
+        toolchain = COREUTILS_TOOLCHAIN_TYPE,
     )
 
 def prepare_apko_config_in_workdir(workdir, ctx):
