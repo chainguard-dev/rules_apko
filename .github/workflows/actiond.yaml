@@ -110,10 +110,13 @@ jobs:
           bazelrc: |
             common --announce_rc --color=yes
 
-      # Expected to fail today. rules_apko stages action inputs with
-      # run_shell commands (mkdir/cp, see apko/private/apko_config.bzl), and
-      # actiond's guest chroot ships only bash plus an /usr/bin/env stub, so
-      # these die with "mkdir: command not found" (exit 127).
+      # Regression gate for remote execution. --spawn_strategy=remote with no
+      # local fallback means an action that opts out of remote execution (a
+      # no-remote-exec tag, as in #332) fails the build outright rather than
+      # quietly running on the host and passing. requires-bash is needed
+      # because rules_apko stages inputs with run_shell actions; everything
+      # they call is either a bash builtin or comes from the coreutils
+      # toolchain, so nothing else is inherited from the executor.
       - name: Build examples/wolfi-base with remote execution
         run: |
           set -euxo pipefail
@@ -123,26 +126,8 @@ jobs:
             --remote_default_exec_properties=requires-bash= \
             --remote_upload_local_results=false \
             --noremote_cache_compression \
+            --spawn_strategy=remote \
             --remote_local_fallback=false \
-            --verbose_failures
-
-      # CopyToWorkdir fails before the apko action is ever scheduled, which
-      # hides what #379 changed. Run the staging actions locally so the apko
-      # action itself reaches the VM and its own failure mode is visible.
-      # Non-blocking: this step exists to produce a log, not a verdict.
-      - name: Diagnostic - isolate the apko action
-        if: always()
-        continue-on-error: true
-        run: |
-          set -uxo pipefail
-          bazel build //examples/wolfi-base \
-            --remote_executor="grpc://${ACTIOND_ENDPOINT}" \
-            --remote_cache="grpc://${ACTIOND_ENDPOINT}" \
-            --remote_default_exec_properties=requires-bash= \
-            --remote_upload_local_results=false \
-            --noremote_cache_compression \
-            --remote_local_fallback=false \
-            --strategy=CopyToWorkdir=local \
             --verbose_failures
 
       - name: Stop actiond
