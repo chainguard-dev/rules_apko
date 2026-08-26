@@ -12,7 +12,7 @@ name: actiond
 
 on:
   push:
-    branches: ['main', 'actiond**']
+    branches: ['main', 'actiond**', 'fix-apko-image-remote-exec']
   workflow_dispatch:
 
 concurrency:
