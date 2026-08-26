@@ -11,6 +11,8 @@
 name: actiond
 
 on:
+  pull_request:
+    branches: ['main']
   push:
     branches: ['main', 'actiond**', 'fix-apko-image-remote-exec']
   workflow_dispatch:
