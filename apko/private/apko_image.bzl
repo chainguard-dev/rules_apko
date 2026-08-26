@@ -2,7 +2,7 @@
 
 load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@bazel_skylib//lib:versions.bzl", "versions")
-load("//apko/private:apko_config.bzl", "COREUTILS_TOOLCHAIN_TYPE", "coreutils_bin", "copy_to_workdir", "prepare_apko_config_in_workdir")
+load("//apko/private:apko_config.bzl", "COREUTILS_TOOLCHAIN_TYPE", "copy_to_workdir", "coreutils_bin", "prepare_apko_config_in_workdir")
 load("//apko/private:apko_run.bzl", "apko_run")
 
 _ATTRS = {
