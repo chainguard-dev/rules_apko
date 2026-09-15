@@ -10,9 +10,19 @@ apko_image(
     tag = "lock:latest",
 )
 
+# Exercises the hermetic action environment opt-in.
+apko_image(
+    name = "lock_hermetic_env",
+    config = ":apko.yaml",
+    contents = "@example_lock//:contents",
+    tag = "lock:latest",
+    use_default_shell_env = False,
+)
+
 build_test(
     name = "test",
     targets = [
         ":lock",
+        ":lock_hermetic_env",
     ],
 )
