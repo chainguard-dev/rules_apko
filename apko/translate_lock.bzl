@@ -5,7 +5,7 @@ load("//apko/private:util.bzl", "util")
 
 _DOC = """Repository rule to generate starlark code from an `apko.lock.json` file.
 
-See [apko-cache.md](./apko-cache.md) documentation.
+See the [apko-cache](https://github.com/chainguard-dev/rules_apko/blob/main/README.md#fetching-and-caching-contents) documentation.
 """
 
 BUILD_TMPL = """\
