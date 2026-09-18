@@ -3,14 +3,14 @@
 # Add new versions by running
 # ./scripts/mirror_apko.sh
 APKO_VERSIONS = {
-    "v1.4.1": {
-        "darwin_amd64": "sha256-Ab8rtffxPWRQCmoQF+S8uHqMqDL5MCfBsZ6HWzKnW7o=",
-        "darwin_arm64": "sha256-g/SjE7CBbn69nWMCjMm1A7G5MR1nvuces7avinkx5eU=",
-        "linux_386": "sha256-ZZBMhjwW8KQNCW5c1FRwvchnH9AAOvMtVCZoYstqhVc=",
-        "linux_amd64": "sha256-1yNSoqh1RAlGwFh3ouIOtP/mq3hc6o5dvqlC8dYv1C4=",
-        "linux_arm64": "sha256-UjIJQcYEtZeqUHT5LGMjNI/yN18fJPOAZM+M8yT5Zy0=",
-        "linux_ppc64le": "sha256-Pgzrn7lxmc0ii+l/mEn8vfYzE6eNiyt9gLNiMzebd+I=",
-        "linux_riscv64": "sha256-KWvtYL9fJAbdbXS9DDP1ed/d4Oa3I8FaOkJMVoP0Wck=",
-        "linux_s390x": "sha256-19I7DRaE1lf3IvjVP0r2YnjSUlYvFkeeqkDqaVXk7E8=",
+    "v1.4.3": {
+        "darwin_amd64": "sha256-+I0sqRA+io813WGbKrVLyLITh9b6UgKJSgMwVDSFyXE=",
+        "darwin_arm64": "sha256-KpDLe/yY4UHzU/dLU33HaCSsKeWlEKvgnEHZLxlBTfA=",
+        "linux_386": "sha256-QA2LZkt5q6uD3H+qIUCTCCkVbvbn892pl7n1lEOmNmY=",
+        "linux_amd64": "sha256-TkTMk7fgm9seUsacl1jCJARZcJ2wGjFI3mZ0BUynm3g=",
+        "linux_arm64": "sha256-6TPjZa2/tk+UA6Ijl78jSuQ4sthe+dmr9c4G1oSwFTs=",
+        "linux_ppc64le": "sha256-kvG3psQUODvgnL6UMdndYnvufzeIyFSOrmcY24kTSyg=",
+        "linux_riscv64": "sha256-CGSN/fE84w/3dnNVHFndiidn7GE2cJY+5wEYDf27NKQ=",
+        "linux_s390x": "sha256-E8WLYiGHhQfnBiGUcethAxmownY4/fcZm7VqCVFGK+w=",
     },
 }
