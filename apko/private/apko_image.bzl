@@ -2,7 +2,7 @@
 
 load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@bazel_skylib//lib:versions.bzl", "versions")
-load("//apko/private:apko_config.bzl", "copy_to_workdir", "prepare_apko_config_in_workdir")
+load("//apko/private:apko_config.bzl", "COREUTILS_TOOLCHAIN_TYPE", "copy_to_workdir", "coreutils_bin", "prepare_apko_config_in_workdir")
 load("//apko/private:apko_run.bzl", "apko_run")
 
 _ATTRS = {
@@ -12,6 +12,10 @@ _ATTRS = {
     "architecture": attr.string(doc = "the CPU architecture which this image should be built to run on. See https://github.com/chainguard-dev/apko/blob/main/docs/apko_file.md#archs-top-level-element"),
     "tag": attr.string(doc = "tag to apply to the resulting docker tarball. only applicable when `output` is `docker`", mandatory = True),
     "args": attr.string_list(doc = "additional arguments to provide when running the `apko build` command."),
+    "use_default_shell_env": attr.bool(
+        doc = "whether the apko build action inherits the default shell environment (the client environment as filtered by `--action_env` / `--incompatible_strict_action_env`). Set to `False` to run apko with a hermetic action environment.",
+        default = True,
+    ),
 }
 
 def _impl(ctx):
@@ -81,7 +85,6 @@ def _impl(ctx):
         inputs.append(lockfile_copy)
         args.add("--lockfile={}".format(lockfile.short_path))
 
-    args.add("--cache-dir={}".format(cache_name))
     args.add("--offline")
 
     if ctx.attr.architecture:
@@ -102,15 +105,47 @@ def _impl(ctx):
     copy_to_workdir(ctx, apko_info.binary, apko_binary)
     inputs.append(apko_binary)
 
+    # apko writes into its --cache-dir even with --offline (it expands
+    # packages and creates directories on cache lookup). Bazel provides the
+    # prepopulated cache tree artifact as a read-only input, which remote
+    # executors enforce strictly, so we mirror it into a writable scratch
+    # directory as real directories containing per-file symlinks. apko only
+    # adds new cache entries and never rewrites existing files, so the
+    # symlinks stay read-only while new writes land in the scratch
+    # directories, avoiding a full copy of the cache. HOME falls back to a
+    # scratch directory on executors that don't provide a writable one.
+    #
+    # Every command below is either a bash builtin or a coreutils subcommand,
+    # so the action depends on nothing from the executor image beyond a shell.
+    # COREUTILS is resolved to an absolute path up front because the EXIT trap
+    # fires after the cd into the workdir.
+    coreutils = coreutils_bin(ctx)
+    command = "\n".join([
+        "set -e",
+        'COREUTILS="$PWD/{coreutils}"',
+        'SCRATCH="$("$COREUTILS" mktemp -d)"',
+        "trap '\"$COREUTILS\" rm -rf \"$SCRATCH\"' EXIT",
+        '"$COREUTILS" mkdir "$SCRATCH/cache" "$SCRATCH/home"',
+        'CACHE_SRC="$(cd {cache_src} && pwd)"',
+        '"$COREUTILS" cp -Rs "$CACHE_SRC/." "$SCRATCH/cache/"',
+        'export HOME="${{HOME:-$SCRATCH/home}}"',
+        "cd {workdir}",
+        '{apko} "$@" --cache-dir="$SCRATCH/cache"',
+    ]).format(
+        coreutils = coreutils.path,
+        cache_src = cache_dir.path,
+        workdir = paths.join(ctx.bin_dir.path, ctx.label.workspace_root, ctx.label.package, workdir),
+        apko = apko_info.binary.short_path,
+    )
+
     ctx.actions.run_shell(
-        command = "cd {} && {} $@".format(paths.join(ctx.bin_dir.path, ctx.label.workspace_root, ctx.label.package, workdir), apko_info.binary.short_path),
+        command = command,
         arguments = [args],
         inputs = inputs,
-        tools = [apko_info.binary],
+        tools = [apko_info.binary, coreutils],
         outputs = [output],
-        use_default_shell_env = True,
-        execution_requirements = {"no-remote-exec": "1"},
-        toolchain = None,
+        use_default_shell_env = ctx.attr.use_default_shell_env,
+        toolchain = "@rules_apko//apko:toolchain_type",
     )
 
     return DefaultInfo(
@@ -120,7 +155,10 @@ def _impl(ctx):
 apko_image_lib = struct(
     attrs = _ATTRS,
     implementation = _impl,
-    toolchains = ["@rules_apko//apko:toolchain_type"],
+    toolchains = [
+        "@rules_apko//apko:toolchain_type",
+        COREUTILS_TOOLCHAIN_TYPE,
+    ],
 )
 
 _apko_image = rule(
@@ -137,6 +175,7 @@ def apko_image(
         output = "oci",
         architecture = None,
         args = [],
+        use_default_shell_env = True,
         **kwargs):
     """Build OCI images from APK packages directly without Dockerfile
 
@@ -181,6 +220,9 @@ def apko_image(
      architecture: the CPU architecture which this image should be built to run on. See https://github.com/chainguard-dev/apko/blob/main/docs/apko_file.md#archs-top-level-element"),
      tag:          tag to apply to the resulting docker tarball. only applicable when `output` is `docker`
      args:         additional arguments to provide when running the `apko build` command.
+     use_default_shell_env: whether the apko build action inherits the default shell environment
+        (the client environment as filtered by `--action_env` / `--incompatible_strict_action_env`).
+        Set to `False` to run apko with a hermetic action environment.
      **kwargs:       other common arguments like: tags, visibility.
     """
     _apko_image(
@@ -191,6 +233,7 @@ def apko_image(
         architecture = architecture,
         tag = tag,
         args = args,
+        use_default_shell_env = use_default_shell_env,
         **kwargs
     )
     config_label = native.package_relative_label(config)

@@ -75,7 +75,7 @@ When referencing other files in the config yaml file use paths relative to your 
 <pre>
 load("@rules_apko//apko:defs.bzl", "apko_image")
 
-apko_image(<a href="#apko_image-name">name</a>, <a href="#apko_image-contents">contents</a>, <a href="#apko_image-config">config</a>, <a href="#apko_image-tag">tag</a>, <a href="#apko_image-output">output</a>, <a href="#apko_image-architecture">architecture</a>, <a href="#apko_image-args">args</a>, <a href="#apko_image-kwargs">**kwargs</a>)
+apko_image(<a href="#apko_image-name">name</a>, <a href="#apko_image-contents">contents</a>, <a href="#apko_image-config">config</a>, <a href="#apko_image-tag">tag</a>, <a href="#apko_image-output">output</a>, <a href="#apko_image-architecture">architecture</a>, <a href="#apko_image-args">args</a>, <a href="#apko_image-use_default_shell_env">use_default_shell_env</a>, <a href="#apko_image-kwargs">**kwargs</a>)
 </pre>
 
 Build OCI images from APK packages directly without Dockerfile
@@ -125,6 +125,7 @@ For more examples checkout the [examples](/examples) directory.
 | <a id="apko_image-output"></a>output |  "oci" of  "docker",   |  `"oci"` |
 | <a id="apko_image-architecture"></a>architecture |  the CPU architecture which this image should be built to run on. See https://github.com/chainguard-dev/apko/blob/main/docs/apko_file.md#archs-top-level-element"),   |  `None` |
 | <a id="apko_image-args"></a>args |  additional arguments to provide when running the `apko build` command.   |  `[]` |
+| <a id="apko_image-use_default_shell_env"></a>use_default_shell_env |  whether the apko build action inherits the default shell environment (the client environment as filtered by `--action_env` / `--incompatible_strict_action_env`). Set to `False` to run apko with a hermetic action environment.   |  `True` |
 | <a id="apko_image-kwargs"></a>kwargs |  other common arguments like: tags, visibility.   |  none |
 
 
