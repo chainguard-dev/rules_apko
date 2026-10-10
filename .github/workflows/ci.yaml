@@ -47,10 +47,23 @@ jobs:
         with:
           egress-policy: audit
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Floating identifiers, resolved by bazelisk: N.x is the latest release
+      # of the LTS series started by N.0.0, and rolling is the latest rolling
+      # release. These track new releases without anyone bumping them by hand.
+      # .bcr/presubmit.yml already uses the same form.
+      - id: bazel_rolling
+        run: echo "bazelversion=rolling" >> $GITHUB_OUTPUT
+      - id: bazel_9x
+        run: echo "bazelversion=9.x" >> $GITHUB_OUTPUT
+      - id: bazel_8x
+        run: echo "bazelversion=8.x" >> $GITHUB_OUTPUT
+      - id: bazel_7x
+        run: echo "bazelversion=7.x" >> $GITHUB_OUTPUT
+      # Pinned: 9.1.0 is what .bazelversion gives contributors locally, and
+      # 8.3.0 and 7.6.1 are the oldest releases of their series the matrix
+      # covers, so the floating entries above cannot silently drop them.
       - id: bazel_91
         run: echo "bazelversion=9.1.0" >> $GITHUB_OUTPUT
-      - id: bazel_86
-        run: echo "bazelversion=8.6.0" >> $GITHUB_OUTPUT
       - id: bazel_83
         run: echo "bazelversion=8.3.0" >> $GITHUB_OUTPUT
       - id: bazel_76
@@ -62,6 +75,11 @@ jobs:
   test:
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
+
+    # Only the rolling cell is advisory. A cell with continue-on-error counts
+    # as a success for anything that needs: this job, so every supported
+    # version still gates test-roundup.
+    continue-on-error: ${{ matrix.bazelversion == 'rolling' }}
 
     needs:
       - matrix-prep-bazelversion
@@ -104,13 +122,13 @@ jobs:
 
       - name: Test
         working-directory: ${{ matrix.folder }}
-        if: ${{ matrix.bazelversion >= '9.' || matrix.folder != '.' }}
+        if: ${{ matrix.folder != '.' || matrix.bazelversion == 'rolling' || startsWith(matrix.bazelversion, '9.') }}
         run: bazel test //...
 
       # Stardoc has output changes between versions
       - name: Test no doc 8 and lower
         working-directory: ${{ matrix.folder }}
-        if: ${{ matrix.bazelversion <= '8.' && matrix.folder == '.' }}
+        if: ${{ matrix.folder == '.' && (startsWith(matrix.bazelversion, '8.') || startsWith(matrix.bazelversion, '7.')) }}
         run: bazel query 'tests(//...) except docs/...' | xargs bazel test
 
   # Single summary gate that aggregates the dynamic test matrix. Branch
