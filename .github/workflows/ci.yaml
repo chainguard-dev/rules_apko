@@ -104,14 +104,7 @@ jobs:
 
       - name: Test
         working-directory: ${{ matrix.folder }}
-        if: ${{ matrix.bazelversion >= '9.' || matrix.folder != '.' }}
         run: bazel test //...
-
-      # Stardoc has output changes between versions
-      - name: Test no doc 8 and lower
-        working-directory: ${{ matrix.folder }}
-        if: ${{ matrix.bazelversion <= '8.' && matrix.folder == '.' }}
-        run: bazel query 'tests(//...) except docs/...' | xargs bazel test
 
   # Single summary gate that aggregates the dynamic test matrix. Branch
   # protection only needs to require this one context, so the Bazel version
