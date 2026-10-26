@@ -86,7 +86,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: bazel-contrib/setup-bazel@c5acdfb288317d0b5c0bbd7a396a3dc868bb0f86 # v0.19.0
+      - uses: bazel-contrib/setup-bazel@c5acdfb288317d0b5c0bbd7a396a3dc868bb0f86 # 0.19.0
         with:
           repository-cache: true
           bazelrc: |
@@ -112,6 +112,12 @@ jobs:
         working-directory: ${{ matrix.folder }}
         if: ${{ matrix.bazelversion <= '8.' && matrix.folder == '.' }}
         run: bazel query 'tests(//...) except docs/...' | xargs bazel test
+
+      # Bazel 9 dropped WORKSPACE; on 7 and 8 the published snippet still has to work.
+      - name: Test WORKSPACE mode
+        working-directory: ${{ matrix.folder }}
+        if: ${{ matrix.bazelversion < '9.' && matrix.folder == 'e2e/smoke' }}
+        run: bazel test //... --noenable_bzlmod --enable_workspace
 
   # Runs the build through actiond, a local Remote Execution API worker that
   # executes each action inside an empty chroot in a Linux VM on the runner.
@@ -198,7 +204,7 @@ jobs:
           exit 1
 
       - name: Set up Bazel
-        uses: bazel-contrib/setup-bazel@c5acdfb288317d0b5c0bbd7a396a3dc868bb0f86 # v0.19.0
+        uses: bazel-contrib/setup-bazel@c5acdfb288317d0b5c0bbd7a396a3dc868bb0f86 # 0.19.0
         with:
           repository-cache: true
           bazelrc: |
