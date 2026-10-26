@@ -1,6 +1,5 @@
-# Cut a release whenever a new tag is pushed to the repo.
-# You should use an annotated tag, like `git tag -a v1.2.3`
-# and put the release notes into the commit message for the tag.
+# Cut a patch release every Monday, then publish it to the Bazel Central
+# Registry through publish.yaml.
 name: Release
 
 on:
@@ -12,6 +11,8 @@ permissions: {}
 
 jobs:
   gh-release:
+    outputs:
+      tag: ${{ steps.create_tag.outputs.git_tag }}
     permissions:
       id-token: write
       contents: write
@@ -43,3 +44,13 @@ jobs:
           ARCHIVE="rules_apko-$TAG.tar.gz"
           git archive --format=tar.gz --prefix=${PREFIX}/ ${{ github.sha }} > $ARCHIVE
           gh release create ${TAG} --fail-on-no-commits --target ${{ github.sha }} --generate-notes $ARCHIVE
+
+  publish:
+    needs: gh-release
+    permissions:
+      contents: read # Read the .bcr templates and release archive at the tag
+    uses: ./.github/workflows/publish.yaml
+    with:
+      tag_name: ${{ needs.gh-release.outputs.tag }}
+    secrets:
+      BCR_PUBLISH_TOKEN: ${{ secrets.BCR_PUBLISH_TOKEN }}

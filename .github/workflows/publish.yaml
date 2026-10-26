@@ -1,0 +1,43 @@
+# Copyright 2026 Chainguard, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+# Opens a Bazel Central Registry pull request for a release, using the
+# .bcr/ templates. release.yaml calls this after it cuts a release. Run it by
+# hand to publish a tag that never reached the registry, e.g. v1.5.57.
+name: Publish to BCR
+
+on:
+  workflow_call:
+    inputs:
+      tag_name:
+        description: The release tag to publish, e.g. v1.5.59.
+        required: true
+        type: string
+    secrets:
+      BCR_PUBLISH_TOKEN:
+        description: Classic PAT with repo and workflow scopes. It pushes to the registry fork and opens the pull request.
+        required: true
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: The release tag to publish, e.g. v1.5.57.
+        required: true
+        type: string
+
+permissions: {}
+
+jobs:
+  publish:
+    permissions:
+      contents: read # Read the .bcr templates and release archive at the tag
+    uses: bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@3b1b972e41764b9a7498cf9128ed4ed2258a3687 # v1.6.0
+    with:
+      tag_name: ${{ inputs.tag_name }}
+      registry_fork: chainguard-dev/bazel-central-registry
+      # Attestations need the release to stay a draft until this job finishes.
+      # release.yaml publishes it immediately, so skip them and let the
+      # workflow hash the release archive from its URL.
+      attest: false
+      download_default_release_artifacts: false
+    secrets:
+      publish_token: ${{ secrets.BCR_PUBLISH_TOKEN }}
