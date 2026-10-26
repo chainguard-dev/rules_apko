@@ -133,6 +133,7 @@ jobs:
       contents: read # Clone the repository
     env:
       ACTIOND_VERSION: v0.0.6
+      ACTIOND_SHA256: 006dc798d4363596fe8ab997606fc93766a0cc427c2d005cf4fc1765fa4c2052
       ACTIOND_ENDPOINT: 127.0.0.1:8980
 
     steps:
@@ -166,11 +167,10 @@ jobs:
           gh release download "${ACTIOND_VERSION}" \
             --repo hermeticbuild/actiond \
             --pattern 'linux-actiond_linux_x86_64' \
-            --pattern 'SHA256.txt' \
             --clobber
-          # SHA256.txt is sha256sum-format. This only proves the download is
-          # intact; actiond publishes no build provenance to verify against.
-          sha256sum -c --ignore-missing SHA256.txt
+          # actiond publishes no build provenance, so the digest is pinned
+          # here instead of read from a checksum file next to the asset.
+          echo "${ACTIOND_SHA256}  linux-actiond_linux_x86_64" | sha256sum -c -
           chmod +x linux-actiond_linux_x86_64
 
       - name: Start actiond worker
@@ -212,8 +212,8 @@ jobs:
 
       # Regression gate for remote execution. --spawn_strategy=remote with no
       # local fallback means an action that opts out of remote execution (a
-      # no-remote-exec tag, as in #332) fails the build outright rather than
-      # quietly running on the host and passing. requires-bash is needed
+      # no-remote-exec tag) fails the build outright rather than quietly
+      # running on the host and passing. requires-bash is needed
       # because rules_apko stages inputs with run_shell actions; everything
       # they call is either a bash builtin or comes from the coreutils
       # toolchain, so nothing else is inherited from the executor.

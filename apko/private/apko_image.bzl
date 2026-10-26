@@ -113,7 +113,8 @@ def _impl(ctx):
     # adds new cache entries and never rewrites existing files, so the
     # symlinks stay read-only while new writes land in the scratch
     # directories, avoiding a full copy of the cache. HOME falls back to a
-    # scratch directory on executors that don't provide a writable one.
+    # scratch directory when the action environment leaves it unset or empty,
+    # as with use_default_shell_env = False or an executor that sets none.
     #
     # Every command below is either a bash builtin or a coreutils subcommand,
     # so the action depends on nothing from the executor image beyond a shell.
