@@ -1,5 +1,5 @@
 # Override http_archive for local testing
-load("@bazel//tools/build_defs/repo:local.bzl", "local_repository")
+load("@bazel_tools//tools/build_defs/repo:local.bzl", "local_repository")
 
 local_repository(
     name = "rules_apko",
@@ -19,6 +19,13 @@ local_repository(
 load("@rules_apko//apko:repositories.bzl", "apko_register_toolchains", "rules_apko_dependencies")
 
 rules_apko_dependencies()
+
+# apko_image and apko_show_config take mkdir/cp/mktemp from aspect_bazel_lib's
+# coreutils toolchain. Skip this if your WORKSPACE already registers it, for
+# example through aspect_bazel_lib_dependencies() on aspect_bazel_lib 1.x.
+load("@aspect_bazel_lib//lib:repositories.bzl", "register_coreutils_toolchains")
+
+register_coreutils_toolchains()
 
 apko_register_toolchains(name = "apko")
 
