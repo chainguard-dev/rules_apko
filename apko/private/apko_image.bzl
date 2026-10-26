@@ -118,16 +118,19 @@ def _impl(ctx):
     # Every command below is either a bash builtin or a coreutils subcommand,
     # so the action depends on nothing from the executor image beyond a shell.
     # COREUTILS is resolved to an absolute path up front because the EXIT trap
-    # fires after the cd into the workdir.
+    # fires after the cd into the workdir. The mirror is copied to a path that
+    # does not exist yet rather than as "src/." into an existing directory,
+    # because uutils 0.0.16 (registered by aspect_bazel_lib 1.x) nests the
+    # latter at dst/<basename>.
     coreutils = coreutils_bin(ctx)
     command = "\n".join([
         "set -e",
         'COREUTILS="$PWD/{coreutils}"',
         'SCRATCH="$("$COREUTILS" mktemp -d)"',
         "trap '\"$COREUTILS\" rm -rf \"$SCRATCH\"' EXIT",
-        '"$COREUTILS" mkdir "$SCRATCH/cache" "$SCRATCH/home"',
-        'CACHE_SRC="$(cd {cache_src} && pwd)"',
-        '"$COREUTILS" cp -Rs "$CACHE_SRC/." "$SCRATCH/cache/"',
+        '"$COREUTILS" mkdir "$SCRATCH/home"',
+        'CACHE_SRC="$(cd {cache_src} && pwd -P)"',
+        '"$COREUTILS" cp -Rs "$CACHE_SRC" "$SCRATCH/cache"',
         'export HOME="${{HOME:-$SCRATCH/home}}"',
         "cd {workdir}",
         '{apko} "$@" --cache-dir="$SCRATCH/cache"',

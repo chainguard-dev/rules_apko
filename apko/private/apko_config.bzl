@@ -2,9 +2,12 @@
 
 load("@bazel_skylib//lib:paths.bzl", "paths")
 
-# Prebuilt, statically linked (musl) uutils coreutils, registered by
-# aspect_bazel_lib. Declaring it as an action tool means mkdir/cp travel with
-# the action instead of being inherited from the executor image, which is what
+# Prebuilt uutils coreutils, registered by aspect_bazel_lib under bzlmod.
+# WORKSPACE users register it themselves (see e2e/smoke/WORKSPACE.bazel). The
+# Linux builds are statically linked against musl in recent aspect_bazel_lib
+# releases; older ones, including the 1.x rules_apko_dependencies() fetches,
+# link glibc. Declaring it as an action tool means mkdir/cp travel with the
+# action instead of being inherited from the executor image, which is what
 # lets these actions run on executors that ship no userspace of their own.
 COREUTILS_TOOLCHAIN_TYPE = "@aspect_bazel_lib//lib:coreutils_toolchain_type"
 
@@ -106,13 +109,15 @@ def copy_to_workdir(ctx, src, dst):
 
     coreutils = coreutils_bin(ctx)
 
-    # When f is a directory, append "/." so its contents land directly in
-    # target instead of nesting at target/<basename> (Bazel pre-creates
-    # declared output directories, so plain cp -r src tgt would nest).
-    copy_file_cmd = lambda f, target: '"{cu}" mkdir -p "{dir}" && "{cu}" cp -rfL "{src}" "{tgt}"'.format(
+    # When f is a directory, remove the pre-created output directory first so
+    # cp creates it as a copy of f rather than nesting at target/<basename>.
+    # Copying "f/." into it does not work with uutils 0.0.16 (aspect_bazel_lib
+    # 1.x), which nests that as well.
+    copy_file_cmd = lambda f, target: '"{cu}" mkdir -p "{dir}" && {rm}"{cu}" cp -rfL "{src}" "{tgt}"'.format(
         cu = coreutils.path,
         dir = paths.dirname(target),
-        src = (f.path + "/.") if f.is_directory else f.path,
+        rm = '"{}" rm -rf "{}" && '.format(coreutils.path, target) if f.is_directory else "",
+        src = f.path,
         tgt = target,
     )
 
