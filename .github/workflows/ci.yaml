@@ -107,6 +107,13 @@ jobs:
         if: ${{ matrix.bazelversion >= '9.' || matrix.folder != '.' }}
         run: bazel test //...
 
+      # A no-remote-exec requirement on any action blocks remote build
+      # execution outright. apko_image carried one until it was removed.
+      - name: No action opts out of remote execution
+        working-directory: ${{ matrix.folder }}
+        if: ${{ matrix.folder == 'e2e/smoke' }}
+        run: bazel aquery '//...' --output=jsonproto | jq -e 'any(.actions[]; (.executionInfo // []) | any(.key == "no-remote-exec")) | not'
+
       # Stardoc has output changes between versions
       - name: Test no doc 8 and lower
         working-directory: ${{ matrix.folder }}
