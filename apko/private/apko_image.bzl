@@ -67,12 +67,16 @@ def _impl(ctx):
 
     lockfile = ctx.attr.contents[OutputGroupInfo].lockfile.to_list()[0]
     apks = ctx.attr.contents[OutputGroupInfo].apks
-    indexes = ctx.attr.contents[OutputGroupInfo].indexes
     keyrings = ctx.attr.contents[OutputGroupInfo].keyrings
 
     inputs = prepare_apko_config_in_workdir(workdir, ctx)
 
-    deps = [apks, keyrings, indexes]
+    # The APKINDEX files from the `indexes` output group are deliberately not
+    # staged. `apko build --lockfile` installs exactly the locked packages by
+    # URL and checksum and never reads an index, while the indexes themselves
+    # are live, unpinned downloads: including them made the action key depend
+    # on when the repository was fetched and defeated remote caching.
+    deps = [apks, keyrings]
 
     supports_lockfile = versions.is_at_least("0.13.0", apko_info.version)
     if supports_lockfile:
