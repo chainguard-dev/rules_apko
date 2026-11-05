@@ -16,7 +16,6 @@ apk_filegroup(
     name = "contents", 
     lockfile = "{lockfile}",
     apks = {apks},
-    indexes = {indexes},
     keyrings = {keyrings},
     visibility = ["//visibility:public"]
 )
@@ -82,7 +81,6 @@ def _translate_apko_lock_impl(rctx):
         rctx.symlink(rctx.attr.lock, lock_file_local)
 
     apks = []
-    indexes = []
     keyrings = []
     defs = []
 
@@ -117,9 +115,12 @@ def _translate_apko_lock_impl(rctx):
             rules_apko_cache_key = RULES_APKO_CACHE_KEY,
         ))
 
+    # The repository indexes are declared but deliberately left out of
+    # `contents`: they are live, unpinned downloads that no cache can serve.
+    # The e2e smoke lockfiles point their indexes at `.invalid` to check that
+    # locked image builds succeed without them.
     for repository in lock_file["contents"]["repositories"]:
         name = util.sanitize_string("{}_{}_{}".format(target_name, repository["name"], repository["architecture"]))
-        indexes.append("@{}//:index".format(name))
         defs.append(APK_REPOSITORY_TMPL.format(
             name = name,
             url = repository["url"],
@@ -133,7 +134,7 @@ def _translate_apko_lock_impl(rctx):
 
     rctx.file(
         "BUILD.bazel",
-        BUILD_TMPL.format(apks = apks, keyrings = keyrings, indexes = indexes, lockfile = lock_file_local),
+        BUILD_TMPL.format(apks = apks, keyrings = keyrings, lockfile = lock_file_local),
     )
 
     # Everything written here is derived from the `lock` file and the
