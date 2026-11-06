@@ -67,12 +67,11 @@ def _impl(ctx):
 
     lockfile = ctx.attr.contents[OutputGroupInfo].lockfile.to_list()[0]
     apks = ctx.attr.contents[OutputGroupInfo].apks
-    indexes = ctx.attr.contents[OutputGroupInfo].indexes
     keyrings = ctx.attr.contents[OutputGroupInfo].keyrings
 
     inputs = prepare_apko_config_in_workdir(workdir, ctx)
 
-    deps = [apks, keyrings, indexes]
+    deps = [apks, keyrings]
 
     supports_lockfile = versions.is_at_least("0.13.0", apko_info.version)
     if supports_lockfile:
