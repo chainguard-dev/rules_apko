@@ -103,22 +103,38 @@ def _repo_metadata(rctx, reproducible):
         return None
     return rctx.repo_metadata(reproducible = reproducible)
 
-def _normalize_sri(rctx, checksum):
+_BASE64_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+_HEX_DIGITS = "0123456789abcdef"
+
+def _normalize_sri(checksum):
     """Converts SRI string to a plain checksum hex.
 
+    Decoded in Starlark rather than by shelling out: the previous
+    `base64 -d | xxd -p` pipeline printed nothing and still exited 0 on hosts
+    without xxd, so the returned hex, and the file names built from it,
+    depended on the host while the repository was marked reproducible.
+
     Args:
-        rctx: repository_ctx
         checksum: SRI string
     Returns:
         normalized checksum hex
     """
-    checksum = checksum.split("-", 1)[1]
-    p = rctx.path("sri.sh")
-    rctx.file(p, """echo "$1" | base64 -d | xxd -p -c 10000000 | tr -d '\\n'""", executable = True)
-    r = rctx.execute([p, checksum])
-    if r.return_code != 0:
-        fail("""normalize_sri failed.\nstderr: {}\nstdout: {}""".format(r.stdout, r.stderr))
-    return r.stdout
+    encoded = checksum.split("-", 1)[1].rstrip("=")
+    hex_digits = []
+    bits = 0
+    bit_count = 0
+    for c in encoded.elems():
+        value = _BASE64_ALPHABET.find(c)
+        if value < 0:
+            fail("normalize_sri: invalid base64 in {}".format(checksum))
+        bits = (bits << 6) | value
+        bit_count += 6
+        if bit_count >= 8:
+            bit_count -= 8
+            byte = (bits >> bit_count) & 0xff
+            bits &= (1 << bit_count) - 1
+            hex_digits.append(_HEX_DIGITS[byte >> 4] + _HEX_DIGITS[byte & 0xf])
+    return "".join(hex_digits)
 
 # TODO: this shouldn't be necessary in the first place. change apko so that it except to find the original apk in the cache
 def _concatenate_gzip_segments(rctx, output, control, data, signature = None):
