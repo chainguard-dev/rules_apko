@@ -251,14 +251,12 @@ apk_keyring = repository_rule(
 def _apk_filegroup_impl(ctx):
     lockfile = depset([ctx.file.lockfile])
     apks = depset(ctx.files.apks)
-    indexes = depset(ctx.files.indexes)
     keyrings = depset(ctx.files.keyrings)
     return [
-        DefaultInfo(files = depset(transitive = [lockfile, apks, indexes, keyrings])),
+        DefaultInfo(files = depset(transitive = [lockfile, apks, keyrings])),
         OutputGroupInfo(
             lockfile = lockfile,
             apks = apks,
-            indexes = indexes,
             keyrings = keyrings,
         ),
     ]
@@ -269,6 +267,5 @@ apk_filegroup = rule(
         "lockfile": attr.label(doc = "Label to the `apko.lock.json` file.", allow_single_file = True, mandatory = True),
         "keyrings": attr.label_list(doc = "Labels of the keyring (public key) files.", allow_files = True, mandatory = True),
         "apks": attr.label_list(doc = "Labels of the package (apk) files.", allow_files = True, mandatory = True),
-        "indexes": attr.label_list(doc = "Labels of the APKINDEX files.", allow_files = True, mandatory = True),
     },
 )
