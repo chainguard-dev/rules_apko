@@ -1,3 +1,48 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+load("//apko:defs.bzl", "apko_config", "apko_lock_test")
 load(":versions_test.bzl", "versions_test_suite")
 
 versions_test_suite(name = "versions_test")
+
+apko_config(
+    name = "config",
+    config = "testdata/apko.yaml",
+    deps = ["testdata/base.apko.yaml"],
+)
+
+# The config includes testdata/base.apko.yaml, so this also checks that included
+# files are part of the checksum.
+apko_lock_test(
+    name = "lock_test",
+    config = ":config",
+    lockfile = "testdata/apko.lock.json",
+)
+
+# Locked before a package was renamed in testdata/base.apko.yaml.
+apko_lock_test(
+    name = "stale_lock_test",
+    config = ":config",
+    lockfile = "testdata/stale.apko.lock.json",
+    tags = ["manual"],
+    update_target = "//apko/tests:stale_lock",
+)
+
+apko_lock_test(
+    name = "no_checksum_lock_test",
+    config = ":config",
+    lockfile = "testdata/no_checksum.apko.lock.json",
+    tags = ["manual"],
+)
+
+sh_test(
+    name = "apko_lock_test_failure_test",
+    srcs = ["apko_lock_test_failure_test.sh"],
+    args = [
+        "$(rootpath :stale_lock_test)",
+        "$(rootpath :no_checksum_lock_test)",
+    ],
+    data = [
+        ":no_checksum_lock_test",
+        ":stale_lock_test",
+    ],
+)

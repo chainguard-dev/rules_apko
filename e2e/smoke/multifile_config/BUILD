@@ -34,6 +34,7 @@ apko_lock(
         "--log-level=debug",  # illustration that you can pass args to the executables (bazel run) rules
     ],
     config = ":final_config",
+    generate_test = True,  # generates lock_from_generated_config_test, which fails when the lock is stale.
     lockfile_name = "apko.generated.lock.json",
     visibility = ["//visibility:private"],  # illustration that you can control visibility.
 )
