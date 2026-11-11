@@ -36,7 +36,17 @@ bzl_library(
     name = "apko_lock",
     srcs = ["apko_lock.bzl"],
     visibility = ["//apko:__subpackages__"],
-    deps = [":apko_run"],
+    deps = [
+        ":apko_lock_test",
+        ":apko_run",
+    ],
+)
+
+bzl_library(
+    name = "apko_lock_test",
+    srcs = ["apko_lock_test.bzl"],
+    visibility = ["//apko:__subpackages__"],
+    deps = [":apko_config"],
 )
 
 bzl_library(

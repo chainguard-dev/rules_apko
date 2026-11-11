@@ -36,6 +36,10 @@ Alternatively you can call `apko lock path/to/apko.yaml` or `bazel run @rules_ap
 to regenerate the `apko.lock.json` file manually.
 To resolve all the files in the repository, such a [snippet](./examples/lock.sh) can be useful.
 
+To have `bazel test //...` fail when an `apko.lock.json` file is out of date with its config, add an
+[apko_lock_test](./docs/rules.md#apko_lock_test) next to it, or pass `generate_test = True` to `apko_lock`.
+It makes the same config checksum check as `apko build`, without building the image or accessing the network.
+
 Finally, we recommend using <https://github.com/bazel-contrib/rules_oci> as the next step in your Bazel build
 to add application code from your repo as the next layers of the image.
 

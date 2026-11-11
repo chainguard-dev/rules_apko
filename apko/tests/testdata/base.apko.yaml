@@ -1,0 +1,8 @@
+contents:
+  repositories:
+    - https://dl-cdn.alpinelinux.org/alpine/v3.21/main
+  packages:
+    - busybox
+
+archs:
+  - amd64

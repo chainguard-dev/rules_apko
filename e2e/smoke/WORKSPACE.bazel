@@ -22,6 +22,13 @@ rules_apko_dependencies()
 
 apko_register_toolchains(name = "apko")
 
+# Only needed for apko_lock_test.
+load("@aspect_bazel_lib//lib:repositories.bzl", "register_coreutils_toolchains", "register_yq_toolchains")
+
+register_coreutils_toolchains()
+
+register_yq_toolchains()
+
 load("@rules_apko//apko:translate_lock.bzl", "translate_apko_lock")
 
 translate_apko_lock(

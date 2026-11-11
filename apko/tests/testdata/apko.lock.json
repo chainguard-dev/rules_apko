@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "config": {
+    "name": "apko/tests/testdata/apko.yaml",
+    "checksum": "sha256-r7T9E1k6n+fW+iHKvTLsNhUmFS5dMF+AgmZD+rdm6hQ="
+  },
+  "contents": {
+    "keyring": [],
+    "build_repositories": [],
+    "runtime_repositories": [],
+    "repositories": [],
+    "packages": []
+  }
+}

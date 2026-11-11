@@ -1,0 +1,3 @@
+include: apko/tests/testdata/base.apko.yaml
+
+cmd: /bin/sh -l
