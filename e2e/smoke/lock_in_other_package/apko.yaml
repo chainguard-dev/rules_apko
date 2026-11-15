@@ -1,0 +1,14 @@
+contents:
+  repositories:
+    - https://dl-cdn.alpinelinux.org/alpine/v3.21/main
+  packages:
+    - busybox
+
+# optional environment configuration
+environment:
+  PATH: /usr/sbin:/sbin:/usr/bin:/bin
+
+cmd: /bin/sh -l
+
+archs:
+  - amd64
