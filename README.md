@@ -32,6 +32,9 @@ Then you import these base layers into Bazel:
 Now you can use the `apko_image` rule to build the image, producing an OCI format output.
 As long as the apko `.yaml` file is in the same directory as the `apko_image` you can periodically refresh the
 `apko.lock.json` file by just calling: `bazel run path/to/image.lock`.
+This `.lock` target is only added when the lock file sits next to the config and is named after it
+(`apko.lock.json` for `apko.yaml`, `foo.apko.lock.json` for `foo.apko.yaml`).
+For a lock file kept anywhere else, use the [`apko_lock`](./docs/rules.md#apko_lock) rule instead.
 Alternatively you can call `apko lock path/to/apko.yaml` or `bazel run @rules_apko//apko lock path/to/apko.yaml`
 to regenerate the `apko.lock.json` file manually.
 To resolve all the files in the repository, such a [snippet](./examples/lock.sh) can be useful.

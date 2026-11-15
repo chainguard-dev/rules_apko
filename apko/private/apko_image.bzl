@@ -198,12 +198,18 @@ def apko_image(
     if config_label.workspace_name == "" and config_label.package == native.package_name() and config_label.name.endswith(".yaml"):
         lock_json_name = config_label.name.removesuffix(".yaml") + ".lock.json"
 
+        # The `apko_run` targets below run apko from the workspace root, so the output has to be workspace-relative.
+        # paths.join keeps it relative for a config in the root package, where config_label.package is "".
+        lock_json_path = paths.join(config_label.package, lock_json_name)
+
         # We generate the .lock target only if the `.apko.lock.json` file exists in the same package.
-        for _ in native.glob([lock_json_name]):
+        # The lock file may also live in another package or under another name, in which case there is
+        # simply no .lock target, so the glob is allowed to match nothing.
+        for _ in native.glob([lock_json_name], allow_empty = True):
             apko_run(
                 name = name + ".lock",
                 # args is subject to make variables substitution: https://bazel.build/reference/be/common-definitions#common-attributes-binaries
-                args = ["lock", "$(execpath {})".format(config), "--output={}/{}".format(config_label.package, lock_json_name)],
+                args = ["lock", "$(execpath {})".format(config), "--output={}".format(lock_json_path)],
                 workdir = "workspace",
                 data = [config],
             )
@@ -215,7 +221,7 @@ def apko_image(
             apko_run(
                 name = name + ".resolve",
                 # args is subject to make variables substitution: https://bazel.build/reference/be/common-definitions#common-attributes-binaries
-                args = ["resolve", "$(execpath {})".format(config), "--output={}/{}".format(config_label.package, lock_json_name)],
+                args = ["resolve", "$(execpath {})".format(config), "--output={}".format(lock_json_path)],
                 workdir = "workspace",
                 data = [config],
                 deprecation = "Please use .lock target instead. Rename your .resolve.json file to .lock.json file.",
